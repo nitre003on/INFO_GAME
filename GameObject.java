@@ -8,6 +8,7 @@ public abstract class GameObject
 	protected float x,y;
 	protected ID id;
 	protected float velX, velY;
+	protected boolean sprinting;
 	Handler handler;
 	
 	public GameObject(float x, float y, ID id, Handler handler) 
@@ -68,4 +69,4 @@ public abstract class GameObject
 	}
 }
 
-// Hier von werden alle Spielobjekte abgeleitet. Und hier werden alle Variabeln, die sie gemein haben(x,y, GeschwindigketX, GeschwindigketY, ID und Handler) festgelegt. AUch die dazu gehörigen Methoden(get- und Set-methoden).
+// Hier von werden alle Spielobjekte abgeleitet. Und hier werden alle Variabeln, die sie gemein haben(x,y, GeschwindigketX, GeschwindigketY, ID und Handler) festgelegt. AUch die dazu gehï¿½rigen Methoden(get- und Set-methoden).
