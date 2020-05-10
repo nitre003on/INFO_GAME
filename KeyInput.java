@@ -57,7 +57,7 @@ public class KeyInput extends KeyAdapter{
 				if(key == KeyEvent.VK_A) keyDown[1]= false;
 				if(key == KeyEvent.VK_S) keyDown[2]= false;
 				if(key == KeyEvent.VK_D) keyDown[3]= false;
-				if(key == KeyEvent.VK_SHIFT) {temObject.sprinting = false}	
+				if(key == KeyEvent.VK_SHIFT) {temObject.sprinting = false};	
 				if (!keyDown[0]&&!keyDown[2]) temObject.setVelY(0);
 				if (!keyDown[1]&&!keyDown[3]) temObject.setVelX(0);																			//KeyEvents falls es ein spieler ist(Die Unterscheidung ist wichtig, falls mann mehrspieler-Modi oder verschiedene Charaktere oder so haben will)
 			}																																//WENN DIE TASTEN LOSGELASSEN WERDENs
