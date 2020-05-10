@@ -1,4 +1,4 @@
-package actualGame;
+
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -27,7 +27,7 @@ public class BasicTrail extends GameObject {
 	public void tick() {
 		if(alpha>life) {
 			alpha-= life -0.0001f;
-		} else {																														//TAil wird gelöscht/Gelassen
+		} else {																														//TAil wird gelï¿½scht/Gelassen
 			handler.removeObject(this);
 		} 
 	}

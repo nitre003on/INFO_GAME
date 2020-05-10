@@ -1,4 +1,4 @@
-package actualGame;
+
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -15,7 +15,7 @@ public class FastEnemy extends GameObject{
 		velY=9;
 	}
 	
-	public Rectangle getBounds() {																																						//Grenze wird zurückgegeben
+	public Rectangle getBounds() {																																						//Grenze wird zurï¿½ckgegeben
 		return new Rectangle((int)x,(int)y,32,32);
 	}																																				
 	public void tick() {

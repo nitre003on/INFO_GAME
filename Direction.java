@@ -1,10 +1,9 @@
-package actualGame;
 
 public enum Direction 
 {
 	Up(),
 	Down(),
 	Left(),
-	Right(),																							//Die 4 Richtungen und das Fehlen einer Richtung können hierdurch unterschieden werden (Es können später vieleicht noch andere Richtungen hinzugefüght werde(Diagonalen und Stuff)
+	Right(),																							//Die 4 Richtungen und das Fehlen einer Richtung kï¿½nnen hierdurch unterschieden werden (Es kï¿½nnen spï¿½ter vieleicht noch andere Richtungen hinzugefï¿½ght werde(Diagonalen und Stuff)
 	None();
 }

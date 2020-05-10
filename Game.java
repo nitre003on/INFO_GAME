@@ -1,4 +1,4 @@
-package actualGame;
+
 import java.awt.Canvas;
 
 import java.awt.Color;
@@ -110,7 +110,7 @@ public class Game extends Canvas implements Runnable
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
-		handler.render(g);																				//selbe wie bei den tick-Methoden, außerdem wird das eigentliche Fenster gezeigt
+		handler.render(g);																				//selbe wie bei den tick-Methoden, auï¿½erdem wird das eigentliche Fenster gezeigt
 		
 		hud.render(g);
 		
@@ -121,7 +121,7 @@ public class Game extends Canvas implements Runnable
 	public static float clamp(float var, float min, float max) {
 		if(var>=max) {
 			return var = max;
-		}else if(var<=min) {																		//durch diese Methode wird var nicht außerhalb der Grenzen von min un max gelassen
+		}else if(var<=min) {																		//durch diese Methode wird var nicht auï¿½erhalb der Grenzen von min un max gelassen
 			return var = min;
 		}else {
 			return var;
@@ -134,7 +134,7 @@ public class Game extends Canvas implements Runnable
 			throw new IllegalArgumentException("max must be greater than min");
 		}
 
-		Random r = new Random();																	//zufällige zahl zwischen min und max
+		Random r = new Random();																	//zufï¿½llige zahl zwischen min und max
 		return r.nextInt((max - min) + 1) + min;
 	}
 	
