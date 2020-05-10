@@ -1,4 +1,4 @@
-package actualGame;
+
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -31,7 +31,7 @@ public class BasicEnemy extends GameObject{
 		if(alive) {
 			g.setColor(Color.green);
 		}
-		else {																														//arbe und größe setzzen
+		else {																														//arbe und grï¿½ï¿½e setzzen
 			g.setColor(Color.red);
 		}
 		g.fillRect((int)x, (int)y, 16, 16);
