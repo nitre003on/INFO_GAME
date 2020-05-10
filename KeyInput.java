@@ -52,7 +52,7 @@ public class KeyInput extends KeyAdapter{
 		for(int i=0;i<handler.objects.size();i++) {
 			GameObject temObject = handler.objects.get(i);
 			if(temObject.getID()==ID.Player) {
-				//key events for player1
+				//key events for player1																								KARL IS MEGA GAY!!!!
 				if(key == KeyEvent.VK_W) keyDown[0]= false;
 				if(key == KeyEvent.VK_A) keyDown[1]= false;
 				if(key == KeyEvent.VK_S) keyDown[2]= false;
