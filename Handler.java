@@ -1,4 +1,4 @@
-package actualGame;
+
 
 import java.awt.Graphics;
 import java.util.LinkedList;
@@ -26,4 +26,4 @@ public class Handler
 	}
 }
 
-//Der handler ist dafür da mit den Objekten um zu gehen. Also Hinzufügen, Entfernen. Auch Alle Objekte in einer Liste zu haben.
+//Der handler ist dafï¿½r da mit den Objekten um zu gehen. Also Hinzufï¿½gen, Entfernen. Auch Alle Objekte in einer Liste zu haben.

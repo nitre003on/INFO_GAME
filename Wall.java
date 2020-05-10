@@ -1,4 +1,3 @@
-package actualGame;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -27,4 +26,4 @@ public class Wall extends GameObject{
 
 
 
-// Die Wände werden erstmal nicht benutzt, weil die Kollision mit den Wänden noch nicht funktioniert
+// Die Wï¿½nde werden erstmal nicht benutzt, weil die Kollision mit den Wï¿½nden noch nicht funktioniert

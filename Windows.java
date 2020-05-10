@@ -1,4 +1,4 @@
-package actualGame;
+
 import java.awt.Canvas;
 import java.awt.Dimension;
 
@@ -16,7 +16,7 @@ public class Windows extends Canvas
 		frame.setMaximumSize(new Dimension(width, height));
 		frame.setMinimumSize(new Dimension(width, height));
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);														// Spezifikationen für das Fenster
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);														// Spezifikationen fï¿½r das Fenster
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 		frame.add(game);

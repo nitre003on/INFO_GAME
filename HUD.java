@@ -1,4 +1,4 @@
-package actualGame;
+
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,11 +9,11 @@ public class HUD {
 	
 	private float greenValue = 255;
 	private int score = 0;
-	private int level = 1;																				//Grünwert, score, level
+	private int level = 1;																				//Grï¿½nwert, score, level
 	
 	public void tick() {
 		HEALTH = Game.clamp(HEALTH, 0, 100);
-		greenValue = Game.clamp(greenValue, 0, 255);														//Grünwert und Leben werden nur in ihren Grenzen bleiben
+		greenValue = Game.clamp(greenValue, 0, 255);														//Grï¿½nwert und Leben werden nur in ihren Grenzen bleiben
 		greenValue = HEALTH*2;
 		//score++;
 	}
@@ -33,7 +33,7 @@ public class HUD {
 		this.score = score;
 	}
 	public int getScore() {
-		return score;																													//Get und Setmethoden für Level und Score
+		return score;																													//Get und Setmethoden fï¿½r Level und Score
 	}
 	public int getLevel() {
 		return level;

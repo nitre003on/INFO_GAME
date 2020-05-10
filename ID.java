@@ -1,4 +1,4 @@
-package actualGame;
+
 
 public enum ID 
 {
@@ -6,7 +6,7 @@ public enum ID
 	BasicEnemy(),
 	FastEnemy(),
 	SmartEnemy(),
-	Trail(),																								//Alle IDs für die Objekte werden hier festgelegt
+	Trail(),																								//Alle IDs fï¿½r die Objekte werden hier festgelegt
 	Shot(),
 	Wall();
 }

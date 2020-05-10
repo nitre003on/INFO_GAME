@@ -1,4 +1,4 @@
-package actualGame;
+
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -28,7 +28,7 @@ public class Shot extends GameObject{
       //x+=velX;
       y+=velY;
     } else if (direction == Direction.Left) {
-      x-=velX;                                                                                  // Schüsse in die 4 Möglichen Richtungen
+      x-=velX;                                                                                  // Schï¿½sse in die 4 Mï¿½glichen Richtungen
       //y+=velY;
     } else if (direction == Direction.Right) {
       x+=velX;

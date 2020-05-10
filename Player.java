@@ -1,4 +1,4 @@
-package actualGame;
+
 
 import java.awt.Color;
 
@@ -28,7 +28,7 @@ public class Player extends GameObject {
 		y+=velY;																													
 		x=Game.clamp(x, 0, Game.WIDTH-37);																							//das innerhalb des Fensters bleiben
 		y=Game.clamp(y, 0, Game.HEIGHT-64);
-		handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.white, 32, 32, 0.08f, handler));							//"Schwanz" ran hängen
+		handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.white, 32, 32, 0.08f, handler));							//"Schwanz" ran hï¿½ngen
 		collision();																												//Kollisionsmethode
 	}
 	
@@ -38,14 +38,14 @@ public class Player extends GameObject {
 			if (tempObject.getID()==ID.BasicEnemy || tempObject.getID()==ID.FastEnemy||tempObject.getID()==ID.SmartEnemy) {
 				if(getBounds().intersects(tempObject.getBounds())) {
 					//collision code
-					HUD.HEALTH -=2;																										//Das passiert, wenn man mit einer Art Gegner "kollidiert"(sich überschneidet)
+					HUD.HEALTH -=2;																										//Das passiert, wenn man mit einer Art Gegner "kollidiert"(sich ï¿½berschneidet)
 				}
 			}
 			if (tempObject.getID()==ID.Wall) {
 				if(getBounds().intersects(tempObject.getBounds())) {
 					
 					velX=0;
-					velY=0;																												////Das passiert, wenn man mit einer Wand "kollidiert"(sich überschneidet)
+					velY=0;																												////Das passiert, wenn man mit einer Wand "kollidiert"(sich ï¿½berschneidet)
 				}
 			}
 		}
