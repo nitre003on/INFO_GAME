@@ -30,6 +30,9 @@ public class Player extends GameObject {
     y=Game.clamp(y, 0, Game.HEIGHT-64);
     handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.white, 32, 32, 0.08f, handler));             //"Schwanz" ran h�ngen
     collision();                                                        //Kollisionsmethode
+    /*if(sprinting){
+      pass;
+      }*/
   }
   
   public void collision() {
