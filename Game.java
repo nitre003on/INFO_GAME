@@ -38,6 +38,10 @@ public class Game extends Canvas implements Runnable
     random = new Random();
     handler.addObject(new Player((WIDTH/2)-16, (HEIGHT/2)-16, ID.Player, handler, Direction.None));
     handler.addObject(new Wall(100, 100, ID.Wall, handler, 20, 200));
+    handler.addObject(new Wall(0, 0, ID.Wall, handler, 20, 20));
+    handler.addObject(new Wall(0, HEIGHT - 20, ID.Wall, handler, 20, 20));
+    handler.addObject(new Wall(WIDTH - 20, 0, ID.Wall, handler, 20, 20));
+    handler.addObject(new Wall(WIDTH - 20, HEIGHT - 20, ID.Wall, handler, 20, 20));
     //handler.addObject(new Player((WIDTH/2)+16, (HEIGHT/2)+16, ID.Player, handler, Direction.None));
     //handler.addObject(new Wall(100, 200, ID.Wall, handler, 20, 400));
     //handler.addObject(new BasicEnemy(Game.ranInt(17, WIDTH-17), Game.ranInt(17, HEIGHT-17), ID.BasicEnemy, handler));         //Hier werden alle Objekte das erste mal gespawnt
