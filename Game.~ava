@@ -3,6 +3,7 @@ import java.awt.Canvas;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.renderable.RenderableImage;
 import java.util.Random;
@@ -11,8 +12,11 @@ public class Game extends Canvas implements Runnable
 {
   
   private static final long serialVersionUID = 358011174883387846L;
-
-  public static final int WIDTH = 2*640, HEIGHT = WIDTH / 12*9;
+  
+  public static final int WIDTH = 1920, HEIGHT = 1080;
+  
+  private static int targetFPS = 60;                         //FPS cap
+  private static int targetTime = 1000000000 / targetFPS;
   
   private Thread thread;
   private boolean running = false;
@@ -28,7 +32,7 @@ public class Game extends Canvas implements Runnable
     handler =  new Handler();
     cam = new Camera(0, 0);
     this.addKeyListener(new KeyInput(handler));
-    new Windows(WIDTH, HEIGHT, "SNAKE", this);
+    new Windows(WIDTH, HEIGHT, "Dungeon Crawler", this);
     hud = new HUD();
     spawn = new Spawn(handler, hud);
     random = new Random();
@@ -100,7 +104,7 @@ public class Game extends Canvas implements Runnable
     handler.tick();
     hud.tick();                                             //Hier werden alle Tickmethoden(bzw. im handler dann) aufgerufen
     spawn.tick();
-    for (int i = 0;i < handler.objects.size();i++) {
+    for (int i = 0;i < handler.objects.size();i++) {        
       if(handler.objects.get(i).getID() == ID.Player){
         cam.tick(handler.objects.get(i));
       }
@@ -109,6 +113,8 @@ public class Game extends Canvas implements Runnable
   
   private void render() 
   {
+    long startTime = System.nanoTime();  //Für die FPS cap
+    
     BufferStrategy bs = this.getBufferStrategy();
     if(bs == null) {
       this.createBufferStrategy(3);
@@ -122,7 +128,7 @@ public class Game extends Canvas implements Runnable
     g.fillRect(0, 0, WIDTH, HEIGHT);
     
     g2d.translate(cam.getX(), cam.getY());  //Start von cam
-                                                                                
+    
     handler.render(g);                                                           //selbe wie bei den tick-Methoden, au�erdem wird das eigentliche Fenster gezeigt
     
     g2d.translate(-cam.getX(), -cam.getY()); //Ende von cam                                     
@@ -131,6 +137,17 @@ public class Game extends Canvas implements Runnable
     
     g.dispose();
     bs.show();
+    
+    long totalTime = System.nanoTime() - startTime;
+    
+    if (totalTime < targetTime){  //FPS cap
+      try {
+        Thread.sleep((targetTime - totalTime) / 1000000);
+      } 
+      catch (InterruptedException e){
+        e.printStackTrace();
+      }
+    }
   }
   
   public static float clamp(float var, float min, float max) {
@@ -144,11 +161,11 @@ public class Game extends Canvas implements Runnable
   }
   
   public static int ranInt(int min, int max) {
-
+    
     if (min >= max) {
       throw new IllegalArgumentException("max must be greater than min");
     }
-
+    
     Random r = new Random();                                  //zuf�llige zahl zwischen min und max
     return r.nextInt((max - min) + 1) + min;
   }
