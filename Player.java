@@ -29,8 +29,8 @@ public class Player extends GameObject {
     collision();                                                      //Kollisionsmethode
     x+=velX;                                                          //Bewegungsrichtumg
     y+=velY;                                                          
-    x=Game.clamp(x, 0, 1920 - 32);                                              //das innerhalb des Fensters bleiben
-    y=Game.clamp(y, 0, 1080 - 32);
+    x=Game.clamp(x, 0, Game.WIDTH - 32);                                              //das innerhalb des Fensters bleiben
+    y=Game.clamp(y, 0, Game.HEIGHT - 32);
      
     handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.white, 32, 32, 0.08f, handler));             //"Schwanz" ran h�ngen                                                                  
     hitBox.x = (int)x;
