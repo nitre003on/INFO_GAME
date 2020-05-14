@@ -16,7 +16,9 @@ public class Windows extends Canvas
     frame.setMaximumSize(new Dimension(width, height));
     frame.setMinimumSize(new Dimension(width, height));
     
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                           // Spezifikationen f�r das Fenster
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
+    frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+    frame.setUndecorated(true);                         // Spezifikationen f�r das Fenster
     frame.setResizable(false);
     frame.setLocationRelativeTo(null);
     frame.add(game);
