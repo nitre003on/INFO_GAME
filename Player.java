@@ -66,6 +66,9 @@ public class Player extends GameObject {
     hitBox.y = (int)y; 
     handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.white, 32, 32, 0.08f, handler));             //"Schwanz" ran h�ngen
     collision();                                                        //Kollisionsmethode
+    /*if(sprinting){
+      pass;
+      }*/
   }
   
   public void collision() {
