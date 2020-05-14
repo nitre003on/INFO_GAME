@@ -11,6 +11,8 @@ public class SmartEnemy extends GameObject{
   
   private GameObject player;
   
+  Rectangle hitBox;
+  
   public SmartEnemy(int x, int y, ID id, Handler handler) {
     super(x, y, id, handler);
     for (int i = 0; i < handler.objects.size(); i++) {
@@ -18,23 +20,26 @@ public class SmartEnemy extends GameObject{
     }
     velX=4;
     velY=4;
+    hitBox = new Rectangle(x, y, 32, 32);
   }
   
   public Rectangle getBounds() {
     return new Rectangle((int)x,(int)y,32,32);                                                      //Grenzen werden entnommen
   }
   public void tick() {
+    collision();
     x+=velX;
     y+=velY;
-    float diffX= x-player.getX() -8;
-    float diffY= y-player.getY() -8;
+    float diffX= x-player.getX();
+    float diffY= y-player.getY();
     float distance = (float) Math.sqrt(((x-player.getX())*(x-player.getX()))+((y-player.getY())*(y-player.getY())));
     velX = (float) ((-1/distance)*diffX);
     velY = (float) ((-1/distance)*diffY);                                                                       //Normales Verhalten(Hier: Wird dem Spieler gefolgt)
     if(y<=0 || y>=Game.HEIGHT-32) velY *=-1;
     if(x<=0 || x>=Game.WIDTH-32) velX *=-1;
     handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.orange, 32, 32, 0.08f, handler));
-    collision();
+    hitBox.x = (int)x;
+    hitBox.y = (int)y;
   }
   public void collision() {
     for (int i = 0; i < handler.objects.size(); i++) {
@@ -50,11 +55,36 @@ public class SmartEnemy extends GameObject{
           if(velYr == 0) {velX*=-1;}
         }
       }
-      if (tempObject.getID()==ID.Wall) {
-        if(getBounds().intersects(tempObject.getBounds())) {
-          //collision code                                                                    //Kollision mit Wand
-          velX*=-0.5;
-          velY*=-0.5;
+    }
+    
+    hitBox.x += velX;
+    for (int i = 0;i < handler.objects.size();i++) {        
+      GameObject tempObject = handler.objects.get(i);
+      if(handler.objects.get(i).getID() == ID.Wall){
+        if (hitBox.intersects(tempObject.getBounds())){
+          hitBox.x -= velX;
+          while (!hitBox.intersects(tempObject.getBounds())){
+            hitBox.x += Math.signum(velX);
+          }
+          hitBox.x -= Math.signum(velX);
+          velX *= (-1);
+          x = hitBox.x;
+        }
+      }
+    }
+    
+    hitBox.y += velY;
+    for (int i = 0;i < handler.objects.size();i++) {        
+      GameObject tempObject = handler.objects.get(i);
+      if(handler.objects.get(i).getID() == ID.Wall){
+        if (hitBox.intersects(tempObject.getBounds())){
+          hitBox.y -= velY;
+          while (!hitBox.intersects(tempObject.getBounds())){
+            hitBox.y += Math.signum(velY);
+          }
+          hitBox.y -= Math.signum(velY);
+          velY *= (-1);
+          y = hitBox.y;
         }
       }
     }

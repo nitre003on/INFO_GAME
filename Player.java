@@ -25,7 +25,31 @@ public class Player extends GameObject {
     return new Rectangle((int)x,(int)y,32,32);                                            //Methode um die Umrisse zu kriegen
   }
   
-  public void tick() {
+  public void tick() {    
+    collision();                                                      //Kollisionsmethode
+    x+=velX;                                                          //Bewegungsrichtumg
+    y+=velY;                                                          
+    x=Game.clamp(x, 0, 1920 - 32);                                              //das innerhalb des Fensters bleiben
+    y=Game.clamp(y, 0, 1080 - 32);
+     
+    handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.white, 32, 32, 0.08f, handler));             //"Schwanz" ran h�ngen                                                                  
+    hitBox.x = (int)x;
+    hitBox.y = (int)y;                                                       
+    /*if(sprinting){
+      pass;
+      }*/
+  }
+  
+  public void collision() {
+    for (int i = 0; i < handler.objects.size(); i++) {
+      GameObject tempObject = handler.objects.get(i);
+      if (tempObject.getID()==ID.BasicEnemy || tempObject.getID()==ID.FastEnemy||tempObject.getID()==ID.SmartEnemy) {
+        if(getBounds().intersects(tempObject.getBounds())) {
+          //collision code
+          HUD.HEALTH -=2;                                                   //Das passiert, wenn man mit einer Art Gegner "kollidiert"(sich �berschneidet)
+        }
+      }
+    }
     hitBox.x += velX;
     for (int i = 0;i < handler.objects.size();i++) {        
       GameObject tempObject = handler.objects.get(i);
@@ -57,37 +81,6 @@ public class Player extends GameObject {
         }
       }
     }
-    
-    x+=velX;                                                          //Bewegungsrichtumg
-    y+=velY;                                                          
-    x=Game.clamp(x, 0, Game.WIDTH-37);                                              //das innerhalb des Fensters bleiben
-    y=Game.clamp(y, 0, Game.HEIGHT-64);
-    hitBox.x = (int)x;
-    hitBox.y = (int)y; 
-    handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.white, 32, 32, 0.08f, handler));             //"Schwanz" ran h�ngen
-    collision();                                                        //Kollisionsmethode
-    /*if(sprinting){
-      pass;
-      }*/
-  }
-  
-  public void collision() {
-    for (int i = 0; i < handler.objects.size(); i++) {
-      GameObject tempObject = handler.objects.get(i);
-      if (tempObject.getID()==ID.BasicEnemy || tempObject.getID()==ID.FastEnemy||tempObject.getID()==ID.SmartEnemy) {
-        if(getBounds().intersects(tempObject.getBounds())) {
-          //collision code
-          HUD.HEALTH -=2;                                                   //Das passiert, wenn man mit einer Art Gegner "kollidiert"(sich �berschneidet)
-        }
-      }
-      if (tempObject.getID()==ID.Wall) {
-        if(getBounds().intersects(tempObject.getBounds())) {
-          
-          velX=0;
-          velY=0;                                                       ////Das passiert, wenn man mit einer Wand "kollidiert"(sich �berschneidet)
-        }
-      }
-    }
   }
       
   public void shoot() {
@@ -108,7 +101,5 @@ public class Player extends GameObject {
     if(id == ID.Player)g.setColor(Color.white);
     g.fillRect((int)x, (int)y, 32, 32);                                                   // Form wird ge"zeichnet"
     
-  }
-      
-      
+  }    
 }
