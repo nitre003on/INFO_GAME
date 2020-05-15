@@ -4,7 +4,7 @@ public class DirectionalShot extends Shot{
 	
 	private Vector2 dir = new Vector2(0,0);
 	private GameObject owner;
-	private float speed;
+	private float speed, despawnTimer = 100;
 	
 	public DirectionalShot(GameObject owner, Vector2 target, ID id, Handler handler) {
 		super((int)owner.x, (int)owner.y, null, id, handler);
@@ -18,6 +18,7 @@ public class DirectionalShot extends Shot{
 		x += dir.x * speed;
 		y += dir.y * speed;
 		handler.addObject(new BasicTrail((int)x+4, (int)y+4, ID.Trail, Color.blue, 8, 8, 0.08f, handler));
-		//checkDespawn();
+		if(despawnTimer < 0){handler.removeObject(this);}
+		else{despawnTimer--;}
 	}
 }
