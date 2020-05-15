@@ -25,7 +25,7 @@ public class KeyInput extends KeyAdapter{
       if(temObject.getID()==ID.Player) {
         //key events for player1
         
-        if(key == KeyEvent.VK_SHIFT) {temObject.dash = true;}   
+        //if(key == KeyEvent.VK_SHIFT) {temObject.dash = true;}   
         if(key == KeyEvent.VK_W) {temObject.setVelY(-5); keyDown[0]= true;}
         if(key == KeyEvent.VK_A) {temObject.setVelX(-5); keyDown[1]= true;}
         if(key == KeyEvent.VK_S) {temObject.setVelY(+5); keyDown[2]= true;}
