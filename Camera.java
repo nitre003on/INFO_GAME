@@ -23,7 +23,7 @@ public class Camera{
     }
   
   public void tick(GameObject Player){     //Passt das Bild an den Player an
-    x = -Player.getX() + 1920/2;
-    y = -Player.getY() + 1080/2;
+    x = -Player.getX() + Game.WIDTH/2;
+    y = -Player.getY() + Game.HEIGHT/2;
     }
   }
