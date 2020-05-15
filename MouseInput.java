@@ -14,5 +14,6 @@ public class MouseInput extends MouseAdapter {
 	
 	public void mousePressed(MouseEvent e) {
 		handler.addObject(new DirectionalShot(Game.player,new Vector2(e.getX(),e.getY()),ID.Shot,handler));
+		System.out.println("shoooooot");
 	}
 }
