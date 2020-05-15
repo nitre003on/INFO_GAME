@@ -40,17 +40,13 @@ public class Game extends Canvas implements Runnable
     random = new Random();
     player = new Player((WIDTH/2)-16, (HEIGHT/2)-16, ID.Player, handler, Direction.None);
     handler.addObject(player);
-    handler.addObject(new Wall(100, 100, ID.Wall, handler, 20, 200));
-    handler.addObject(new Wall(0, 0, ID.Wall, handler, 20, 20));
-    handler.addObject(new Wall(0, HEIGHT - 20, ID.Wall, handler, 20, 20));
-    handler.addObject(new Wall(WIDTH - 20, 0, ID.Wall, handler, 20, 20));
-    handler.addObject(new Wall(WIDTH - 20, HEIGHT - 20, ID.Wall, handler, 20, 20));
+    dungeonGeneration.drawDungeon();
+    handler.addObject(new Wall(100, 200, ID.Wall, handler, 20, 400));
     //handler.addObject(new Player((WIDTH/2)+16, (HEIGHT/2)+16, ID.Player, handler, Direction.None));
     //handler.addObject(new Wall(100, 200, ID.Wall, handler, 20, 400));
     //handler.addObject(new BasicEnemy(Game.ranInt(17, WIDTH-17), Game.ranInt(17, HEIGHT-17), ID.BasicEnemy, handler));         //Hier werden alle Objekte das erste mal gespawnt
     //handler.addObject(new FastEnemy(Game.ranInt(17, WIDTH-17), Game.ranInt(17, HEIGHT-17), ID.FastEnemy, handler));
     //handler.addObject(new SmartEnemy(Game.ranInt(17, WIDTH-17), Game.ranInt(17, HEIGHT-17), ID.SmartEnemy, handler));
-    
   }
   
   public synchronized void start() 

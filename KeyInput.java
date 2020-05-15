@@ -24,10 +24,10 @@ public class KeyInput extends KeyAdapter{
         //key events for player1
         
         if(key == KeyEvent.VK_SHIFT) {temObject.dash = true;}   
-        if(key == KeyEvent.VK_W) {temObject.setVelY(-2); keyDown[0]= true;}
-        if(key == KeyEvent.VK_A) {temObject.setVelX(-2); keyDown[1]= true;}
-        if(key == KeyEvent.VK_S) {temObject.setVelY(+2); keyDown[2]= true;}
-        if(key == KeyEvent.VK_D) {temObject.setVelX(+2); keyDown[3]= true;}                                                                   //KeyEvents falls es ein spieler ist(Die Unterscheidung ist wichtig, falls mann mehrspieler-Modi oder verschiedene Charaktere oder so haben will)
+        if(key == KeyEvent.VK_W) {temObject.setVelY(-5); keyDown[0]= true;}
+        if(key == KeyEvent.VK_A) {temObject.setVelX(-5); keyDown[1]= true;}
+        if(key == KeyEvent.VK_S) {temObject.setVelY(+5); keyDown[2]= true;}
+        if(key == KeyEvent.VK_D) {temObject.setVelX(+5); keyDown[3]= true;}                                                                   //KeyEvents falls es ein spieler ist(Die Unterscheidung ist wichtig, falls mann mehrspieler-Modi oder verschiedene Charaktere oder so haben will)
         /*if(keyDown[0]&&keyDown[1]){
         temObject.setVelY(-2); 
         temObject.setVelX(-2);
