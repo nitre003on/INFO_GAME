@@ -15,7 +15,8 @@ public class Game extends Canvas implements Runnable
   
   public static final int WIDTH = 1920, HEIGHT = 1080;
   public static Player player;
-  
+  public static Camera cam;
+
   private static int targetFPS = 60;                         //FPS cap
   private static int targetTime = 1000000000 / targetFPS;
   
@@ -26,7 +27,6 @@ public class Game extends Canvas implements Runnable
   private Handler handler;
   private HUD hud;
   private Spawn spawn;
-  Camera cam;
   
   public Game() 
   {
