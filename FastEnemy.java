@@ -30,21 +30,8 @@ public class FastEnemy extends GameObject{
     if(x<=0 || x>=Game.WIDTH-32) velX *=-1;                                                                           //normale Verhaltensmethode
     handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.cyan, 32, 32, 0.08f, handler));
   }
+  
   public void collision() {
-    for (int i = 0; i < handler.objects.size(); i++) {
-      GameObject tempObject = handler.objects.get(i);
-      if (tempObject.getID()==ID.Shot) {
-        if(getBounds().intersects(tempObject.getBounds())) {
-          //collision code
-          x = random.nextInt(Game.WIDTH); 
-          y = random.nextInt(Game.HEIGHT);
-          int velXr = Game.ranInt(0,1);                                                   //Kollision mit Schuss
-          if(velXr == 0) {velX*=-1;}
-          int velYr = Game.ranInt(0,1);
-          if(velYr == 0) {velX*=-1;}
-        }
-      }
-    }
     hitBox.x += velX; 
     for (int i = 0;i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
@@ -57,6 +44,22 @@ public class FastEnemy extends GameObject{
           hitBox.x -= Math.signum(velX); 
           velX *= -1; 
           x = hitBox.x; 
+        } 
+      }
+      if(handler.objects.get(i).getID() == ID.Shot){ 
+        if (hitBox.intersects(tempObject.getBounds())){ 
+          hitBox.x -= velX; 
+          while (!hitBox.intersects(tempObject.getBounds())){ 
+            hitBox.x += Math.signum(velX); 
+          } 
+          hitBox.x -= Math.signum(velX); 
+          //collision code
+          x = random.nextInt(Game.WIDTH - 32);
+          y = random.nextInt(Game.HEIGHT - 32);                                                          //Kollision mit Schuss
+          int velXr = Game.ranInt(0,1);
+          if(velXr == 0) {velX*=-1;}
+          int velYr = Game.ranInt(0,1);
+          if(velYr == 0) {velX*=-1;}
         } 
       } 
     } 
@@ -74,9 +77,26 @@ public class FastEnemy extends GameObject{
           velY *= -1; 
           y = hitBox.y; 
         } 
+      }
+      if(handler.objects.get(i).getID() == ID.Shot){ 
+        if (hitBox.intersects(tempObject.getBounds())){ 
+          hitBox.y -= velY; 
+          while (!hitBox.intersects(tempObject.getBounds())){ 
+            hitBox.y += Math.signum(velY); 
+          } 
+          hitBox.y -= Math.signum(velY); 
+          //collision code
+          x = random.nextInt(Game.WIDTH - 32);
+          y = random.nextInt(Game.HEIGHT - 32);                                                          //Kollision mit Schuss
+          int velXr = Game.ranInt(0,1);
+          if(velXr == 0) {velX*=-1;}
+          int velYr = Game.ranInt(0,1);
+          if(velYr == 0) {velX*=-1;} 
+        } 
       } 
     }
   }
+  
   public void render(Graphics g) {
     g.setColor(Color.cyan);
     g.fillRect((int)x, (int)y, 32, 32);                                                       //wird gezeichnet

@@ -24,7 +24,7 @@ public class Game extends Canvas implements Runnable
   private boolean running = false;
   
   private Random random;
-  private Handler handler;
+  public static Handler handler;
   private HUD hud;
   private Spawn spawn;
   
@@ -40,8 +40,7 @@ public class Game extends Canvas implements Runnable
     random = new Random();
     player = new Player((WIDTH/2)-16, (HEIGHT/2)-16, ID.Player, handler, Direction.None);
     handler.addObject(player);
-    dungeonGeneration.drawDungeon();
-    handler.addObject(new Wall(100, 200, ID.Wall, handler, 20, 400));
+    DungeonGeneration.drawDungeon();
     //handler.addObject(new Player((WIDTH/2)+16, (HEIGHT/2)+16, ID.Player, handler, Direction.None));
     //handler.addObject(new Wall(100, 200, ID.Wall, handler, 20, 400));
     //handler.addObject(new BasicEnemy(Game.ranInt(17, WIDTH-17), Game.ranInt(17, HEIGHT-17), ID.BasicEnemy, handler));         //Hier werden alle Objekte das erste mal gespawnt
