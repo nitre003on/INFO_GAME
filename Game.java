@@ -38,7 +38,7 @@ public class Game extends Canvas implements Runnable
     hud = new HUD();
     spawn = new Spawn(handler, hud);
     random = new Random();
-    player = new Player((WIDTH/2)-16, (HEIGHT/2)-16, ID.Player, handler, Direction.None);
+    player = new Player(200, 200, ID.Player, handler, Direction.None);
     handler.addObject(player);
     DungeonGeneration.drawDungeon();
     //handler.addObject(new Player((WIDTH/2)+16, (HEIGHT/2)+16, ID.Player, handler, Direction.None));

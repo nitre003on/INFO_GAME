@@ -10,10 +10,9 @@ public class DungeonGeneration {
   public static void drawDungeon() {
     //handler = new Handler();
     Game.handler.addObject(new Wall(100, 100, ID.Wall, Game.handler, 20, 200));
-    Game.handler.addObject(new Wall(0, 0, ID.Wall, Game.handler, 20, 20));
-    Game.handler.addObject(new Wall(0, Game.HEIGHT - 20, ID.Wall, Game.handler, 20, 20));
-    Game.handler.addObject(new Wall(Game.WIDTH - 20, 0, ID.Wall, Game.handler, 20, 20));
-    Game.handler.addObject(new Wall(Game.WIDTH - 20, Game.HEIGHT - 20, ID.Wall, Game.handler, 20, 20));
-    Game.handler.addObject(new Wall(100, 200, ID.Wall, Game.handler, 20, 400));
+    Game.handler.addObject(new Wall(0, 0, ID.Wall, Game.handler, Game.WIDTH, 20));
+    Game.handler.addObject(new Wall(0, Game.HEIGHT - 20, ID.Wall, Game.handler, Game.WIDTH, 20));
+    Game.handler.addObject(new Wall(0, 0, ID.Wall, Game.handler, 20, Game.HEIGHT));
+    Game.handler.addObject(new Wall(Game.WIDTH - 20, 0, ID.Wall, Game.handler, 20, Game.HEIGHT));
   }
 }   
