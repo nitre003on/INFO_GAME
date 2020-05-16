@@ -4,11 +4,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class KeyInput extends KeyAdapter{
-
+  
   
   private Handler handler;
   private boolean[] keyDown = new boolean[4];
-  private int rightNow = 0;
+  private String[] axes = new String[2];
   private HUD hud;
   
   public KeyInput(Handler handler) {
@@ -17,108 +17,57 @@ public class KeyInput extends KeyAdapter{
     keyDown[1] = false;
     keyDown[2] = false;
     keyDown[3] = false;
+    axes[0] = "";
+    axes[1] = ""; 
   }
   
   public void keyPressed(KeyEvent e) {
     int key = e.getKeyCode();
     for(int i=0;i<handler.objects.size();i++) {
-      GameObject temObject = handler.objects.get(i);
-      if(temObject.getID()==ID.Player) {
+      GameObject tempObject = handler.objects.get(i);
+      if(tempObject.getID()==ID.Player) {
         //key events for player1
-        /*if(key == KeyEvent.VK_SHIFT) {temObject.dash = true;}   
-        if(key == KeyEvent.VK_W) {keyDown[0]= true; rightNow = 0;}
-        if(key == KeyEvent.VK_A) {keyDown[1]= true; rightNow = 1;}
-        if(key == KeyEvent.VK_S) {keyDown[2]= true; rightNow = 2;}
-        if(key == KeyEvent.VK_D) {keyDown[3]= true; rightNow = 3;}                                                                   //KeyEvents falls es ein spieler ist(Die Unterscheidung ist wichtig, falls mann mehrspieler-Modi oder verschiedene Charaktere oder so haben will)
         
-        if(keyDown[0]&&keyDown[1]&&!keyDown[2]&&!keyDown[3]){
-          temObject.setVelX(-2);
-          temObject.setVelY(-2);
-          System.out.println("up & left");
-        }
-          else if(!keyDown[0]&&keyDown[1]&&keyDown[2]&&!keyDown[3]){
-            temObject.setVelX(-2);
-            temObject.setVelY(2);
-            System.out.println("down & left");
+        if(key == KeyEvent.VK_SHIFT) {tempObject.dash = true;}   
+        
+        //axes 1
+        if(key == KeyEvent.VK_W) {
+          tempObject.setVelY(-8); keyDown[0]= true;
+          if(keyDown[2]){
+            axes[1]="FS";
+            System.out.println("first s");
           }
-            else if(!keyDown[0]&&!keyDown[1]&&keyDown[2]&&keyDown[3]){
-              temObject.setVelX(2);
-              temObject.setVelY(2);
-              System.out.println("down & right");
-            }
-              else if(keyDown[0]&&!keyDown[1]&&!keyDown[2]&&keyDown[3]){
-                temObject.setVelX(2);
-                temObject.setVelY(-2);
-                System.out.println("up & right");
-              }
-              else{ 
-                if(rightNow == 0) {
-                  temObject.setVelY(-2);
-                } // end of if
-                  else if(rightNow == 1) {
-                    temObject.setVelX(-2);
-                  } // end of if
-                    else if(rightNow == 2) {
-                      temObject.setVelY(2);
-                    } // end of if
-                      else if(rightNow == 3) {
-                        temObject.setVelX(2);
-                      } // end of if
-                
-              }
-        */
-        
-        /*
-        if(keyDown[0]&&!keyDown[1]&&!keyDown[2]&&!keyDown[3]){
-        temObject.setVelX(0);
-        temObject.setVelY(-2);
-        System.out.println("up");
         }
-        if(!keyDown[0]&&!keyDown[1]&&keyDown[2]&&!keyDown[3]){
-        temObject.setVelX(0);
-        temObject.setVelY(2);
-        System.out.println("down");
+        if(key == KeyEvent.VK_S){
+          tempObject.setVelY(8); keyDown[2]= true;
+          if(keyDown[0]){
+            axes[1]="FW";
+            System.out.println("first w");
+          }
         }
-        if(!keyDown[0]&&keyDown[1]&&!keyDown[2]&&!keyDown[3]){
-        temObject.setVelX(-2);
-        temObject.setVelY(0);
-        System.out.println("left");
+        
+        //axes 0
+        if(key == KeyEvent.VK_A) {
+          tempObject.setVelX(-8); keyDown[1]= true;
+          if(keyDown[3]){
+            axes[0]="FD";
+            System.out.println("first d");
+          }
         }
-        if(!keyDown[0]&&!keyDown[1]&&!keyDown[2]&&keyDown[3]){
-        temObject.setVelX(2);
-        temObject.setVelY(0);
-        System.out.println("right");
+        if(key == KeyEvent.VK_D) {
+          tempObject.setVelX(+8); keyDown[3]= true;
+          if(keyDown[1]){
+            axes[0]="FA";
+            System.out.println("first a");
+          }
+        }                                                                   //KeyEvents falls es ein spieler ist(Die Unterscheidung ist wichtig, falls mann mehrspieler-Modi oder verschiedene Charaktere oder so haben will)
+        
+        /*if(keyDown[0]&&keyDown[2]){
+        axes[1] = true;
         }
-        */
-        
-        
-        
-        
-        
-        
-        if(key == KeyEvent.VK_SHIFT) {temObject.dash = true;}   
-        
-        if(key == KeyEvent.VK_W) {temObject.setVelY(-8); keyDown[0]= true;}
-        if(key == KeyEvent.VK_A) {temObject.setVelX(-8); keyDown[1]= true;}
-        if(key == KeyEvent.VK_S) {temObject.setVelY(+8); keyDown[2]= true;}
-        if(key == KeyEvent.VK_D) {temObject.setVelX(+8); keyDown[3]= true;}                                                                   //KeyEvents falls es ein spieler ist(Die Unterscheidung ist wichtig, falls mann mehrspieler-Modi oder verschiedene Charaktere oder so haben will)
-        /*
-        if(keyDown[0]&&keyDown[1]){
-        temObject.setVelY(-2); 
-        temObject.setVelX(-2);
-        }
-        if(keyDown[1]&&keyDown[2]){
-        temObject.setVelY(2); 
-        temObject.setVelX(-2);
-        }
-        if(keyDown[2]&&keyDown[3]){
-        temObject.setVelY(2); 
-        temObject.setVelX(2);
-        }
-        if(keyDown[3]&&keyDown[0]){
-        temObject.setVelY(-2); 
-        temObject.setVelX(2);
-        }*/        
+        if(keyDown[1]&&keyDown[3]){
+        axes[0] = true;
+        }*/
         
         //if(key == KeyEvent.VK_UP) temObject.shoot(Direction.Up);                                    //WENN DIE TASTEN GEDR�CKT WERDEN
         //if(key == KeyEvent.VK_DOWN) temObject.shoot(Direction.Down);
@@ -133,27 +82,59 @@ public class KeyInput extends KeyAdapter{
   public void keyReleased(KeyEvent e) {
     int key = e.getKeyCode();
     for(int i=0;i<handler.objects.size();i++) {
-      GameObject temObject = handler.objects.get(i);
-      if(temObject.getID()==ID.Player) {
-        //key events for player1                                          
-        /*if(key == KeyEvent.VK_W) keyDown[0]= false;
-        if(key == KeyEvent.VK_A) keyDown[1]= false;                   
-        if(key == KeyEvent.VK_S) keyDown[2]= false;
-        if(key == KeyEvent.VK_D) keyDown[3]= false;     
+      GameObject tempObject = handler.objects.get(i);
+      if(tempObject.getID()==ID.Player) {
+        //key events for player1                                                  
+        if(key == KeyEvent.VK_SHIFT) {tempObject.dash = false;} 
         
-        if (!keyDown[0]&&!keyDown[2]) temObject.setVelY(0);
-        if (!keyDown[1]&&!keyDown[3]) temObject.setVelX(0);
-        */
+        //axes 1
+        if(key == KeyEvent.VK_W) {
+          if(axes[1]=="FS"){
+            tempObject.setVelY(8);
+            axes[1]="";
+          }else if(axes[1]=="FW"){
+              tempObject.setVelY(8);
+              axes[1]="";
+            }  
+          keyDown[0]= false;
+        }  
+        if(key == KeyEvent.VK_S) {
+          if(axes[1]=="FW"){
+            tempObject.setVelY(-8);
+            axes[1]="";
+          }else if(axes[1]=="FS"){
+              tempObject.setVelY(-8);
+              axes[1]="";
+            }
+          keyDown[2]= false;
+        }
         
-        if(key == KeyEvent.VK_SHIFT) {temObject.dash = false;} 
-        if(key == KeyEvent.VK_W) {keyDown[0]= false; temObject.velY*=-1;}
-        if(key == KeyEvent.VK_A) {keyDown[1]= false; temObject.velX*=-1;}                   
-        if(key == KeyEvent.VK_S) {keyDown[2]= false; temObject.velY*=-1;}
-        if(key == KeyEvent.VK_D) {keyDown[3]= false; temObject.velX*=-1;}
-        if (!keyDown[0]&&!keyDown[2]) temObject.setVelY(0);
-        if (!keyDown[1]&&!keyDown[3]) temObject.setVelX(0);                                     //KeyEvents falls es ein spieler ist(Die Unterscheidung ist wichtig, falls mann mehrspieler-Modi oder verschiedene Charaktere oder so haben will)
-      }                                                               //WENN DIE TASTEN LOSGELASSEN WERDENs
-    }
+        //axes 0
+        if(key == KeyEvent.VK_A) {
+          if(axes[0]=="FA"){
+            tempObject.setVelX(8);
+            axes[0]="";
+          }else if(axes[0]=="FD"){
+              tempObject.setVelX(8);
+              axes[0]="";
+            }
+          keyDown[1]= false;
+        }                   
+        if(key == KeyEvent.VK_D) {
+          if(axes[0]=="FA"){
+            tempObject.setVelX(-8);
+            axes[0]="";
+          }else if(axes[0]=="FD"){
+              tempObject.setVelX(-8);
+              axes[0]="";
+            }
+          keyDown[3]= false;
+        }  
+        
+        if (!keyDown[0]&&!keyDown[2]) tempObject.setVelY(0);
+        if (!keyDown[1]&&!keyDown[3]) tempObject.setVelX(0);
+      }                                     //KeyEvents falls es ein spieler ist(Die Unterscheidung ist wichtig, falls mann mehrspieler-Modi oder verschiedene Charaktere oder so haben will)
+    }                                                               //WENN DIE TASTEN LOSGELASSEN WERDENs
   }
-
 }
+
