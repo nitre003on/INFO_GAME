@@ -8,11 +8,14 @@ public class Shot extends GameObject{
   
   private Direction direction;
   
+  Rectangle hitBox;
+  
   public Shot(int x, int y, Direction direction, ID id, Handler handler) {
     super(x, y, id, handler);
     this.direction = direction;
     velX=7;
-    velY=7;                                               //Schussgeschwindigkeit
+    velY=7;
+    hitBox = new Rectangle(x, y, 16, 16);                                               //Schussgeschwindigkeit
   }
   
   public Rectangle getBounds() {
@@ -20,7 +23,9 @@ public class Shot extends GameObject{
   }
   
   public void tick() {
-    
+    hitBox.x = (int)x; 
+    hitBox.y = (int)y;
+    collision();
     if (direction == Direction.Up) {
       //x+=velX;
       y-=velY;
@@ -34,22 +39,16 @@ public class Shot extends GameObject{
       x+=velX;
       //y+=velY;
     }
-    collision();
     handler.addObject(new BasicTrail((int)x+4, (int)y+4, ID.Trail, Color.blue, 8, 8, 0.08f, handler));
   }
   
   public void collision() {
-    for (int i = 0; i < handler.objects.size(); i++) {
-      GameObject tempObject = handler.objects.get(i);
-      if (tempObject.getID()==ID.Wall) {
-        if(getBounds().intersects(tempObject.getBounds())) {
-          velY = 0;
-          velX = 0;
-          handler.removeObject(this);
-          //handler.addObject(new Shot((int)x-16, (int)y-16, direction, ID.Shot, handler));
-        }
-      }
-    }
+    for (int i = 0;i < handler.objects.size();i++) {         
+      GameObject tempObject = handler.objects.get(i); 
+      if(handler.objects.get(i).getID() == ID.Wall){ 
+        handler.removeObject(this); 
+      } 
+    } 
   }
   
   public void render(Graphics g) {
