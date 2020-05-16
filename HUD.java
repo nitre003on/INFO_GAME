@@ -16,6 +16,7 @@ public class HUD {
     greenValue = Game.clamp(greenValue, 0, 255);                            //Gr�nwert und Leben werden nur in ihren Grenzen bleiben
     greenValue = HEALTH*2;
     //score++;
+    
   }
   
   public void render(Graphics g) {

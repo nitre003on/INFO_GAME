@@ -66,7 +66,7 @@ public class Player extends GameObject {
     /*Graphics2D g2d = (Graphics2D) g;
     g.setColor(Color.green);
     g2d.draw(getBounds());*/
-    if(id == ID.Player)g.setColor(Color.white);
+    /*if(id == ID.Player)*/g.setColor(Color.white);
     g.fillRect((int)x, (int)y, 32, 32);                                                   // Form wird ge"zeichnet"
     
   }
