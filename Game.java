@@ -13,7 +13,7 @@ public class Game extends Canvas implements Runnable
   
   private static final long serialVersionUID = 358011174883387846L;
   
-  public static final int WIDTH = 1920, HEIGHT = 1080;
+  public static final int WIDTH = 3000, HEIGHT = 3000;
   public static Player player;
   public static Camera cam;
 
