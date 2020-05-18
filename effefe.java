@@ -8,7 +8,7 @@ public class DungeonGeneration {
   //private static Handler handler;
   
   static int wallThicc = 20; 
-  
+       
   public static void drawDungeon() {
     //handler = new Handler();
     //Umrandung des Spielfeldes und spawnen einer debug wall
