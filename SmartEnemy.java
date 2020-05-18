@@ -52,7 +52,7 @@ public class SmartEnemy extends GameObject{
             hitBox.x += Math.signum(velX); 
           } 
           hitBox.x -= Math.signum(velX); 
-          velX *= -1; 
+          velX = 0; 
           x = hitBox.x; 
         } 
       }
@@ -84,7 +84,7 @@ public class SmartEnemy extends GameObject{
             hitBox.y += Math.signum(velY); 
           } 
           hitBox.y -= Math.signum(velY); 
-          velY *= -1; 
+          velY = 0; 
           y = hitBox.y; 
         } 
       }

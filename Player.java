@@ -16,6 +16,9 @@ public class Player extends GameObject {
   
   Rectangle hitBox;
   
+  float tempVelX;
+  float tempVelY;
+  
   public Player(int x, int y, ID id, Handler handler, Direction direction) {
     super(x, y, id, handler);
     this.direction = direction;
@@ -29,9 +32,13 @@ public class Player extends GameObject {
   public void tick() {
     hitBox.x = (int)x; 
     hitBox.y = (int)y;
+    tempVelX = velX;
+    tempVelY = velY;
     collision();
     x+=velX;                                                          //Bewegungsrichtumg
-    y+=velY;                                                          
+    y+=velY; 
+    velX = tempVelX;
+    velY = tempVelY;                                                          
     x=Game.clamp(x, 0, Game.WIDTH-32);                                              //das innerhalb des Fensters bleiben
     y=Game.clamp(y, 0, Game.HEIGHT-32);
     handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.white, 32, 32, 0.08f, handler));             //"Schwanz" ran h�ngen                                                  
@@ -56,10 +63,10 @@ public class Player extends GameObject {
           while (!hitBox.intersects(tempObject.getBounds())){ 
             hitBox.x += Math.signum(velX); 
           } 
-          hitBox.x -= Math.signum(velX); 
-          velX = 0; 
+          hitBox.x -= Math.signum(velX);  
+          velX = 0;
           x = hitBox.x; 
-        } 
+        }
       } 
     } 
      
@@ -73,7 +80,7 @@ public class Player extends GameObject {
             hitBox.y += Math.signum(velY); 
           } 
           hitBox.y -= Math.signum(velY); 
-          velY = 0; 
+          velY = 0;
           y = hitBox.y; 
         } 
       } 
