@@ -10,12 +10,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.Scanner;
 
-public class Gun extends GameObject {
+public class HealingPotionM extends GameObject {
   
   boolean picked = false;
   Direction direction;
   
-  public Gun(int x, int y, ID id, Handler handler) {
+  
+  public HealingPotionM(int x, int y, ID id, Handler handler) {
     super(x, y, id, handler);
   }
   
@@ -26,7 +27,7 @@ public class Gun extends GameObject {
   public void tick() {
     collision();
     if(picked){
-      Player.itemPicked[1] = true;
+      Player.itemPicked[0] = true;
       handler.removeObject(this);
       }
     x+=velX;                                                          //Bewegungsrichtumg
@@ -61,7 +62,7 @@ public class Gun extends GameObject {
     /*Graphics2D g2d = (Graphics2D) g;
     g.setColor(Color.green);
     g2d.draw(getBounds());*/
-    /*if(id == ID.Player)*/g.setColor(Color.orange);
+    /*if(id == ID.Player)*/g.setColor(Color.green);
     g.fillRect((int)x, (int)y, 16, 16);                                                   // Form wird ge"zeichnet"
     
   }

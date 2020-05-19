@@ -40,6 +40,8 @@ public class Game extends Canvas implements Runnable
     random = new Random();
     player = new Player(200, 200, ID.Player, handler, Direction.None);
     handler.addObject(player);
+    handler.addObject(new Gun(250, 250, ID.Item, handler));
+    handler.addObject(new HealingPotionM(300, 250, ID.Item, handler));
     DungeonGeneration.drawDungeon();
     //handler.addObject(new Player((WIDTH/2)+16, (HEIGHT/2)+16, ID.Player, handler, Direction.None));
     //handler.addObject(new Wall(100, 200, ID.Wall, handler, 20, 400));

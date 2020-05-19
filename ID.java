@@ -8,5 +8,6 @@ public enum ID
   SmartEnemy(),
   Trail(),                                                //Alle IDs f�r die Objekte werden hier festgelegt
   Shot(),
-  Wall();
+  Wall(),
+  Item(); 
 }

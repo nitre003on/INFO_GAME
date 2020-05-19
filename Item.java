@@ -10,12 +10,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.Scanner;
 
-public class Gun extends GameObject {
+public class Item extends GameObject {
   
   boolean picked = false;
   Direction direction;
   
-  public Gun(int x, int y, ID id, Handler handler) {
+  public Item(int x, int y, ID id, Handler handler) {
     super(x, y, id, handler);
   }
   
