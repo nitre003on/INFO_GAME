@@ -9,7 +9,6 @@ public class KeyInput extends KeyAdapter{
   private Handler handler;
   public static boolean[] keyDown = new boolean[4];
   private String[] axes = new String[2];
-  private HUD hud;
   
   public KeyInput(Handler handler) {
     this.handler = handler;
@@ -75,8 +74,10 @@ public class KeyInput extends KeyAdapter{
         //if(key == KeyEvent.VK_RIGHT) temObject.shoot(Direction.Right);
       }
     }
-    if(key == KeyEvent.VK_ESCAPE)System.exit(1);
-    //if(hud.HEALTH==0)System.exit(1);
+    if(key == KeyEvent.VK_ESCAPE){
+      Game.curState = Game.states.menu;
+      Game.hud.drawPause();
+    }
   }
   
   public void keyReleased(KeyEvent e) {

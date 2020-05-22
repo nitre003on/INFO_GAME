@@ -16,7 +16,12 @@ public class Game extends Canvas implements Runnable
   public static final int WIDTH = 3000, HEIGHT = 3000;
   public static Player player;
   public static Camera cam;
-
+  public static Handler handler;
+  public static HUD hud;
+  public static states curState;
+  public static enum states{play,paused,menu};
+  public static boolean leftMousePressed;
+  
   private static int targetFPS = 60;                         //FPS cap
   private static int targetTime = 1000000000 / targetFPS;
   
@@ -24,12 +29,12 @@ public class Game extends Canvas implements Runnable
   private boolean running = false;
   
   private Random random;
-  public static Handler handler;
-  private HUD hud;
+
   private Spawn spawn;
   
   public Game() 
   {
+    curState = states.play;
     handler =  new Handler();
     cam = new Camera(0, 0);
     this.addKeyListener(new KeyInput(handler));
@@ -105,12 +110,14 @@ public class Game extends Canvas implements Runnable
   
   private void tick() 
   {
-    handler.tick();
-    hud.tick();                                             //Hier werden alle Tickmethoden(bzw. im handler dann) aufgerufen
-    spawn.tick();
-    for (int i = 0;i < handler.objects.size();i++) {        
-      if(handler.objects.get(i).getID() == ID.Player){
-        cam.tick(handler.objects.get(i));
+    hud.tick();
+    if(curState == states.play){
+      handler.tick();                                             //Hier werden alle Tickmethoden(bzw. im handler dann) aufgerufen
+      spawn.tick();
+      for (int i = 0;i < handler.objects.size();i++) {        
+        if(handler.objects.get(i).getID() == ID.Player){
+          cam.tick(handler.objects.get(i));
+        }
       }
     }
   }
