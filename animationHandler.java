@@ -112,10 +112,14 @@ public class animationHandler { // Nachfragen an Piet richten
   public void faceRight(){flipped = false;}
 
   public void draw(Graphics g,int x, int y, int size){    //dieses draw() muss in denen des zu animirenden Objektes aufrufen werden
-    g.drawImage(curImage, x - size / 2, y - size / 2, size, size, null);  
+    g.drawImage(curImage, x, y, size, size, null);  
+  }
+
+  public void draw(Graphics g,int x, int y, int Xoffset, int Yoffset, int size){
+    g.drawImage(curImage, x + Xoffset, y + Yoffset, size, size, null);  
   }
 
   public void draw(Graphics g,int x, int y){
-    g.drawImage(curImage, x - 100 / 2, y - 100 / 2, 100, 100, null);  
+    g.drawImage(curImage, x, y, 100, 100, null);  
   }
 } 

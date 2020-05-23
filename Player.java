@@ -18,17 +18,24 @@ public class Player extends GameObject {
   
   float tempVelX;
   float tempVelY;
+
+  private animationHandler ah;
   
   public static boolean[] itemPicked = new boolean[2];
   
   public Player(int x, int y, ID id, Handler handler, Direction direction) {
     super(x, y, id, handler);
     this.direction = direction;
-    hitBox = new Rectangle(x, y, 32, 32);
+    hitBox = new Rectangle(x, y, 30, 80);
+
+    ah = new animationHandler("Content/playerSprites.png", 35);
+    ah.createAnimation("walk", 1, 4);
+    ah.createAnimation("idle", 5, 5);
+    //ah.playAnimation("walk", 0.05f, false, false);
   }
   
   public Rectangle getBounds() {
-    return new Rectangle((int)x,(int)y,32,32);                                            //Methode um die Umrisse zu kriegen
+    return new Rectangle((int)x,(int)y,hitBox.width,hitBox.height);                                            //Methode um die Umrisse zu kriegen
   }
   
   public void tick() {
@@ -38,13 +45,21 @@ public class Player extends GameObject {
     tempVelX = velX;
     tempVelY = velY;
     collision();
+    if(velX == 0 && velY == 0){
+      ah.playAnimation("idle", 0, false, true);
+    }else if (ah.curPlaying != "walk"){
+      ah.playAnimation("walk", 0.05f, true, false);
+    }
+    if(velX > 0){ ah.faceLeft(); }
+    else{ ah.faceRight(); }
+    ah.tick();
     x+=velX;                                                          //Bewegungsrichtumg
     y+=velY; 
     velX = tempVelX;
     velY = tempVelY;                                                          
     x=Game.clamp(x, 0, Game.WIDTH-32);                                              //das innerhalb des Fensters bleiben
     y=Game.clamp(y, 0, Game.HEIGHT-32);
-    handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.white, 32, 32, 0.08f, handler));             //"Schwanz" ran h�ngen                                                  
+    //handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.white, 32, 32, 0.08f, handler));             //"Schwanz" ran h�ngen                                                  
   }
   
   public void collision() {
@@ -111,13 +126,13 @@ public class Player extends GameObject {
     g.setColor(Color.green);
     g2d.draw(getBounds());*/
      
-    g.setColor(Color.white);
-    g.fillRect((int)x, (int)y, 32, 32);                                                   // Form wird ge"zeichnet"
+    //g.setColor(Color.white);
+    //g.fillRect((int)x + 50, (int)y, 89, 100);                                                   // Form wird ge"zeichnet"
     if(itemPicked[1]){
-      System.out.println("GUN!!");
       g.setColor(Color.orange);
       g.fillRect((int)x+26, (int)y+26, 16,16);
     } 
+    ah.draw(g, (int)x, (int)y, -40, -10,100);
   }
   
   

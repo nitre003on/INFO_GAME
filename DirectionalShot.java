@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.awt.Rectangle;
 
-public class DirectionalShot extends Shot{
+public class DirectionalShot extends Shot{  //Schuss in richtung Maus (Piet)
   
   private Vector2 dir = new Vector2(0,0);
   private GameObject owner;
@@ -12,7 +12,16 @@ public class DirectionalShot extends Shot{
   public DirectionalShot(GameObject owner, Vector2 target, ID id, Handler handler) {
     super((int)owner.x, (int)owner.y, null, id, handler);
     dir = Vector2.subtract(target, Vector2.getPos(owner));
-    speed = 10;
+    speed = 15;
+    this.owner = owner;
+    dir.normalize();
+    hitBox = new Rectangle((int)x, (int)y, 16, 16);
+  }
+
+  public DirectionalShot(GameObject owner,Vector2 offset, Vector2 target, ID id, Handler handler) {
+    super((int)owner.x + (int)offset.x, (int)owner.y + (int)offset.y, null, id, handler);
+    dir = Vector2.subtract(target, Vector2.getPos(owner));
+    speed = 15;
     this.owner = owner;
     dir.normalize();
     hitBox = new Rectangle((int)x, (int)y, 16, 16);
