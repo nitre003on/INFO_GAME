@@ -11,6 +11,8 @@ public class KeyInput extends KeyAdapter{
   private String[] axes = new String[2];
   private HUD hud;
   
+  public static int playerSpeed = 6;
+  
   public KeyInput(Handler handler) {
     this.handler = handler;
     keyDown[0] = false;
@@ -32,14 +34,14 @@ public class KeyInput extends KeyAdapter{
         
         //axes 1
         if(key == KeyEvent.VK_W) {
-          tempObject.setVelY(-8); keyDown[0]= true;
+          tempObject.setVelY(-playerSpeed); keyDown[0]= true;
           if(keyDown[2]){
             axes[1]="FS";
             System.out.println("first s");
           }
         }
         if(key == KeyEvent.VK_S){
-          tempObject.setVelY(8); keyDown[2]= true;
+          tempObject.setVelY(playerSpeed); keyDown[2]= true;
           if(keyDown[0]){
             axes[1]="FW";
             System.out.println("first w");
@@ -48,14 +50,14 @@ public class KeyInput extends KeyAdapter{
         
         //axes 0
         if(key == KeyEvent.VK_A) {
-          tempObject.setVelX(-8); keyDown[1]= true;
+          tempObject.setVelX(-playerSpeed); keyDown[1]= true;
           if(keyDown[3]){
             axes[0]="FD";
             System.out.println("first d");
           }
         }
         if(key == KeyEvent.VK_D) {
-          tempObject.setVelX(+8); keyDown[3]= true;
+          tempObject.setVelX(playerSpeed); keyDown[3]= true;
           if(keyDown[1]){
             axes[0]="FA";
             System.out.println("first a");
@@ -90,20 +92,20 @@ public class KeyInput extends KeyAdapter{
         //axes 1
         if(key == KeyEvent.VK_W) {
           if(axes[1]=="FS"){
-            tempObject.setVelY(8);
+            tempObject.setVelY(playerSpeed);
             axes[1]="";
           }else if(axes[1]=="FW"){
-              tempObject.setVelY(8);
+              tempObject.setVelY(playerSpeed);
               axes[1]="";
             }  
           keyDown[0]= false;
         }  
         if(key == KeyEvent.VK_S) {
           if(axes[1]=="FW"){
-            tempObject.setVelY(-8);
+            tempObject.setVelY(-playerSpeed);
             axes[1]="";
           }else if(axes[1]=="FS"){
-              tempObject.setVelY(-8);
+              tempObject.setVelY(-playerSpeed);
               axes[1]="";
             }
           keyDown[2]= false;
@@ -112,20 +114,20 @@ public class KeyInput extends KeyAdapter{
         //axes 0
         if(key == KeyEvent.VK_A) {
           if(axes[0]=="FA"){
-            tempObject.setVelX(8);
+            tempObject.setVelX(playerSpeed);
             axes[0]="";
           }else if(axes[0]=="FD"){
-              tempObject.setVelX(8);
+              tempObject.setVelX(playerSpeed);
               axes[0]="";
             }
           keyDown[1]= false;
         }                   
         if(key == KeyEvent.VK_D) {
           if(axes[0]=="FA"){
-            tempObject.setVelX(-8);
+            tempObject.setVelX(-playerSpeed);
             axes[0]="";
           }else if(axes[0]=="FD"){
-              tempObject.setVelX(-8);
+              tempObject.setVelX(-playerSpeed);
               axes[0]="";
             }
           keyDown[3]= false;

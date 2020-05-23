@@ -3,12 +3,14 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.HierarchyBoundsAdapter;
 import java.awt.Graphics2D;
+import java.util.Random;
 
 public class DungeonGeneration {
   //private static Handler handler;
   
-  static int wallThicc = 20; 
-       
+  static int wallThicc = 20;
+  static int doorWidth = 100; 
+  
   public static void drawDungeon() {
     //handler = new Handler();
     //Umrandung des Spielfeldes und spawnen einer debug wall
@@ -22,10 +24,12 @@ public class DungeonGeneration {
   }
   
   public static void createDungeonLayout(int posX, int posY, int numberOfRooms, int numberOfKeys, int roomDistribution){
-    createRoomRect(posX, posY, 400, 400, new int[][]{{100, 100}, {50, 50}}, new int[][]{{250, 50}}, new int[][]{{100, 200}}, new int[][]{{100, 100}, {50, 50}});
+    createRoomAnyRect(posX, posY, 400, 400, new int[][]{{100, doorWidth}, {50, doorWidth}}, new int[][]{{250, doorWidth}}, new int[][]{{100, doorWidth}}, new int[][]{{100, doorWidth}, {50, doorWidth}});
+    createRoomRect(posX + 500, posY, 500, 500, new boolean[]{true, true, true ,true});
+    createRoomRect(posX + 500, posY + 500, 500, 500, new boolean[]{false, false, false ,false});
   }
   
-  public static void createRoomRect(int posX, int posY, int length, int height, int[][] nDoors, int[][] eDoors, int[][] sDoors, int[][] wDoors){
+  public static void createRoomAnyRect(int posX, int posY, int length, int height, int[][] nDoors, int[][] eDoors, int[][] sDoors, int[][] wDoors){
     int tempPos = 0;
     
     Game.handler.addObject(new Wall(posX, posY, ID.Wall, Game.handler, wallThicc, wallThicc));
@@ -72,7 +76,13 @@ public class DungeonGeneration {
     if (tempPos + wallThicc*2 < height) {
       Game.handler.addObject(new Wall(posX, posY + wallThicc, ID.Wall, Game.handler, wallThicc, height - (tempPos + wallThicc*2)));
     }
-  } 
+  }
+  
+  public static void createRoomRect (int posX, int posY, int length, int height, boolean[] doorsFacing){
+    if (doorsFacing[0] == true) {
+      Game.handler.addObject(new Wall(posX, posY, ID.Wall, Game.handler, length/2 - doorWidth/2, wallThicc));
+    }
+  }
 }  
 
     
