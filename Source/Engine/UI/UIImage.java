@@ -29,7 +29,7 @@ public class UIImage extends GameObject{
       }
 
       private Image loadImage(String path) throws IOException {   //Spritesheet laden
-        return ImageIO.read(new FileInputStream("INFO_GAME_NKPLP\\" + path));
+        return ImageIO.read(new FileInputStream(path));
       }
   
       public Rectangle getBounds() {

@@ -34,7 +34,7 @@ public class animationHandler { // Nachfragen an Piet richten
   
   private BufferedImage loadImage(String path) throws IOException {   //Spritesheet laden
     //return ImageIO.read(getClass().getResource(path));
-    return ImageIO.read(new FileInputStream("INFO_GAME_NKPLP\\" + path));
+    return ImageIO.read(new FileInputStream(path));
   }
   
   private BufferedImage grabImage(int col, int row, int width, int height){   //Sprite aus dem Spritesheet lesen
