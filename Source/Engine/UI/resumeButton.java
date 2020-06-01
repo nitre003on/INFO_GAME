@@ -11,6 +11,7 @@ public class resumeButton extends button {
     public resumeButton(int x, int y, int w, int h, ID id, Handler handler) {
       super(x, y,w,h, id, handler);
       super.txt = "resume";
+      super.img = new UIImage(x, y, w, h, id, "Content/UI/Resume.png", handler);
     }
     
     public void tick(){
