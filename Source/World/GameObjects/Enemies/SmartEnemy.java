@@ -51,7 +51,7 @@ public class SmartEnemy extends GameObject{
     hitBox.x += velX; 
     for (int i = 0;i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
-      if(handler.objects.get(i).getID() == ID.Wall){ 
+      if(tempObject.getID()==ID.Wall){ 
         if (hitBox.intersects(tempObject.getBounds())){ 
           hitBox.x -= velX; 
           while (!hitBox.intersects(tempObject.getBounds())){ 
@@ -62,7 +62,7 @@ public class SmartEnemy extends GameObject{
           x = hitBox.x; 
         } 
       }
-      if(handler.objects.get(i).getID() == ID.Shot){ 
+      if(tempObject.getID()==ID.Shot){ 
         if (hitBox.intersects(tempObject.getBounds())){ 
           hitBox.x -= velX; 
           while (!hitBox.intersects(tempObject.getBounds())){ 
@@ -83,7 +83,7 @@ public class SmartEnemy extends GameObject{
     hitBox.y += velY; 
     for (int i = 0;i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
-      if(handler.objects.get(i).getID() == ID.Wall){ 
+      if(tempObject.getID()==ID.Wall){ 
         if (hitBox.intersects(tempObject.getBounds())){ 
           hitBox.y -= velY; 
           while (!hitBox.intersects(tempObject.getBounds())){ 
@@ -94,7 +94,7 @@ public class SmartEnemy extends GameObject{
           y = hitBox.y; 
         } 
       }
-      if(handler.objects.get(i).getID() == ID.Shot){ 
+      if(tempObject.getID()==ID.Shot){ 
         if (hitBox.intersects(tempObject.getBounds())){ 
           hitBox.y -= velY; 
           while (!hitBox.intersects(tempObject.getBounds())){ 

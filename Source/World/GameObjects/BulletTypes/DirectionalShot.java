@@ -50,7 +50,7 @@ public class DirectionalShot extends Shot{  //Schuss in richtung Maus (Piet)
     hitBox.x += velX; 
     for (int i = 0;i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
-      if(handler.objects.get(i).getID() == ID.Wall){ 
+      if(tempObject.getID()==ID.Wall || tempObject.getID()==ID.Door){ 
         if (hitBox.intersects(tempObject.getBounds())){ 
           hitBox.x -= velX; 
           while (!hitBox.intersects(tempObject.getBounds())){ 
@@ -65,7 +65,7 @@ public class DirectionalShot extends Shot{  //Schuss in richtung Maus (Piet)
     hitBox.y += velY; 
     for (int i = 0;i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
-      if(handler.objects.get(i).getID() == ID.Wall){ 
+      if(tempObject.getID()==ID.Wall || tempObject.getID()==ID.Door){ 
         if (hitBox.intersects(tempObject.getBounds())){ 
           hitBox.y -= velY; 
           while (!hitBox.intersects(tempObject.getBounds())){ 

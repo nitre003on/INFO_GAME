@@ -27,16 +27,19 @@ public class Player extends GameObject {
   
   float tempVelX;
   float tempVelY;
-
+  
   private animationHandler ah;
   
   public static boolean[] itemPicked = new boolean[2];
   
+  public static int playerLength = 30;
+  public static int playerHeight = 80;
+  
   public Player(int x, int y, ID id, Handler handler, Direction direction) {
     super(x, y, id, handler);
     this.direction = direction;
-    hitBox = new Rectangle(x, y, 30, 80);
-
+    hitBox = new Rectangle(x, y, this.playerLength, this.playerHeight);
+    
     ah = new animationHandler("Content/playerSprites.png", 35);
     ah.createAnimation("walk", 1, 4);
     ah.createAnimation("idle", 5, 5);
@@ -60,18 +63,19 @@ public class Player extends GameObject {
       ah.playAnimation("walk", 0.05f, true, false);
     }
     if(velX > 0){ ah.faceLeft(); }
-    else{ ah.faceRight(); }
+    else if (velX < 0){ ah.faceRight(); }
     ah.tick();
     x+=velX;                                                          //Bewegungsrichtumg
     y+=velY; 
     velX = tempVelX;
     velY = tempVelY;                                                          
-    x=Game.clamp(x, 0, Game.WIDTH-32);                                              //das innerhalb des Fensters bleiben
-    y=Game.clamp(y, 0, Game.HEIGHT-32);
+    x=Game.clamp(x, 0, Game.WIDTH-this.playerLength);                                              //das innerhalb des Fensters bleiben
+    y=Game.clamp(y, 0, Game.HEIGHT-this.playerHeight);
     //handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.white, 32, 32, 0.08f, handler));             //"Schwanz" ran h�ngen                                                  
   }
   
   public void collision() {
+    //Kollision mit Gegnern
     for (int i = 0; i < handler.objects.size(); i++) {
       GameObject tempObject = handler.objects.get(i);
       if (tempObject.getID()==ID.BasicEnemy || tempObject.getID()==ID.FastEnemy||tempObject.getID()==ID.SmartEnemy) {
@@ -81,44 +85,58 @@ public class Player extends GameObject {
         }
       }
       /*if(tempObject.getID()==ID.Item){
-        if(getBounds().intersects(tempObject.getBounds())) {
-          itemPicked = true;
-          }  
-        }*/
-      }
-      hitBox.x += velX; 
-      for (int i = 0;i < handler.objects.size();i++) {         
-        GameObject tempObject = handler.objects.get(i); 
-        if(handler.objects.get(i).getID() == ID.Wall){ 
-          if (hitBox.intersects(tempObject.getBounds())){ 
-            hitBox.x -= velX; 
-            while (!hitBox.intersects(tempObject.getBounds())){ 
-              hitBox.x += Math.signum(velX); 
-            } 
-            hitBox.x -= Math.signum(velX);  
-            velX = 0;
-            x = hitBox.x; 
-          }
-        } 
-      } 
-      
-      hitBox.y += velY; 
-      for (int i = 0;i < handler.objects.size();i++) {         
-        GameObject tempObject = handler.objects.get(i); 
-        if(handler.objects.get(i).getID() == ID.Wall){ 
-          if (hitBox.intersects(tempObject.getBounds())){ 
-            hitBox.y -= velY; 
-            while (!hitBox.intersects(tempObject.getBounds())){ 
-              hitBox.y += Math.signum(velY); 
-            } 
-            hitBox.y -= Math.signum(velY); 
-            velY = 0;
-            y = hitBox.y; 
+      if(getBounds().intersects(tempObject.getBounds())) {
+      itemPicked = true;
+      }  
+      }*/
+    }
+    
+    //Kollision mit wand
+    hitBox.x += velX; 
+    for (int i = 0;i < handler.objects.size();i++) {         
+      GameObject tempObject = handler.objects.get(i); 
+      if(handler.objects.get(i) instanceof Wall){ 
+        if (hitBox.intersects(tempObject.getBounds())){ 
+          hitBox.x -= velX; 
+          while (!hitBox.intersects(tempObject.getBounds())){ 
+            hitBox.x += Math.signum(velX); 
           } 
+          hitBox.x -= Math.signum(velX);  
+          velX = 0;
+          x = hitBox.x; 
+        }
+      } 
+    } 
+    
+    hitBox.y += velY; 
+    for (int i = 0;i < handler.objects.size();i++) {         
+      GameObject tempObject = handler.objects.get(i); 
+      if(handler.objects.get(i) instanceof Wall){ 
+        if (hitBox.intersects(tempObject.getBounds())){ 
+          hitBox.y -= velY; 
+          while (!hitBox.intersects(tempObject.getBounds())){ 
+            hitBox.y += Math.signum(velY); 
+          } 
+          hitBox.y -= Math.signum(velY); 
+          velY = 0;
+          y = hitBox.y; 
         } 
       } 
     }
     
+    
+    //Teleport 
+    for (int i = 0;i < handler.objects.size();i++) {         
+      GameObject tempObject = handler.objects.get(i); 
+      if(handler.objects.get(i) instanceof Door){
+        if (hitBox.intersects(tempObject.getBounds())){
+          Door tempDoor = (Door)tempObject; 
+          tempDoor.teleport(Game.player, i);
+        }
+      } 
+    } 
+  }
+  
   public void shoot() {
     handler.addObject(new Shot((int) x,(int) y, direction, ID.Shot, handler));                                //Schuss methode(ein Schuss Object wird erstellt
   } 
@@ -134,7 +152,7 @@ public class Player extends GameObject {
     /*Graphics2D g2d = (Graphics2D) g;
     g.setColor(Color.green);
     g2d.draw(getBounds());*/
-     
+    
     //g.setColor(Color.white);
     //g.fillRect((int)x + 50, (int)y, 89, 100);                                                   // Form wird ge"zeichnet"
     if(itemPicked[1]){

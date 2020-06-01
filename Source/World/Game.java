@@ -25,7 +25,7 @@ public class Game extends Canvas implements Runnable
   
   private static final long serialVersionUID = 358011174883387846L;
   
-  public static final int WIDTH = 5000, HEIGHT = 5000;
+  public static final int WIDTH = 20000, HEIGHT = 5000;
   public static Player player;
   public static Camera cam;
   public static Handler handler;
@@ -42,6 +42,8 @@ public class Game extends Canvas implements Runnable
 
   private Spawn spawn;
   
+  public static boolean debug = true;
+  
   public Game() 
   {
     curState = states.play;
@@ -52,7 +54,7 @@ public class Game extends Canvas implements Runnable
     new Windows(WIDTH, HEIGHT, "Dungeon Crawler", this);
     hud = new HUD();
     spawn = new Spawn(handler, hud);
-    player = new Player(200, 200, ID.Player, handler, Direction.None);
+    player = new Player(5400, 400, ID.Player, handler, Direction.None);
     handler.addObject(player);
     handler.addObject(new Gun(250, 250, ID.Item, handler));
     handler.addObject(new HealingPotionM(300, 250, ID.Item, handler));

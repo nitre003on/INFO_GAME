@@ -7,6 +7,7 @@ import Source.Engine.Direction;
 import Source.Engine.Handler;
 import Source.Engine.ID;
 import Source.World.GameObjects.BulletTypes.Shot;
+import Source.World.GameObjects.Player;
 
 public abstract class GameObject 
 {
@@ -15,6 +16,7 @@ public abstract class GameObject
   public float x,y;
   public boolean dash;
   public Handler handler;
+  
   
   public GameObject(float x, float y, ID id, Handler handler) 
   {
@@ -55,6 +57,10 @@ public abstract class GameObject
   
   public float getY() {
     return y;
+  }
+  
+  public void teleport(Player player, int door){
+    
   }
 
   public ID getID() {

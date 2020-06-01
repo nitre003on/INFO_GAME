@@ -13,34 +13,34 @@ import Source.Engine.ID;
 import Source.World.GameObject;
 
 public class UIImage extends GameObject{
-
-    private Image img;
-    private int w,h;
-
-    public UIImage(int x, int y, int w, int h, ID id, String imgURL, Handler handler) {
-        super(x, y, id, handler);
-        this.w = w;
-        this.h = h;
-        try {
-            img = loadImage(imgURL);
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-      }
-
-      private Image loadImage(String path) throws IOException {   //Spritesheet laden
-        return ImageIO.read(new FileInputStream(path));
-      }
   
-      public Rectangle getBounds() {
-        return new Rectangle((int)x,(int)y);
-      }
-      
-      public void tick(){
-
-      }
-      
-      public void render(Graphics g){
-        g.drawImage(img, (int)x, (int)y, w, h, Color.white, null);
-      }
+  private Image img;
+  private int w,h;
+  
+  public UIImage(int x, int y, int w, int h, ID id, String imgURL, Handler handler) {
+    super(x, y, id, handler);
+    this.w = w;
+    this.h = h;
+    try {
+      img = loadImage(imgURL);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+  
+  private Image loadImage(String path) throws IOException {   //Spritesheet laden
+    return ImageIO.read(new FileInputStream(path));
+  }
+  
+  public Rectangle getBounds() {
+    return new Rectangle((int)x,(int)y);
+  }
+  
+  public void tick(){
+    
+  }
+  
+  public void render(Graphics g){
+    g.drawImage(img, (int)x, (int)y, w, h, Color.white, null);
+  }
 }

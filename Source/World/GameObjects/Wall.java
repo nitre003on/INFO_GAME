@@ -28,7 +28,3 @@ public class Wall extends GameObject{
     g.fillRect((int)x, (int)y, width, height);                                    //Graphische Darstellung
   } 
 }
-
-
-
-// Die W�nde werden erstmal nicht benutzt, weil die Kollision mit den W�nden noch nicht funktioniert
