@@ -15,8 +15,6 @@ import Source.World.GameObjects.Wall;
 import Source.World.GameObjects.Door;
 
 public class DungeonGeneration {
-  //private static Handler handler;
-  
   static int wallThicc = 20;
   static int doorWidth = 150;
   
@@ -33,7 +31,11 @@ public class DungeonGeneration {
     Game.handler.addObject(new Wall(0, 0, ID.Wall, Game.handler, 20, Game.HEIGHT));
     Game.handler.addObject(new Wall(Game.WIDTH - 20, 0, ID.Wall, Game.handler, 20, Game.HEIGHT));
     //Erstellen des ersten Dungeons
-    createDungeonLayout(300, 300, 500, 500, 10);
+    createDungeonLayout(1000, 1000, 500, 1000, 5);
+    
+    if (Game.debug) {
+      System.out.println(doors);
+    }
   }
   
   public static int[][] makeDoorArray(int minDoors, int maxDoors, int doorPos/*1 = nord, 2 = ost, 3 = sued, 4 = west*/, int id){
@@ -63,6 +65,15 @@ public class DungeonGeneration {
       doorArray[doorPos - 1][2] = 1;
     }                 
     
+    if (Game.debug) {
+      for (int i = 0; i < 4; i++) {
+        for (int e = 0; e < 3; e++) {
+          System.out.print(doorArray[i][e]);
+        }
+        System.out.println();
+      }
+      System.out.println();
+    }
     return doorArray;
   }
   
@@ -70,6 +81,7 @@ public class DungeonGeneration {
     //createRoomRect(posX, posY, 500, 500, new int[][]{{1, 2}, {0, 0}, {1, 2}, {0, 0}});
     int minDoors = 0;
     int maxDoors = 0;
+    int roomDistance = maxRoomSize + 1000;
     
     createRoomRect(posX, posY, 500, 500, makeDoorArray(1, 4, 0, 0));
     
@@ -82,11 +94,7 @@ public class DungeonGeneration {
         u -= 2;
       }
       
-      if (doors.size()/2 == numberOfRooms - i - 1) {
-        minDoors = 0;
-        maxDoors = 0;
-      }
-      else if (doors.size()/2 == numberOfRooms - i) {
+      if (doors.size()/2 == numberOfRooms - i) {
         minDoors = 0;
         maxDoors = 0;
       }
@@ -99,22 +107,24 @@ public class DungeonGeneration {
         maxDoors = 4;
       }
       
-      createRoomRect(posX + (i + 1)*(600), posY, 
+      createRoomRect(posX + (i + 1)*(roomDistance), posY, 
       getRandomInt(minRoomSize, maxRoomSize), 
       getRandomInt(minRoomSize, maxRoomSize), 
       makeDoorArray(minDoors, maxDoors, u + 1, doors.get(1)));
       doors.remove(0);
       doors.remove(0);
-    } 
+    }
     
-    
-    /*
-    createRoomRect(posX + 500, posY, 500, 500, new boolean[]{true, true, true ,true});
-    createRoomRect(posX + 500, posY + 600, 500, 500, new boolean[]{false, false, false ,false});
-    createRoomCross(posX - 150, posY + 500, 200, 200, new boolean[]{false, false, false ,false});
-    createRoomCross(posX - 150, posY + 1300, 200, 200, new boolean[]{true, true, true ,true});
-    createRoomCross(posX + 2000, posY + 2000, 500, 500, new boolean[]{true, true, true ,true});
-    */
+    int r = doors.get(0);
+    if (r < 2) {
+      r += 2;
+    }
+    else {
+      r -= 2;
+    }
+    createRoomRect(posX + numberOfRooms*roomDistance, posY, 2000, 2000, makeDoorArray(0, 0, r + 1, doors.get(1)));
+    doors.remove(0);
+    doors.remove(0);
   }
   
   public static void createRoomRect (int posX, int posY, int length, int height, int[][] doorsFacing){

@@ -54,7 +54,7 @@ public class Game extends Canvas implements Runnable
     new Windows(WIDTH, HEIGHT, "Dungeon Crawler", this);
     hud = new HUD();
     spawn = new Spawn(handler, hud);
-    player = new Player(400, 400, ID.Player, handler, Direction.None);
+    player = new Player(1150, 1150, ID.Player, handler, Direction.None);
     handler.addObject(player);
     handler.addObject(new Gun(250, 250, ID.Item, handler));
     handler.addObject(new HealingPotionM(300, 250, ID.Item, handler));
