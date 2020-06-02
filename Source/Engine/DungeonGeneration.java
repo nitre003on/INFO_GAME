@@ -36,24 +36,14 @@ public class DungeonGeneration {
     createDungeonLayout(300, 300, 500, 500, 5);
   }
   
-  public static int assignId(){
-    id++;
-    return id;
-  }
-  
-  public static int getRandomInt(int min, int max){
-    int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
-    return randomNum;
-  }
-  
-  public static int[][] makeDoorArray(int minDoors, int maxDoors, int doorPos, int id){
+  public static int[][] makeDoorArray(int minDoors, int maxDoors, int doorPos/*1 = nord, 2 = ost, 3 = sued, 4 = west*/, int id){
     int[][] doorArray = new int[4][2];
     double f = getRandomInt(minDoors, maxDoors);
     int existingDoors = 0;
-    for (int i = 0; i < f; i++) {
+    for (int i = 0; i < 4; i++) {
       int c = getRandomInt(0, 1);
       
-      if (f - existingDoors < f - i) {
+      if (f - existingDoors >= 4 - i) {
         c = 1;
       }
       
@@ -75,8 +65,10 @@ public class DungeonGeneration {
   
   public static void createDungeonLayout(int posX, int posY, int minRoomSize, int maxRoomSize, int numberOfRooms){
     //createRoomRect(posX, posY, 500, 500, new int[][]{{1, 2}, {0, 0}, {1, 2}, {0, 0}});
+    int minDoors = 0;
+    int maxDoors = 0;
     
-    createRoomRect(posX + 5000, posY, 500, 500, makeDoorArray(1, 4, 0, 0));
+    createRoomRect(posX, posY, 500, 500, makeDoorArray(1, 4, 0, 0));
     
     for (int i = 0; i < numberOfRooms - 1; i++) {
       int u = doors.get(0);
@@ -87,22 +79,22 @@ public class DungeonGeneration {
         u -= 2;
       }
       
-      createRoomRect(posX + 5000 + (i + 1)*(600), posY, 
+      if (doors.size()/2 == numberOfRooms - i) {
+        minDoors = 0;
+        maxDoors = 0;
+      }
+      else if (doors.size()/2 <= numberOfRooms - i && ((numberOfRooms - i) - doors.size()/2) <= 4) {
+        minDoors = 1;
+        maxDoors = (numberOfRooms - i) - doors.size()/2;
+      }
+      
+      createRoomRect(posX + (i + 1)*(600), posY, 
       getRandomInt(minRoomSize, maxRoomSize), 
       getRandomInt(minRoomSize, maxRoomSize), 
-      makeDoorArray(1, 4, u + 1, doors.get(1)));
+      makeDoorArray(minDoors, maxDoors, u + 1, doors.get(1)));
       doors.remove(0);
       doors.remove(0);
     } 
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     /*
@@ -219,6 +211,16 @@ public class DungeonGeneration {
   
   public static void createRoomL(int posX, int posY, int length, int height, boolean[] doorsFacing){
     
+  }
+  
+  public static int assignId(){
+    id++;
+    return id;
+  }
+  
+  public static int getRandomInt(int min, int max){
+    int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
+    return randomNum;
   }
 }  
 
