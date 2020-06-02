@@ -18,7 +18,7 @@ public class DungeonGeneration {
   //private static Handler handler;
   
   static int wallThicc = 20;
-  static int doorWidth = 100;
+  static int doorWidth = 150;
   
   static int id = 0; 
   
@@ -33,32 +33,35 @@ public class DungeonGeneration {
     Game.handler.addObject(new Wall(0, 0, ID.Wall, Game.handler, 20, Game.HEIGHT));
     Game.handler.addObject(new Wall(Game.WIDTH - 20, 0, ID.Wall, Game.handler, 20, Game.HEIGHT));
     //Erstellen des ersten Dungeons
-    createDungeonLayout(300, 300, 500, 500, 5);
+    createDungeonLayout(300, 300, 500, 500, 10);
   }
   
   public static int[][] makeDoorArray(int minDoors, int maxDoors, int doorPos/*1 = nord, 2 = ost, 3 = sued, 4 = west*/, int id){
-    int[][] doorArray = new int[4][2];
+    int[][] doorArray = new int[4][3];
     double f = getRandomInt(minDoors, maxDoors);
     int existingDoors = 0;
     for (int i = 0; i < 4; i++) {
-      int c = getRandomInt(0, 1);
-      
-      if (f - existingDoors >= 4 - i) {
-        c = 1;
+      if (existingDoors < f) {
+        int c = getRandomInt(0, 1);
+        
+        if (f - existingDoors >= 4 - i) {
+          c = 1;
+        }
+        
+        doorArray[i][0] = c;
+        
+        if (c == 1) {
+          doorArray[i][1] = assignId();
+          existingDoors++;
+        }
       }
-      
-      if (c == 1) {
-        existingDoors++;
-      }
-      
-      doorArray[i][0] = c;
-      doorArray[i][1] = assignId();
     }
     
     if (doorPos == 1 || doorPos == 2 || doorPos == 3 || doorPos == 4) {
       doorArray[doorPos - 1][0] = 1;
       doorArray[doorPos - 1][1] = id;
-    }
+      doorArray[doorPos - 1][2] = 1;
+    }                 
     
     return doorArray;
   }
@@ -79,13 +82,21 @@ public class DungeonGeneration {
         u -= 2;
       }
       
-      if (doors.size()/2 == numberOfRooms - i) {
+      if (doors.size()/2 == numberOfRooms - i - 1) {
+        minDoors = 0;
+        maxDoors = 0;
+      }
+      else if (doors.size()/2 == numberOfRooms - i) {
         minDoors = 0;
         maxDoors = 0;
       }
       else if (doors.size()/2 <= numberOfRooms - i && ((numberOfRooms - i) - doors.size()/2) <= 4) {
         minDoors = 1;
         maxDoors = (numberOfRooms - i) - doors.size()/2;
+      }
+      else {
+        minDoors = 1;
+        maxDoors = 4;
       }
       
       createRoomRect(posX + (i + 1)*(600), posY, 
@@ -113,8 +124,11 @@ public class DungeonGeneration {
       int TPPosX = posX + length/2;
       int TPPosY = posY + wallThicc + 10;
       Game.handler.addObject(new Door(posX + (length/2 - doorWidth/2), posY, ID.Door, Game.handler, doorWidth, wallThicc, TPPosX, TPPosY, doorsFacing[0][1], 0));
-      doors.add(0);
-      doors.add(doorsFacing[0][1]);
+      
+      if (doorsFacing[0][2] != 1) {
+        doors.add(0);
+        doors.add(doorsFacing[0][1]);
+      }
       
       Game.handler.addObject(new Wall(posX + length/2 + doorWidth/2, posY, ID.Wall, Game.handler, length/2 - doorWidth/2, wallThicc));
     }
@@ -127,8 +141,10 @@ public class DungeonGeneration {
       int TPPosX = posX + length/2;
       int TPPosY = posY - wallThicc + height - 10;
       Game.handler.addObject(new Door(posX + (length/2 - doorWidth/2), posY - wallThicc + height, ID.Door, Game.handler, doorWidth, wallThicc, TPPosX, TPPosY, doorsFacing[2][1], 2));
-      doors.add(2);
-      doors.add(doorsFacing[2][1]);
+      if (doorsFacing[2][2] != 1) {
+        doors.add(2);
+        doors.add(doorsFacing[2][1]);
+      }
       
       Game.handler.addObject(new Wall(posX + length/2 + doorWidth/2, posY - wallThicc + height, ID.Wall, Game.handler, length/2 - doorWidth/2, wallThicc));
     }
@@ -142,8 +158,10 @@ public class DungeonGeneration {
       int TPPosX = posX + length - wallThicc - 10;
       int TPPosY = posY + height/2;
       Game.handler.addObject(new Door(posX + length - wallThicc, posY + height/2 - doorWidth/2, ID.Door, Game.handler, wallThicc, doorWidth, TPPosX, TPPosY, doorsFacing[1][1], 1));
-      doors.add(1);
-      doors.add(doorsFacing[1][1]);
+      if (doorsFacing[1][2] != 1) {
+        doors.add(1);
+        doors.add(doorsFacing[1][1]);
+      }
       
       Game.handler.addObject(new Wall(posX + length - wallThicc, posY + height/2 + doorWidth/2, ID.Wall, Game.handler, wallThicc, height/2 - wallThicc - doorWidth/2));
     }
@@ -156,8 +174,10 @@ public class DungeonGeneration {
       int TPPosX = posX + wallThicc + 10;
       int TPPosY = posY + height/2;
       Game.handler.addObject(new Door(posX, posY + height/2 - doorWidth/2, ID.Door, Game.handler, wallThicc, doorWidth, TPPosX, TPPosY, doorsFacing[3][1], 3));
-      doors.add(3);
-      doors.add(doorsFacing[3][1]);
+      if (doorsFacing[3][2] != 1) {
+        doors.add(3);
+        doors.add(doorsFacing[3][1]);
+      }
       
       Game.handler.addObject(new Wall(posX, posY + height/2 + doorWidth/2, ID.Wall, Game.handler, wallThicc, height/2 - wallThicc - doorWidth/2));
     }
