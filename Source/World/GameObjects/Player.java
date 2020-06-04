@@ -99,8 +99,8 @@ public class Player extends GameObject {
         if (hitBox.intersects(tempObject.getBounds())){ 
           hitBox.x -= velX; 
           while (!hitBox.intersects(tempObject.getBounds())){ 
-            hitBox.x += Math.signum(velX); 
-          } 
+            hitBox.x += Math.signum(velX);                           //Die Kollision prüft ob der Spieler nächsten Frame in einer Wand sein würde. 
+          }                                                          //Wenn dies der Fall ist, dann nähert sie den Spieler an die Wand ran.
           hitBox.x -= Math.signum(velX);  
           velX = 0;
           x = hitBox.x; 
@@ -160,6 +160,14 @@ public class Player extends GameObject {
       g.fillRect((int)x+26, (int)y+26, 16,16);
     } 
     ah.draw(g, (int)x, (int)y, -40, -10,100);
+    
+    if (Game.debug) {
+      g.setColor(Color.WHITE);
+      g.drawString("X:" ,(int)x - 30, (int)y + 100);
+      g.drawString("Y:" ,(int)x + 15, (int)y + 100);
+      g.drawString(Integer.toString((int)this.x), (int)x - 20, (int)y + 100); 
+      g.drawString(Integer.toString((int)this.y), (int)x + 25, (int)y + 100);
+    }
   }
   
   

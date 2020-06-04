@@ -25,7 +25,7 @@ public class Game extends Canvas implements Runnable
   
   private static final long serialVersionUID = 358011174883387846L;
   
-  public static final int WIDTH = 20000, HEIGHT = 5000;
+  public static final int WIDTH = 20000, HEIGHT = 20000;              //Höhe und Breite des Gesamten Spielfeldes
   public static Player player;
   public static Camera cam;
   public static Handler handler;
@@ -35,20 +35,20 @@ public class Game extends Canvas implements Runnable
   public static boolean leftMousePressed;
   
   private static int targetFPS = 60;                         //FPS cap
-  private static int targetTime = 1000000000 / targetFPS;
+  private static int targetTime = 1000000000 / targetFPS;    //Für die FPS cap
   
   private Thread thread;
   private boolean running = false;
 
   private Spawn spawn;
   
-  public static boolean debug = true;
+  public static boolean debug = true;        //Wenn debug true ist werden alle debug funktionen ausgeführt
   
   public Game() 
   {
     curState = states.play;
     handler =  new Handler();
-    cam = new Camera(0, 0);
+    cam = new Camera(0, 0);                         //Kamera wird initialisiert
     this.addKeyListener(new KeyInput(handler));
     this.addMouseListener(new MouseInput(handler));
     new Windows(WIDTH, HEIGHT, "Dungeon Crawler", this);
@@ -58,7 +58,7 @@ public class Game extends Canvas implements Runnable
     handler.addObject(player);
     handler.addObject(new Gun(250, 250, ID.Item, handler));
     handler.addObject(new HealingPotionM(300, 250, ID.Item, handler));
-    DungeonGeneration.drawDungeon();
+    DungeonGeneration.drawDungeon();                                                    //Zeichnen des Dungeons
     //handler.addObject(new Player((WIDTH/2)+16, (HEIGHT/2)+16, ID.Player, handler, Direction.None));
     //handler.addObject(new Wall(100, 200, ID.Wall, handler, 20, 400));
     //handler.addObject(new BasicEnemy(Game.ranInt(17, WIDTH-17), Game.ranInt(17, HEIGHT-17), ID.BasicEnemy, handler));         //Hier werden alle Objekte das erste mal gespawnt
@@ -160,10 +160,10 @@ public class Game extends Canvas implements Runnable
     g.dispose();
     bs.show();
     
-    long totalTime = System.nanoTime() - startTime;
+    long totalTime = System.nanoTime() - startTime;     //Misst die Zeit für Alles was seit dem letzen Frame passiert ist
     
-    if (totalTime < targetTime){  //FPS cap
-      try {
+    if (totalTime < targetTime){  //FPS cap, pausiert das Spiel bis die gewünschte Länge des Frames erreicht ist
+      try {   
         Thread.sleep((targetTime - totalTime) / 1000000);
       } 
       catch (InterruptedException e){
