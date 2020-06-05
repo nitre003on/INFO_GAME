@@ -10,6 +10,7 @@ import Source.Engine.ID;
 import Source.World.Game;
 import Source.World.GameObject;
 import Source.World.GameObjects.BasicTrail;
+import Source.World.GameObjects.Door;
 
 public class BasicEnemy extends GameObject{
   
@@ -72,16 +73,18 @@ public class BasicEnemy extends GameObject{
           } 
           hitBox.x -= Math.signum(velX); 
           //collision code
-          x = random.nextInt(Game.WIDTH - BasicEnemySize);
-          y = random.nextInt(Game.HEIGHT - BasicEnemySize);                                                          //Kollision mit Schuss
-          int velXr = Game.ranInt(0,1);
-          if(velXr == 0) {velX*=-1;}
-          int velYr = Game.ranInt(0,1);
-          if(velYr == 0) {velX*=-1;}
+          Game.handler.removeEnemy(this);
+          for (int e = 0; e < Game.handler.objects.size(); e++) {
+            GameObject tempObject2 = Game.handler.objects.get(e);
+            if (tempObject2 instanceof Door) {
+              Door tempDoor = (Door)tempObject2;
+              tempDoor.checkIfOpen();
+            }
+          }
         } 
       } 
     } 
-     
+    
     hitBox.y += velY; 
     for (int i = 0;i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
@@ -104,14 +107,17 @@ public class BasicEnemy extends GameObject{
           } 
           hitBox.y -= Math.signum(velY); 
           //collision code
-          x = random.nextInt(Game.WIDTH - BasicEnemySize);
-          y = random.nextInt(Game.HEIGHT - BasicEnemySize);                                                          //Kollision mit Schuss
-          int velXr = Game.ranInt(0,1);
-          if(velXr == 0) {velX*=-1;}
-          int velYr = Game.ranInt(0,1);
-          if(velYr == 0) {velX*=-1;} 
+          Game.handler.removeEnemy(this);
+          for (int e = 0; e < Game.handler.objects.size(); e++) {
+            GameObject tempObject2 = Game.handler.objects.get(e);
+            if (tempObject2 instanceof Door) {
+              Door tempDoor = (Door)tempObject2;
+              tempDoor.checkIfOpen();
+            }
+          }
         } 
       } 
-    }
+    } 
   }
 }
+

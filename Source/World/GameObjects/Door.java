@@ -17,10 +17,10 @@ public class Door extends GameObject{
   public int teleportID;        //ID um zwei Tueren zu verbinden
   private int doorFacing;       //0 = norden, 1 = osten, 2 = sueden, 3 = westen.
   public int[] roomBounds;
-  
+  public boolean isOpen;
   
   //Konstruktor
-  public Door(float x, float y, ID id, Handler handler, int width, int height, float teleportPosX, float teleportPosY, int teleportID, int doorFacing, int[] roomBounds) {
+  public Door(float x, float y, ID id, Handler handler, int width, int height, float teleportPosX, float teleportPosY, int teleportID, int doorFacing, int[] roomBounds, boolean isOpen) {
     super(x, y, id, handler);
     this.width = width;
     this.height = height;
@@ -29,6 +29,7 @@ public class Door extends GameObject{
     this.teleportID = teleportID;
     this.doorFacing = doorFacing;
     this.roomBounds = roomBounds;
+    this.isOpen = isOpen;
   }
   
   public int getTeleportID(){
@@ -88,6 +89,12 @@ public class Door extends GameObject{
     return isUnlocked;
   }
   
+  public void checkIfOpen() {
+    if (isUnlocked()) {
+      isOpen = true;
+    }
+  }
+  
   public boolean inRange(int toCheck, int start, int end){
     boolean inRange = false;
     if (start <= toCheck && toCheck <= end) {
@@ -97,7 +104,12 @@ public class Door extends GameObject{
   }
   
   public void render(Graphics g) {
-    g.setColor(Color.magenta);
+    if (isOpen) {
+      g.setColor(Color.blue);
+    }
+    else {
+      g.setColor(Color.magenta);
+    }
     g.fillRect((int)x, (int)y, width, height);                                    //Graphische Darstellung
     if (Game.debug) {
       g.fillRect((int)TPLocX, (int)TPLocY, 3, 3);

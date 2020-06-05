@@ -17,6 +17,7 @@ import Source.Engine.Input.KeyInput;
 import Source.Engine.Input.MouseInput;
 import Source.Engine.UI.HUD;
 import Source.World.GameObjects.Player;
+import Source.World.GameObjects.Door;
 import Source.World.GameObjects.Items.Gun;
 import Source.World.GameObjects.Items.HealingPotionM;
 
@@ -59,6 +60,15 @@ public class Game extends Canvas implements Runnable
     handler.addObject(new Gun(1300, 1200, ID.Item, handler));
     handler.addObject(new HealingPotionM(1300, 1250, ID.Item, handler));
     DungeonGeneration.drawDungeon();                                                    //Zeichnen des Dungeons
+    
+    //Update für alle Tueren
+    for (int e = 0; e < Game.handler.objects.size(); e++) {
+      GameObject tempObject2 = Game.handler.objects.get(e);
+      if (tempObject2 instanceof Door) {
+        Door tempDoor = (Door)tempObject2;
+        tempDoor.checkIfOpen();
+      }
+    }
     //handler.addObject(new Player((WIDTH/2)+16, (HEIGHT/2)+16, ID.Player, handler, Direction.None));
     //handler.addObject(new Wall(100, 200, ID.Wall, handler, 20, 400));
     //handler.addObject(new BasicEnemy(Game.ranInt(17, WIDTH-17), Game.ranInt(17, HEIGHT-17), ID.BasicEnemy, handler));         //Hier werden alle Objekte das erste mal gespawnt
