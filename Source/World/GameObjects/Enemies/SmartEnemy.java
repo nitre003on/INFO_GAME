@@ -15,6 +15,8 @@ public class SmartEnemy extends GameObject{
   
   Random random = new Random();
   
+  public static int SmartEnemySize = 32;
+  
   private GameObject player;
   
   Rectangle hitBox;
@@ -26,11 +28,11 @@ public class SmartEnemy extends GameObject{
     }
     velX=4;
     velY=4;
-    hitBox = new Rectangle(x, y, 32, 32);
+    hitBox = new Rectangle(x, y, SmartEnemySize, SmartEnemySize);
   }
   
   public Rectangle getBounds() {
-    return new Rectangle((int)x,(int)y,32,32);                                                      //Grenzen werden entnommen
+    return new Rectangle((int)x,(int)y,SmartEnemySize,SmartEnemySize);                                                      //Grenzen werden entnommen
   }
   public void tick() {
     hitBox.x = (int)x; 
@@ -43,15 +45,15 @@ public class SmartEnemy extends GameObject{
     float distance = (float) Math.sqrt(((x-player.getX())*(x-player.getX()))+((y-player.getY())*(y-player.getY())));
     velX = (float) ((-1/distance)*diffX);
     velY = (float) ((-1/distance)*diffY);                                                                       //Normales Verhalten(Hier: Wird dem Spieler gefolgt)
-    if(y<=0 || y>=Game.HEIGHT-32) velY *=-1;
-    if(x<=0 || x>=Game.WIDTH-32) velX *=-1;
-    handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.orange, 32, 32, 0.08f, handler));
+    if(y<=0 || y>=Game.HEIGHT-SmartEnemySize) velY *=-1;
+    if(x<=0 || x>=Game.WIDTH-SmartEnemySize) velX *=-1;
+    handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.orange, SmartEnemySize, SmartEnemySize, 0.08f, handler));
   }
   public void collision() {
     hitBox.x += velX; 
     for (int i = 0;i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
-      if(tempObject.getID()==ID.Wall){ 
+      if(tempObject.getID()==ID.Wall || tempObject.getID()==ID.Door){ 
         if (hitBox.intersects(tempObject.getBounds())){ 
           hitBox.x -= velX; 
           while (!hitBox.intersects(tempObject.getBounds())){ 
@@ -70,8 +72,8 @@ public class SmartEnemy extends GameObject{
           } 
           hitBox.x -= Math.signum(velX); 
           //collision code
-          x = random.nextInt(Game.WIDTH - 32);
-          y = random.nextInt(Game.HEIGHT - 32);                                                          //Kollision mit Schuss
+          x = random.nextInt(Game.WIDTH - SmartEnemySize);
+          y = random.nextInt(Game.HEIGHT - SmartEnemySize);                                                          //Kollision mit Schuss
           int velXr = Game.ranInt(0,1);
           if(velXr == 0) {velX*=-1;}
           int velYr = Game.ranInt(0,1);
@@ -83,7 +85,7 @@ public class SmartEnemy extends GameObject{
     hitBox.y += velY; 
     for (int i = 0;i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
-      if(tempObject.getID()==ID.Wall){ 
+      if(tempObject.getID()==ID.Wall || tempObject.getID()==ID.Door){ 
         if (hitBox.intersects(tempObject.getBounds())){ 
           hitBox.y -= velY; 
           while (!hitBox.intersects(tempObject.getBounds())){ 
@@ -102,8 +104,8 @@ public class SmartEnemy extends GameObject{
           } 
           hitBox.y -= Math.signum(velY); 
           //collision code
-          x = random.nextInt(Game.WIDTH - 32);
-          y = random.nextInt(Game.HEIGHT - 32);                                                          //Kollision mit Schuss
+          x = random.nextInt(Game.WIDTH - SmartEnemySize);
+          y = random.nextInt(Game.HEIGHT - SmartEnemySize);                                                          //Kollision mit Schuss
           int velXr = Game.ranInt(0,1);
           if(velXr == 0) {velX*=-1;}
           int velYr = Game.ranInt(0,1);
@@ -114,6 +116,6 @@ public class SmartEnemy extends GameObject{
   }
   public void render(Graphics g) {
     g.setColor(Color.orange);
-    g.fillRect((int)x, (int)y, 32, 32);                                                       //grafische Darstellung
+    g.fillRect((int)x, (int)y, SmartEnemySize, SmartEnemySize);                                                       //grafische Darstellung
   }
 }

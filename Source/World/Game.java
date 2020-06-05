@@ -39,7 +39,7 @@ public class Game extends Canvas implements Runnable
   
   private Thread thread;
   private boolean running = false;
-
+  
   private Spawn spawn;
   
   public static boolean debug = true;        //Wenn debug true ist werden alle debug funktionen ausgeführt
@@ -53,11 +53,11 @@ public class Game extends Canvas implements Runnable
     this.addMouseListener(new MouseInput(handler));
     new Windows(WIDTH, HEIGHT, "Dungeon Crawler", this);
     hud = new HUD();
-    spawn = new Spawn(handler, hud);
+    //spawn = new Spawn(handler, hud);
     player = new Player(1150, 1150, ID.Player, handler, Direction.None);
     handler.addObject(player);
-    handler.addObject(new Gun(250, 250, ID.Item, handler));
-    handler.addObject(new HealingPotionM(300, 250, ID.Item, handler));
+    handler.addObject(new Gun(1300, 1200, ID.Item, handler));
+    handler.addObject(new HealingPotionM(1300, 1250, ID.Item, handler));
     DungeonGeneration.drawDungeon();                                                    //Zeichnen des Dungeons
     //handler.addObject(new Player((WIDTH/2)+16, (HEIGHT/2)+16, ID.Player, handler, Direction.None));
     //handler.addObject(new Wall(100, 200, ID.Wall, handler, 20, 400));
@@ -112,7 +112,9 @@ public class Game extends Canvas implements Runnable
       if(System.currentTimeMillis() - timer > 1000)
       {
         timer += 1000;
-        //System.out.println("FPS: "+ frames);
+        if (debug = true) {
+          System.out.println("FPS: "+ frames);
+        }
         frames = 0;
       }
     }
@@ -124,7 +126,7 @@ public class Game extends Canvas implements Runnable
     hud.tick();
     if(curState == states.play){
       handler.tick();                                             //Hier werden alle Tickmethoden(bzw. im handler dann) aufgerufen
-      spawn.tick();
+      //spawn.tick();
       for (int i = 0;i < handler.objects.size();i++) {        
         if(handler.objects.get(i).getID() == ID.Player){
           cam.tick(handler.objects.get(i));
