@@ -10,13 +10,14 @@ import java.lang.Math;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import Source.Engine.Image.displayTypes;
 import Source.World.Game;
 import Source.World.GameObjects.Wall;
 import Source.World.GameObjects.Door;
 
 public class DungeonGeneration {
   static int wallThicc = 20;     //Allgemeine Breite der Waende
-  static int doorWidth = 150;    //Allgemeine Länge der Tueren
+  static int doorWidth = 150;    //Allgemeine Lï¿½nge der Tueren
   
   static int id = 0; 
   
@@ -40,7 +41,7 @@ public class DungeonGeneration {
     int[][] doorArray = new int[4][3];                      //Erstellen des Arrays
     double f = getRandomInt(minDoors, maxDoors);            //Anzahl der Tueren 
     int existingDoors = 0;
-    for (int i = 0; i < 4; i++) {                           //Einfügen der Tuer Positionen
+    for (int i = 0; i < 4; i++) {                           //Einfï¿½gen der Tuer Positionen
       if (existingDoors < f) {                              //Wenn es noch mehr Tueren geben soll
         int c = getRandomInt(0, 1);                         
         
@@ -48,7 +49,7 @@ public class DungeonGeneration {
           c = 1;
         }
         
-        doorArray[i][0] = c;                                //Einfügen der Tuer ins Array
+        doorArray[i][0] = c;                                //Einfï¿½gen der Tuer ins Array
         
         if (c == 1) {
           doorArray[i][1] = assignId();
@@ -57,7 +58,7 @@ public class DungeonGeneration {
       }
     }
     
-    if (doorPos == 1 || doorPos == 2 || doorPos == 3 || doorPos == 4) { //Einfügen der Tuer welche schon Existiert
+    if (doorPos == 1 || doorPos == 2 || doorPos == 3 || doorPos == 4) { //Einfï¿½gen der Tuer welche schon Existiert
       doorArray[doorPos - 1][0] = 1;
       doorArray[doorPos - 1][1] = id;
       doorArray[doorPos - 1][2] = 1;
@@ -79,13 +80,13 @@ public class DungeonGeneration {
     //createRoomRect(posX, posY, 500, 500, new int[][]{{1, 2}, {0, 0}, {1, 2}, {0, 0}});
     int minDoors = 0;
     int maxDoors = 0;
-    int startRoomSize = 500;      //Groeße des Startraumes
-    int bossRoomSize = 2000;      //Groeße des Bossraumes
-    int roomDistance = maxRoomSize + 1000;      //Ermitteln des Abstands zwischen zwei Räumen sodass man sie nicht voneinander sehen kann
+    int startRoomSize = 500;      //Groeï¿½e des Startraumes
+    int bossRoomSize = 2000;      //Groeï¿½e des Bossraumes
+    int roomDistance = maxRoomSize + 1000;      //Ermitteln des Abstands zwischen zwei Rï¿½umen sodass man sie nicht voneinander sehen kann
     
     createRoomRect(posX, posY, startRoomSize, startRoomSize, makeDoorArray(1, 4, 0, 0));   //Erstellen des Startraumes
     
-    int roomPosX = posX + startRoomSize + 1000; //Position des nächsten Raumes wird festgelegt
+    int roomPosX = posX + startRoomSize + 1000; //Position des nï¿½chsten Raumes wird festgelegt
     int roomPosY = posY;                        
     
     //Erstellen der anderen Raeume
@@ -165,6 +166,7 @@ public class DungeonGeneration {
   }
   
   public static void createRoomRect (int posX, int posY, int length, int height, int[][] doorsFacing){
+    Game.handler.addObject(new Image("Content\\Environment\\floor.png", new Vector2(posX, posY), new Vector2(height, length), 2, displayTypes.tiled, ID.Image, Game.handler));
     if (doorsFacing[0][0] == 1) {
       Game.handler.addObject(new Wall(posX, posY, ID.Wall, Game.handler, length/2 - doorWidth/2, wallThicc));
       

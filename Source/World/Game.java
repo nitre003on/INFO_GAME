@@ -42,7 +42,7 @@ public class Game extends Canvas implements Runnable
 
   private Spawn spawn;
   
-  public static boolean debug = true;        //Wenn debug true ist werden alle debug funktionen ausgeführt
+  public static boolean debug = false;        //Wenn debug true ist werden alle debug funktionen ausgeführt
   
   public Game() 
   {

@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.image.AffineTransformOp;
-
 import javax.imageio.ImageIO;
 
 public class animationHandler { // Nachfragen an Piet richten
@@ -33,7 +32,6 @@ public class animationHandler { // Nachfragen an Piet richten
   }
   
   private BufferedImage loadImage(String path) throws IOException {   //Spritesheet laden
-    //return ImageIO.read(getClass().getResource(path));
     return ImageIO.read(new FileInputStream(path));
   }
   

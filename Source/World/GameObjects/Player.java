@@ -9,9 +9,12 @@ import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 import Source.Engine.animationHandler;
+import Source.Engine.Image.displayTypes;
 import Source.Engine.Direction;
 import Source.Engine.Handler;
 import Source.Engine.ID;
+import Source.Engine.Image;
+import Source.Engine.Vector2;
 import Source.Engine.UI.HUD;
 import Source.World.Game;
 import Source.World.GameObject;
@@ -34,7 +37,7 @@ public class Player extends GameObject {
   
   public static int playerLength = 30;
   public static int playerHeight = 80;
-  
+
   public Player(int x, int y, ID id, Handler handler, Direction direction) {
     super(x, y, id, handler);
     this.direction = direction;
@@ -43,7 +46,6 @@ public class Player extends GameObject {
     ah = new animationHandler("Content/playerSprites.png", 35);
     ah.createAnimation("walk", 1, 4);
     ah.createAnimation("idle", 5, 5);
-    //ah.playAnimation("walk", 0.05f, false, false);
   }
   
   public Rectangle getBounds() {
@@ -52,7 +54,7 @@ public class Player extends GameObject {
   
   public void tick() {
     if(itemPicked[0]) HUD.HEALTH += 50;
-    hitBox.x = (int)x; 
+    hitBox.x = (int)x;
     hitBox.y = (int)y;
     tempVelX = velX;
     tempVelY = velY;
@@ -148,7 +150,6 @@ public class Player extends GameObject {
 
   
   public void render(Graphics g) {
-    
     /*Graphics2D g2d = (Graphics2D) g;
     g.setColor(Color.green);
     g2d.draw(getBounds());*/
