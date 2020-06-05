@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 
 import Source.Engine.Direction;
 import Source.Engine.DungeonGeneration;
@@ -34,6 +36,10 @@ public class Game extends Canvas implements Runnable
   public static states curState;
   public static enum states{play,paused,menu};
   public static boolean leftMousePressed;
+
+  public static GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+  public static int ScreenWidth = gd.getDisplayMode().getWidth();
+  public static int ScreenHeight = gd.getDisplayMode().getHeight();
   
   private static int targetFPS = 60;                         //FPS cap
   private static int targetTime = 1000000000 / targetFPS;    //Für die FPS cap

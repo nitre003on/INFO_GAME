@@ -9,13 +9,9 @@ import Source.Engine.ID;
 import Source.World.Game;
 import Source.World.GameObject;
 
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-
 public class HUD {
   
   public static float HEALTH = 100;                         //Leben
-  public static GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
   LinkedList<GameObject> UIobj = new LinkedList<GameObject>();
 
   private Handler handler;
@@ -52,11 +48,12 @@ public class HUD {
   }
 
   public void drawPause(){
-    int width = gd.getDisplayMode().getWidth();
-    int height = gd.getDisplayMode().getHeight();
-    button resume = new resumeButton(width / 2 - width / 4 / 2,(int)(height * 0.5),width / 4,50,ID.UI, handler);
-    button exit = new exitButton(width / 2 - width / 4 / 2,(int)(height * 0.6),width / 4,50,ID.UI, handler);
-    addObject(new UIImage(width / 2 - 250, (int)(height * 0.2), 500, 250, ID.UI, "Content/UI/Pause.png", handler));
+    int width = Game.ScreenWidth;
+    int height = Game.ScreenHeight;
+    button resume = new resumeButton(width / 2 - 170*2 / 2,(int)(height * 0.5),170 * 2,38 * 2,ID.UI, handler);
+    button exit = new exitButton(width / 2 - 170*2 / 2,(int)(height * 0.6),170 * 2,38 * 2,ID.UI, handler);
+    addObject(new UIImage(0,0, width,height, ID.UI, "Content/UI/pausePng.png", handler));
+    addObject(new UIImage(width / 2 - 170 * 2 / 2, (int)(height * 0.2), 170 * 2,38 * 2, ID.UI, "Content/UI/Pause.png", handler));
     addObject(exit);
     addObject(resume);
   }

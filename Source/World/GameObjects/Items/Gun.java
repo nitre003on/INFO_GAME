@@ -24,7 +24,7 @@ public class Gun extends GameObject {
   Direction direction;
   
   public Gun(int x, int y, ID id, Handler handler) {
-    super(x, y, id, handler);
+    super(x, y,16,16, id, handler);
   }
   
   public Rectangle getBounds() {

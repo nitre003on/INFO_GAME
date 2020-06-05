@@ -13,7 +13,7 @@ public class Wall extends GameObject{
 
   int width, height;
   public Wall(float x, float y, ID id, Handler handler, int width, int height) {
-    super(x, y, id, handler);
+    super(x, y, width, height, id, handler);
     this.width = width;
     this.height = height;
   }

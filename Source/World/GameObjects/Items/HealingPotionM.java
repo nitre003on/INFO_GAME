@@ -25,7 +25,7 @@ public class HealingPotionM extends GameObject {
   
   
   public HealingPotionM(int x, int y, ID id, Handler handler) {
-    super(x, y, id, handler);
+    super(x, y,16,16, id, handler);
   }
   
   public Rectangle getBounds() {

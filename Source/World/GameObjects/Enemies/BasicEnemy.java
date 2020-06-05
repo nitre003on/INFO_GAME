@@ -22,7 +22,7 @@ public class BasicEnemy extends GameObject{
   Rectangle hitBox;
   
   public BasicEnemy(int x, int y, ID id, Handler handler) {
-    super(x, y, id, handler);
+    super(x, y,BasicEnemySize,BasicEnemySize, id, handler);
     velX=2;                   //TODO
     velY=2;
     hitBox = new Rectangle(x, y, BasicEnemySize, BasicEnemySize);

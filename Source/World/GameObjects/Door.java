@@ -21,7 +21,7 @@ public class Door extends GameObject{
   
   //Konstruktor
   public Door(float x, float y, ID id, Handler handler, int width, int height, float teleportPosX, float teleportPosY, int teleportID, int doorFacing, int[] roomBounds, boolean isOpen) {
-    super(x, y, id, handler);
+    super(x, y,width,height, id, handler);
     this.width = width;
     this.height = height;
     this.TPLocX = teleportPosX;

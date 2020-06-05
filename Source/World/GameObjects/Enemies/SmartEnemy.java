@@ -23,7 +23,7 @@ public class SmartEnemy extends GameObject{
   Rectangle hitBox;
   
   public SmartEnemy(int x, int y, ID id, Handler handler) {
-    super(x, y, id, handler);
+    super(x, y,SmartEnemySize,SmartEnemySize, id, handler);
     for (int i = 0; i < handler.objects.size(); i++) {
       if(handler.objects.get(i).getID()==ID.Player) player = handler.objects.get(i);
     }

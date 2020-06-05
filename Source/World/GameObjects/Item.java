@@ -23,7 +23,7 @@ public class Item extends GameObject {
   Direction direction;
   
   public Item(int x, int y, ID id, Handler handler) {
-    super(x, y, id, handler);
+    super(x, y,16,16, id, handler);
   }
   
   public Rectangle getBounds() {

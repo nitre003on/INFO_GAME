@@ -20,12 +20,12 @@ public abstract class button extends GameObject {  //generische button Klasse (P
     
     public String txt;
     public int txtW, txtH;
-    public Color normColor = Color.white;
-    public Color hoverColor = Color.gray;
+    public Color normColor = new Color(0,0,0,0);
+    public Color hoverColor = new Color(50,50,50,100);
     public UIImage img;
 
     public button(int x, int y, int w, int h, ID id, Handler handler) {
-      super(x, y, id, handler);
+      super(x, y, w, h, id, handler);
       this.w = w;
       this.h = h;
     }
@@ -38,7 +38,7 @@ public abstract class button extends GameObject {  //generische button Klasse (P
       p = MouseInfo.getPointerInfo().getLocation();
       if (p.x > x &&  p.x < x + w && p.y > y && p.y < y + h){ //falls der Mauszeiger inerhalb des Buttons ist
         color = hoverColor;
-        if(img != null) img.color = new Color(0, 0, 0, 100);
+        if(img != null) img.color = hoverColor;
         if(Game.leftMousePressed) event();
       }else{
         color = normColor;

@@ -20,7 +20,7 @@ public class FastEnemy extends GameObject{
   Rectangle hitBox;
   
   public FastEnemy(int x, int y, ID id, Handler handler) {
-    super(x, y, id, handler);
+    super(x, y,FastEnemySize,FastEnemySize, id, handler);
     velX=2;
     velY=9;
     hitBox = new Rectangle(x, y, FastEnemySize, FastEnemySize);

@@ -20,7 +20,7 @@ public class UIImage extends GameObject{  // nachfragen an Piet
     public Color color;
 
     public UIImage(int x, int y, int w, int h, ID id, String imgURL, Handler handler) {
-        super(x, y, id, handler);
+        super(x, y, w, h, id, handler);
         this.w = w;
         this.h = h;
         try {

@@ -184,7 +184,7 @@ public class DungeonGeneration {
   
   public static void createRoomRect (int posX, int posY, int length, int height, int[][] doorsFacing, int[] spawnEnemies, int obstacle){
     int[] roomBounds = {posX, posY, length, height};
-    
+    Game.handler.addObjectAsBG(new Image("Content\\Environment\\floor.png", new Vector2(posX, posY), new Vector2(height, length), 2, displayTypes.tiled, ID.Image, Game.handler));
     //Erzeugen des Raumes
     if (doorsFacing[0][0] == 1) {
       Game.handler.addObject(new Wall(posX, posY, ID.Wall, Game.handler, length/2 - doorWidth/2, wallThicc));

@@ -14,14 +14,17 @@ public abstract class GameObject
   protected ID id;
   protected float velX, velY;
   public float x,y;
+  public int w,h;
   public boolean dash;
   public Handler handler;
   
   
-  public GameObject(float x, float y, ID id, Handler handler) 
+  public GameObject(float x, float y, int w, int h, ID id, Handler handler) 
   {
     this.x = x;
     this.y = y;
+    this.w = w;
+    this.h = h;
     this.id = id;
     this.handler = handler;
   }
@@ -30,7 +33,11 @@ public abstract class GameObject
   public abstract void render(Graphics g);
   
   public abstract Rectangle getBounds();
-    
+  
+  public boolean onScreen(){
+    return (x - Game.player.x + w > 0 - Game.ScreenWidth / 2 && x - Game.player.x < 0 + Game.ScreenWidth / 2 && y - Game.player.y + h > 0 - Game.ScreenHeight / 2 && y - Game.player.y < 0 + Game.ScreenHeight / 2);
+  }
+
   public void setX(int x) {
     this.x = x; 
   }
@@ -58,10 +65,6 @@ public abstract class GameObject
   public float getY() {
     return y;
   }
-  
-  public void teleport(Player player, int door){
-    
-  }
 
   public ID getID() {
     return id;
@@ -73,10 +76,6 @@ public abstract class GameObject
   
   public float getVelY() {
     return velY;
-  }
-  
-  public void shoot(Direction direction) {
-    handler.addObject(new Shot((int) x,(int) y, direction, ID.Shot, handler));
   }
 }
 

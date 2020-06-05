@@ -39,7 +39,7 @@ public class Player extends GameObject {
   public static int playerHeight = 80;
 
   public Player(int x, int y, ID id, Handler handler, Direction direction) {
-    super(x, y, id, handler);
+    super(x, y,playerLength,playerHeight, id, handler);
     this.direction = direction;
     hitBox = new Rectangle(x, y, this.playerLength, this.playerHeight);
     

@@ -18,7 +18,7 @@ public class Image extends GameObject{
     private displayTypes displayType;
 
     public Image(String imgURL, Vector2 pos, Vector2 size, int zoomLvl, displayTypes displayType, ID id, Handler handler){   //frag Piet bei nachfragen
-        super(pos.x, pos.y, id, handler);
+        super(pos.x, pos.y,(int)size.x,(int)size.y, id, handler);
         this.displayType = displayType;
         this.zoomLvl = zoomLvl;
         this.borderH = (int)size.x;
@@ -48,11 +48,9 @@ public class Image extends GameObject{
                 g.drawImage(img, (int)x, (int)y, borderW, borderH, null);
             case tiled :
                 for(int i = 0; i < Math.floor(borderH / (img.getHeight() * zoomLvl)+1);i++){
-                    for(int j = 0; j < borderW / Math.floor((img.getWidth() * zoomLvl)+1);j++){
-                        if(j == borderW / Math.floor(img.getWidth() * zoomLvl)){
-                            
-                        }
-                        g.drawImage(img, (int)x + j * img.getWidth() * zoomLvl,(int)y  + i * img.getHeight() * zoomLvl,img.getWidth() * zoomLvl,img.getHeight() * zoomLvl , null);
+                    for(int j = 0; j < Math.floor(borderW / (img.getWidth() * zoomLvl)+1);j++){
+                        if((int)x + j * img.getWidth() * zoomLvl - Game.player.x + img.getWidth() * zoomLvl > 0 - Game.ScreenWidth / 2 && (int)x + j * img.getWidth() * zoomLvl - Game.player.x < 0 + Game.ScreenWidth / 2 && (int)y  + i * img.getHeight() * zoomLvl - Game.player.y + img.getHeight() * zoomLvl > 0 - Game.ScreenHeight / 2 && (int)y  + i * img.getHeight() * zoomLvl - Game.player.y < 0 + Game.ScreenHeight / 2)
+                            g.drawImage(img, (int)x + j * img.getWidth() * zoomLvl,(int)y  + i * img.getHeight() * zoomLvl,img.getWidth() * zoomLvl,img.getHeight() * zoomLvl , null);
                     }
                 }
                 if(Game.debug){
