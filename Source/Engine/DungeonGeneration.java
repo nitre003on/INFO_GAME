@@ -12,8 +12,12 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import Source.Engine.Image.displayTypes;
 import Source.World.Game;
+import Source.World.GameObject;
 import Source.World.GameObjects.Wall;
 import Source.World.GameObjects.Door;
+import Source.World.GameObjects.Enemies.BasicEnemy;
+import Source.World.GameObjects.Enemies.FastEnemy;
+import Source.World.GameObjects.Enemies.SmartEnemy;
 
 public class DungeonGeneration {
   static int wallThicc = 20;     //Allgemeine Breite der Waende
@@ -30,7 +34,7 @@ public class DungeonGeneration {
     Game.handler.addObject(new Wall(0, 0, ID.Wall, Game.handler, 20, Game.HEIGHT));
     Game.handler.addObject(new Wall(Game.WIDTH - 20, 0, ID.Wall, Game.handler, 20, Game.HEIGHT));
     //Erstellen des ersten Dungeons
-    createDungeonLayout(1000, 1000, 1000, 2000, 15);
+    createDungeonLayout(1000, 1000, 1000, 2000, 7);
     
     if (Game.debug) {
       System.out.println(doors);
@@ -84,13 +88,14 @@ public class DungeonGeneration {
     int bossRoomSize = 2000;      //Groe�e des Bossraumes
     int roomDistance = maxRoomSize + 1000;      //Ermitteln des Abstands zwischen zwei R�umen sodass man sie nicht voneinander sehen kann
     
-    createRoomRect(posX, posY, startRoomSize, startRoomSize, makeDoorArray(1, 4, 0, 0));   //Erstellen des Startraumes
+    createRoomRect(posX, posY, startRoomSize, startRoomSize, makeDoorArray(1, 4, 0, 0), new int[] {}, 0);   //Erstellen des Startraumes
     
     int roomPosX = posX + startRoomSize + 1000; //Position des n�chsten Raumes wird festgelegt
     int roomPosY = posY;                        
     
     //Erstellen der anderen Raeume
     for (int i = 0; i < numberOfRooms - 1; i++) {
+      //Erzeugen der Werte des Raumes
       int u = doors.get(0);
       if (u < 2) {
         u += 2;
@@ -123,12 +128,22 @@ public class DungeonGeneration {
       }
       
       int r = getRandomInt(0, 1);
+      int numOfEnemies = getRandomInt(1, 4);
+      int[] enemyArray = new int[numOfEnemies];
+      for (int f = 0; f < numOfEnemies; f++) {
+        int ranEnemyType = getRandomInt(0, 2);
+        enemyArray[f] = ranEnemyType;
+      }
+      int ranObstacle = getRandomInt(1, 2);
+      
       switch (r) {
         case  0: 
           createRoomRect(roomPosX, roomPosY, 
           getRandomInt(minRoomSize, maxRoomSize), 
           getRandomInt(minRoomSize, maxRoomSize), 
-          makeDoorArray(minDoors, maxDoors, u + 1, doors.get(1)));
+          makeDoorArray(minDoors, maxDoors, u + 1, doors.get(1)),
+          enemyArray,
+          ranObstacle);
           doors.remove(0);
           doors.remove(0);
           break;
@@ -136,7 +151,9 @@ public class DungeonGeneration {
           createRoomCross(roomPosX, roomPosY, 
           getRandomInt(minRoomSize, maxRoomSize)/3, 
           getRandomInt(minRoomSize, maxRoomSize)/3, 
-          makeDoorArray(minDoors, maxDoors, u + 1, doors.get(1)));
+          makeDoorArray(minDoors, maxDoors, u + 1, doors.get(1)),
+          enemyArray,
+          ranObstacle);
           doors.remove(0);
           doors.remove(0);
           break;
@@ -160,19 +177,21 @@ public class DungeonGeneration {
       roomPosY += bossRoomSize + 1000;
     }
     
-    createRoomRect(roomPosX, roomPosY, 2000, 2000, makeDoorArray(0, 0, r + 1, doors.get(1)));
+    createRoomRect(roomPosX, roomPosY, 2000, 2000, makeDoorArray(0, 0, r + 1, doors.get(1)), new int[] {0, 0, 0}, 0);
     doors.remove(0);
     doors.remove(0);
   }
   
-  public static void createRoomRect (int posX, int posY, int length, int height, int[][] doorsFacing){
-    Game.handler.addObject(new Image("Content\\Environment\\floor.png", new Vector2(posX, posY), new Vector2(height, length), 2, displayTypes.tiled, ID.Image, Game.handler));
+  public static void createRoomRect (int posX, int posY, int length, int height, int[][] doorsFacing, int[] spawnEnemies, int obstacle){
+    int[] roomBounds = {posX, posY, length, height};
+    
+    //Erzeugen des Raumes
     if (doorsFacing[0][0] == 1) {
       Game.handler.addObject(new Wall(posX, posY, ID.Wall, Game.handler, length/2 - doorWidth/2, wallThicc));
       
       int TPPosX = posX + length/2;
       int TPPosY = posY + wallThicc + 10;
-      Game.handler.addObject(new Door(posX + (length/2 - doorWidth/2), posY, ID.Door, Game.handler, doorWidth, wallThicc, TPPosX, TPPosY, doorsFacing[0][1], 0));
+      Game.handler.addObject(new Door(posX + (length/2 - doorWidth/2), posY, ID.Door, Game.handler, doorWidth, wallThicc, TPPosX, TPPosY, doorsFacing[0][1], 0, roomBounds, false));
       
       if (doorsFacing[0][2] != 1) {
         doors.add(0);
@@ -189,7 +208,7 @@ public class DungeonGeneration {
       
       int TPPosX = posX + length/2;
       int TPPosY = posY - wallThicc + height - 10;
-      Game.handler.addObject(new Door(posX + (length/2 - doorWidth/2), posY - wallThicc + height, ID.Door, Game.handler, doorWidth, wallThicc, TPPosX, TPPosY, doorsFacing[2][1], 2));
+      Game.handler.addObject(new Door(posX + (length/2 - doorWidth/2), posY - wallThicc + height, ID.Door, Game.handler, doorWidth, wallThicc, TPPosX, TPPosY, doorsFacing[2][1], 2, roomBounds, false));
       if (doorsFacing[2][2] != 1) {
         doors.add(2);
         doors.add(doorsFacing[2][1]);
@@ -206,7 +225,7 @@ public class DungeonGeneration {
       
       int TPPosX = posX + length - wallThicc - 10;
       int TPPosY = posY + height/2;
-      Game.handler.addObject(new Door(posX + length - wallThicc, posY + height/2 - doorWidth/2, ID.Door, Game.handler, wallThicc, doorWidth, TPPosX, TPPosY, doorsFacing[1][1], 1));
+      Game.handler.addObject(new Door(posX + length - wallThicc, posY + height/2 - doorWidth/2, ID.Door, Game.handler, wallThicc, doorWidth, TPPosX, TPPosY, doorsFacing[1][1], 1, roomBounds, false));
       if (doorsFacing[1][2] != 1) {
         doors.add(1);
         doors.add(doorsFacing[1][1]);
@@ -222,7 +241,7 @@ public class DungeonGeneration {
       
       int TPPosX = posX + wallThicc + 10;
       int TPPosY = posY + height/2;
-      Game.handler.addObject(new Door(posX, posY + height/2 - doorWidth/2, ID.Door, Game.handler, wallThicc, doorWidth, TPPosX, TPPosY, doorsFacing[3][1], 3));
+      Game.handler.addObject(new Door(posX, posY + height/2 - doorWidth/2, ID.Door, Game.handler, wallThicc, doorWidth, TPPosX, TPPosY, doorsFacing[3][1], 3, roomBounds, false));
       if (doorsFacing[3][2] != 1) {
         doors.add(3);
         doors.add(doorsFacing[3][1]);
@@ -233,9 +252,68 @@ public class DungeonGeneration {
     else {
       Game.handler.addObject(new Wall(posX, posY, ID.Wall, Game.handler, wallThicc, height));
     }
+    
+    //Einf�gen des Obstacles
+    if (obstacle != 0) {
+      addObstacle(obstacle, length/4, height/4, posX + length/2, posY + height/2);
+    }
+    
+    //Einf�gen der Gegner
+    for (int i = 0; i < spawnEnemies.length; i++) {
+      switch (spawnEnemies[i]) {
+        case 0 :
+          int ran0X = getRandomInt(wallThicc, length - wallThicc - BasicEnemy.BasicEnemySize);
+          int ran0Y = getRandomInt(wallThicc, height - wallThicc - BasicEnemy.BasicEnemySize);
+           
+          GameObject tempEnemy0 = new BasicEnemy(posX + ran0X, posY + ran0Y, ID.BasicEnemy, Game.handler); 
+          Game.handler.addEnemy(tempEnemy0);
+          
+          for (int t = 0; t < Game.handler.objects.size(); t++) {         
+            GameObject tempObject = Game.handler.objects.get(t); 
+            if(tempObject instanceof Wall) {
+              while (tempEnemy0.getBounds().intersects(tempObject.getBounds())) { 
+                tempEnemy0.x++;
+              }
+            }
+          }
+          break;
+        case 1 : 
+          int ran1X = getRandomInt(wallThicc, length - wallThicc - FastEnemy.FastEnemySize);
+          int ran1Y = getRandomInt(wallThicc, height - wallThicc - FastEnemy.FastEnemySize);
+          
+          GameObject tempEnemy1 = new FastEnemy(posX + ran1X, posY + ran1Y, ID.FastEnemy, Game.handler);
+          Game.handler.addEnemy(tempEnemy1);
+          for (int t = 0; t < Game.handler.objects.size(); t++) {         
+            GameObject tempObject = Game.handler.objects.get(t); 
+            if(tempObject instanceof Wall) {
+              while (tempEnemy1.getBounds().intersects(tempObject.getBounds())) { 
+                tempEnemy1.x++;
+              }
+            }
+          }
+          break;
+        case 2 :
+          int ran2X = getRandomInt(wallThicc, length - wallThicc - SmartEnemy.SmartEnemySize);
+          int ran2Y = getRandomInt(wallThicc, height - wallThicc - SmartEnemy.SmartEnemySize);
+          
+          GameObject tempEnemy2 = new SmartEnemy(posX + ran2X, posY + ran2Y, ID.SmartEnemy, Game.handler);
+          Game.handler.addEnemy(tempEnemy2);
+          for (int t = 0; t < Game.handler.objects.size(); t++) {         
+            GameObject tempObject = Game.handler.objects.get(t); 
+            if(tempObject instanceof Wall) {
+              while (tempEnemy2.getBounds().intersects(tempObject.getBounds())) { 
+                tempEnemy2.x++;
+              }
+            }
+          }
+          break;
+        default: 
+          System.out.println("Enemy does not exist... probably");
+      }
+    }
   }
   
-  public static void createRoomCross(int posX, int posY, int length, int height, int[][] doorsFacing){
+  public static void createRoomCross(int posX, int posY, int length, int height, int[][] doorsFacing, int[] spawnEnemies, int obstacle){
     Game.handler.addObject(new Wall(posX + length - wallThicc, posY, ID.Wall, Game.handler, wallThicc, height));
     Game.handler.addObject(new Wall(posX + length*2, posY, ID.Wall, Game.handler, wallThicc, height));
     Game.handler.addObject(new Wall(posX + length - wallThicc, posY + height*2, ID.Wall, Game.handler, wallThicc, height));
@@ -244,13 +322,16 @@ public class DungeonGeneration {
     Game.handler.addObject(new Wall(posX + length*2 + wallThicc, posY + height - wallThicc, ID.Wall, Game.handler, length - wallThicc, wallThicc));
     Game.handler.addObject(new Wall(posX, posY + height*2, ID.Wall, Game.handler, length - wallThicc, wallThicc));
     Game.handler.addObject(new Wall(posX + length*2 + wallThicc, posY + height*2, ID.Wall, Game.handler, length - wallThicc, wallThicc));
+    
+    int[] roomBounds = {posX, posY, length*3, height*3};
+    
     //Noerdliche Tuer
     if (doorsFacing[0][0] == 1) {
       Game.handler.addObject(new Wall(posX + length, posY, ID.Wall, Game.handler, (length - doorWidth)/2, wallThicc));
       
       int TPPosX = posX + length + (length - doorWidth)/2 + doorWidth/2;
       int TPPosY = posY + wallThicc + 10;
-      Game.handler.addObject(new Door(posX + length + (length - doorWidth)/2, posY, ID.Door, Game.handler, doorWidth, wallThicc, TPPosX, TPPosY, doorsFacing[0][1], 0));
+      Game.handler.addObject(new Door(posX + length + (length - doorWidth)/2, posY, ID.Door, Game.handler, doorWidth, wallThicc, TPPosX, TPPosY, doorsFacing[0][1], 0, roomBounds, false));
       
       if (doorsFacing[0][2] != 1) {
         doors.add(0);
@@ -268,7 +349,7 @@ public class DungeonGeneration {
       
       int TPPosX = posX + length + (length - doorWidth)/2 + doorWidth/2;
       int TPPosY = posY + height*3 - wallThicc - 10;
-      Game.handler.addObject(new Door(posX + length + (length - doorWidth)/2, posY + height*3 - wallThicc, ID.Door, Game.handler, doorWidth, wallThicc, TPPosX, TPPosY, doorsFacing[2][1], 2));
+      Game.handler.addObject(new Door(posX + length + (length - doorWidth)/2, posY + height*3 - wallThicc, ID.Door, Game.handler, doorWidth, wallThicc, TPPosX, TPPosY, doorsFacing[2][1], 2, roomBounds, false));
       if (doorsFacing[2][2] != 1) {
         doors.add(2);
         doors.add(doorsFacing[2][1]);
@@ -285,7 +366,7 @@ public class DungeonGeneration {
       
       int TPPosX = posX + length*3 - wallThicc - 10;
       int TPPosY = posY + height + (height - doorWidth)/2 + doorWidth/2;
-      Game.handler.addObject(new Door(posX + length*3 - wallThicc, posY + height + (height - doorWidth)/2, ID.Door, Game.handler, wallThicc, doorWidth, TPPosX, TPPosY, doorsFacing[1][1], 1));
+      Game.handler.addObject(new Door(posX + length*3 - wallThicc, posY + height + (height - doorWidth)/2, ID.Door, Game.handler, wallThicc, doorWidth, TPPosX, TPPosY, doorsFacing[1][1], 1, roomBounds, false));
       if (doorsFacing[1][2] != 1) {
         doors.add(1);
         doors.add(doorsFacing[1][1]);
@@ -302,7 +383,7 @@ public class DungeonGeneration {
       
       int TPPosX = posX + wallThicc + 10;
       int TPPosY = posY + height + (height - doorWidth)/2 + doorWidth/2;
-      Game.handler.addObject(new Door(posX, posY + height + (height - doorWidth)/2, ID.Door, Game.handler, wallThicc, doorWidth, TPPosX, TPPosY, doorsFacing[3][1], 3));
+      Game.handler.addObject(new Door(posX, posY + height + (height - doorWidth)/2, ID.Door, Game.handler, wallThicc, doorWidth, TPPosX, TPPosY, doorsFacing[3][1], 3, roomBounds, false));
       if (doorsFacing[3][2] != 1) {
         doors.add(3);
         doors.add(doorsFacing[3][1]);
@@ -313,12 +394,103 @@ public class DungeonGeneration {
     else {
       Game.handler.addObject(new Wall(posX, posY + height - wallThicc, ID.Wall, Game.handler, wallThicc, height + wallThicc*2));
     }
+    
+    //Einf�gen des Obstacles
+    if (obstacle != 0) {
+      addObstacle(2, length/4*3, height/4*3, posX + length/2 + length, posY + height/2 + height);
+    }
+    
+    
+    //Einf�gen der Gegner
+    for (int i = 0; i < spawnEnemies.length; i++) {
+      switch (spawnEnemies[i]) {
+        case 0 :
+          int ran0X = getRandomInt(wallThicc, length*3 - wallThicc - BasicEnemy.BasicEnemySize);
+          int ran0Y;
+          if (ran0X < length || ran0X > length*2 - BasicEnemy.BasicEnemySize) {
+            ran0Y = getRandomInt(height, height*2 - BasicEnemy.BasicEnemySize);
+          }
+          else {
+            ran0Y = getRandomInt(wallThicc, height*3 - wallThicc - BasicEnemy.BasicEnemySize);
+          }
+          GameObject tempEnemy0 = new BasicEnemy(posX + ran0X, posY + ran0Y, ID.BasicEnemy, Game.handler); 
+          Game.handler.addEnemy(tempEnemy0);
+          
+          for (int t = 0; t < Game.handler.objects.size(); t++) {         
+            GameObject tempObject = Game.handler.objects.get(t); 
+            if(tempObject instanceof Wall) {
+              while (tempEnemy0.getBounds().intersects(tempObject.getBounds())) { 
+                tempEnemy0.x++;
+              }
+            }
+          }
+          break;
+        case 1 : 
+          int ran1X = getRandomInt(wallThicc, length*3 - wallThicc - BasicEnemy.BasicEnemySize);
+          int ran1Y;
+          if (ran1X < length || ran1X > length*2 - BasicEnemy.BasicEnemySize) {
+            ran1Y = getRandomInt(height, height*2 - BasicEnemy.BasicEnemySize);
+          }
+          else {
+            ran1Y = getRandomInt(wallThicc, height*3 - wallThicc - BasicEnemy.BasicEnemySize);
+          }
+          GameObject tempEnemy1 = new FastEnemy(posX + ran1X, posY + ran1Y, ID.FastEnemy, Game.handler);
+          Game.handler.addEnemy(tempEnemy1);
+          for (int t = 0; t < Game.handler.objects.size(); t++) {         
+            GameObject tempObject = Game.handler.objects.get(t); 
+            if(tempObject instanceof Wall) {
+              while (tempEnemy1.getBounds().intersects(tempObject.getBounds())) { 
+                tempEnemy1.x++;
+              }
+            }
+          }
+          break;
+        case 2 :
+          int ran2X = getRandomInt(wallThicc, length*3 - wallThicc - BasicEnemy.BasicEnemySize);
+          int ran2Y;
+          if (ran2X < length || ran2X > length*2 - BasicEnemy.BasicEnemySize) {
+            ran2Y = getRandomInt(height, height*2 - BasicEnemy.BasicEnemySize);
+          }
+          else {
+            ran2Y = getRandomInt(wallThicc, height*3 - wallThicc - BasicEnemy.BasicEnemySize);
+          }
+          GameObject tempEnemy2 = new SmartEnemy(posX + ran2X, posY + ran2Y, ID.SmartEnemy, Game.handler);
+          Game.handler.addEnemy(tempEnemy2);
+          for (int t = 0; t < Game.handler.objects.size(); t++) {         
+            GameObject tempObject = Game.handler.objects.get(t); 
+            if(tempObject instanceof Wall) {
+              while (tempEnemy2.getBounds().intersects(tempObject.getBounds())) { 
+                tempEnemy2.x++;
+              }
+            }
+          }
+          break;
+        default: 
+          System.out.println("Enemy does not exist... probably");
+      }
+    }
   }
-  
+      
   public static void createRoomL(int posX, int posY, int length, int height, boolean[] doorsFacing){
     
   }
   
+  
+  public static void addObstacle(int obstacleType, int length, int height, int posX, int posY){
+    switch (obstacleType) {
+      case 1 : 
+        Game.handler.addObject(new Wall(posX - length/2, posY - height/2, ID.Wall, Game.handler, length, height));
+        break;
+      case 2 : 
+        Game.handler.addObject(new Wall(posX - wallThicc/2, posY - height/2, ID.Wall, Game.handler, wallThicc, height));
+        Game.handler.addObject(new Wall(posX - length/2, posY - wallThicc/2, ID.Wall, Game.handler, length, wallThicc));
+        break;
+      default: 
+        System.out.println("Kein richtiges Obstacle! Warum mache ich das �berhaupt noch...?");
+    }
+  }
+  
+
   public static int assignId(){
     id++;
     return id;

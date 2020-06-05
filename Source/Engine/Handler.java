@@ -8,9 +8,14 @@ import Source.World.GameObject;
 public class Handler 
 {
   public LinkedList<GameObject> objects = new LinkedList<GameObject>();
+  public LinkedList<GameObject> enemies = new LinkedList<GameObject>();
   public void tick() {
     for(int i = 0; i<objects.size(); i++) {
       GameObject tempObject = objects.get(i);
+      tempObject.tick();                                //hier werden alle Tickmethoden getan.
+    }
+    for(int i = 0; i<enemies.size(); i++) {
+      GameObject tempObject = enemies.get(i);
       tempObject.tick();                                //hier werden alle Tickmethoden getan.
     }
   }
@@ -25,6 +30,13 @@ public class Handler
   }
   public void removeObject(GameObject object) {
     this.objects.remove(object);
+  }
+  
+  public void addEnemy(GameObject object) {
+    this.enemies.add(object);
+  }
+  public void removeEnemy(GameObject object) {
+    this.enemies.remove(object);
   }
 }
 
