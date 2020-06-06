@@ -14,11 +14,11 @@ import java.awt.Color;
 public class Image extends GameObject{
     private BufferedImage img;
     private int borderW, borderH,zoomLvl;
-    public static enum displayTypes{normal,zoomed,stretched,tiled};
+    public static enum displayTypes{normal,stretched,tiled};
     private displayTypes displayType;
 
     public Image(String imgURL, Vector2 pos, Vector2 size, int zoomLvl, displayTypes displayType, ID id, Handler handler){   //frag Piet bei nachfragen
-        super(pos.x, pos.y,(int)size.x,(int)size.y, id, handler);
+        super(pos.x, pos.y,(int)size.y,(int)size.x, id, handler);
         this.displayType = displayType;
         this.zoomLvl = zoomLvl;
         this.borderH = (int)size.x;
@@ -41,9 +41,6 @@ public class Image extends GameObject{
             case normal :
                 g.drawImage(img, (int)x, (int)y,img.getWidth() * zoomLvl,img.getHeight() * zoomLvl, null);
                 break;
-            case zoomed :
-                g.drawImage(img, (int)x, (int)y, null);
-                break;
             case stretched :
                 g.drawImage(img, (int)x, (int)y, borderW, borderH, null);
             case tiled :
@@ -60,8 +57,12 @@ public class Image extends GameObject{
         }
     }
 
-    private BufferedImage getSubimage(BufferedImage img, int x, int y, int width, int height){   //Sprite aus dem Spritesheet lesen
-        return img.getSubimage(x,y,width / zoomLvl,height / zoomLvl);
+    private BufferedImage clippedImage(BufferedImage img,int i,int j){
+        int width, height;
+        System.out.println(img.getWidth());
+        width = img.getWidth() * zoomLvl * (j ) > borderW? borderW - zoomLvl * img.getWidth() * (j ):img.getWidth();
+        height = img.getHeight() * zoomLvl * (i) > borderH? borderH - zoomLvl * img.getHeight() * (i ):img.getHeight();
+        return img.getSubimage(0,0,width / zoomLvl,height / zoomLvl);
     }
 }
 

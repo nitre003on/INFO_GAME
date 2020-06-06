@@ -10,8 +10,8 @@ public class Handler
   public LinkedList<GameObject> objects = new LinkedList<GameObject>();
   public LinkedList<GameObject> enemies = new LinkedList<GameObject>();
   public void tick() {
-    for(int i = 0; i<objects.size(); i++) { objects.get(i).tick(); }                            //hier werden alle Tickmethoden getan.
-    for(int i = 0; i<enemies.size(); i++) { enemies.get(i).tick(); }
+    for(int i = 0; i<objects.size(); i++) { if(objects.get(i).onScreen())objects.get(i).tick(); }                            //hier werden alle Tickmethoden getan.
+    for(int i = 0; i<enemies.size(); i++) { if(enemies.get(i).onScreen())enemies.get(i).tick(); }
   }
   public void render(Graphics g) {
     for (int i = 0; i < objects.size(); i++) { if(objects.get(i).onScreen())objects.get(i).render(g); }                             // Hier alle rendermethoden 

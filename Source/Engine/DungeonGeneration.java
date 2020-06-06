@@ -184,6 +184,9 @@ public class DungeonGeneration {
   
   public static void createRoomRect (int posX, int posY, int length, int height, int[][] doorsFacing, int[] spawnEnemies, int obstacle){
     int[] roomBounds = {posX, posY, length, height};
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length, posY), new Vector2(height, 158), ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height), new Vector2(158, length + 158), ID.Image, Game.handler));
+
     Game.handler.addObjectAsBG(new Image("Content\\Environment\\floor.png", new Vector2(posX, posY), new Vector2(height, length), 2, displayTypes.tiled, ID.Image, Game.handler));
     //Erzeugen des Raumes
     if (doorsFacing[0][0] == 1) {
@@ -314,6 +317,14 @@ public class DungeonGeneration {
   }
   
   public static void createRoomCross(int posX, int posY, int length, int height, int[][] doorsFacing, int[] spawnEnemies, int obstacle){
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY), new Vector2(height, length), ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX  + length*2, posY), new Vector2(height, length), ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height*2), new Vector2(height, length), ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length*2, posY + height*2), new Vector2(height + 168, length + 168), ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length*3, posY), new Vector2(length * 3, 168), ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height*3), new Vector2(168, height * 3), ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new Image("Content\\Environment\\floor.png", new Vector2(posX, posY), new Vector2(height * 3, length * 3), 2, displayTypes.tiled, ID.Image, Game.handler));
+    
     Game.handler.addObject(new Wall(posX + length - wallThicc, posY, ID.Wall, Game.handler, wallThicc, height));
     Game.handler.addObject(new Wall(posX + length*2, posY, ID.Wall, Game.handler, wallThicc, height));
     Game.handler.addObject(new Wall(posX + length - wallThicc, posY + height*2, ID.Wall, Game.handler, wallThicc, height));
