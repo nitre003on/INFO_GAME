@@ -19,7 +19,7 @@ public class Spawn {
     
   }
   
-  public void tick() {
+  /*public void tick() {
     scoreKeep++;
     if (scoreKeep>=150) {
       scoreKeep = 0;
@@ -40,7 +40,7 @@ public class Spawn {
         }
       }
     }
-  }
+  }*/
   
   
 }

@@ -27,7 +27,8 @@ public class Player extends GameObject {
   Direction direction;
   
   public Rectangle hitBox;
-  
+  public int[] roomBounds = new int[] {0, 0, 0};
+
   float tempVelX;
   float tempVelY;
   

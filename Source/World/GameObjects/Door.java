@@ -68,6 +68,7 @@ public class Door extends GameObject{
           
           player.x = tempX;
           player.y = tempY;
+          player.roomBounds = tempDoor.roomBounds;
           if (Game.debug) {
             System.out.println("tempX: " + tempX);
             System.out.println("tempY: " + tempY);
@@ -95,13 +96,7 @@ public class Door extends GameObject{
     }
   }
   
-  public boolean inRange(int toCheck, int start, int end){
-    boolean inRange = false;
-    if (start <= toCheck && toCheck <= end) {
-      inRange = true;
-    }
-    return inRange;
-  }
+  public boolean inRange(int toCheck, int start, int end){ return start <= toCheck && toCheck <= end; }
   
   public void render(Graphics g) {
     if (isOpen) {

@@ -34,6 +34,7 @@ public class BasicTrail extends GameObject {
     } else {                                                            //TAil wird gel�scht/Gelassen
       handler.removeObject(this);
     } 
+    if(!onScreen()) handler.removeObject(this);
   }
   
   public void render(Graphics g) {

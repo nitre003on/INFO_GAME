@@ -47,8 +47,6 @@ public class Game extends Canvas implements Runnable
   private Thread thread;
   private boolean running = false;
   
-  private Spawn spawn;
-  
   public static boolean debug = false;        //Wenn debug true ist werden alle debug funktionen ausgeführt
   
   public Game() 
@@ -60,7 +58,6 @@ public class Game extends Canvas implements Runnable
     this.addMouseListener(new MouseInput(handler));
     new Windows(WIDTH, HEIGHT, "Dungeon Crawler", this);
     hud = new HUD();
-    //spawn = new Spawn(handler, hud);
     player = new Player(1150, 1150, ID.Player, handler, Direction.None);
     handler.addObject(player);
     handler.addObject(new Gun(1300, 1200, ID.Item, handler));
@@ -75,11 +72,6 @@ public class Game extends Canvas implements Runnable
         tempDoor.checkIfOpen();
       }
     }
-    //handler.addObject(new Player((WIDTH/2)+16, (HEIGHT/2)+16, ID.Player, handler, Direction.None));
-    //handler.addObject(new Wall(100, 200, ID.Wall, handler, 20, 400));
-    //handler.addObject(new BasicEnemy(Game.ranInt(17, WIDTH-17), Game.ranInt(17, HEIGHT-17), ID.BasicEnemy, handler));         //Hier werden alle Objekte das erste mal gespawnt
-    //handler.addObject(new FastEnemy(Game.ranInt(17, WIDTH-17), Game.ranInt(17, HEIGHT-17), ID.FastEnemy, handler));
-    //handler.addObject(new SmartEnemy(Game.ranInt(17, WIDTH-17), Game.ranInt(17, HEIGHT-17), ID.SmartEnemy, handler));
   }
   
   public synchronized void start() 
