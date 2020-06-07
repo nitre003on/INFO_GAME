@@ -57,7 +57,7 @@ public class Game extends Canvas implements Runnable
     handler.addObject(new HealingPotionM(1300, 1250, ID.Item, handler));
     DungeonGeneration.drawDungeon();                                                    //Zeichnen des Dungeons
     
-    //Update für alle Tueren
+    //Update für alle Tueren einmal am Anfang, da sonnst der Startraum geschlossen waere
     for (int e = 0; e < Game.handler.objects.size(); e++) {
       GameObject tempObject2 = Game.handler.objects.get(e);
       if (tempObject2 instanceof Door) {
