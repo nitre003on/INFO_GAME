@@ -22,7 +22,7 @@ public class animationHandler { // Nachfragen an Piet richten
   private List<Vector2> animFrameStamps = new ArrayList<Vector2>();
   private int first,last,curFrame,gridSize, timer;
   private float speed;
-  private boolean repeat,flipped, processing = false;
+  private boolean repeat,flippedX,flippedY, processing = false;
   
   public animationHandler(String spriteSheetURL, int gridSize){   //"spriteSheetURL" ist der relative Pfad der Bilddatei und "gridSize" die größe eines Frames in Pixel.
     this.gridSize = gridSize;
@@ -100,20 +100,32 @@ public class animationHandler { // Nachfragen an Piet richten
         }
       }
       Vector2 imgPos = indexToPos(curFrame);
-      curImage = (flipped)? ImageFlip(grabImage((int)imgPos.x, (int)imgPos.y, gridSize, gridSize)) : grabImage((int)imgPos.x, (int)imgPos.y, gridSize, gridSize); // zeige das Bild gespiegelt, falls "flipped" true ist
+      if(flippedX){ curImage = ImageFlipX(grabImage((int)imgPos.x, (int)imgPos.y, gridSize, gridSize)); } // zeige das Bild gespiegelt, falls "flipped" true ist etc.
+      else if(flippedY){ curImage = ImageFlipY(grabImage((int)imgPos.x, (int)imgPos.y, gridSize, gridSize)); }
+      else{ curImage = grabImage((int)imgPos.x, (int)imgPos.y, gridSize, gridSize); }
     }
   }
 
-  private BufferedImage ImageFlip(BufferedImage img){ //gibt das gegebene Bild gespiegelt zurück
+  private BufferedImage ImageFlipX(BufferedImage img){ //gibt das gegebene Bild gespiegelt zurück
     AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
     tx.translate( -img.getHeight(null),0);
     AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
     return op.filter(img, null);
   }
 
-  public void flip(){flipped = !flipped;}
-  public void faceLeft(){flipped = true;}
-  public void faceRight(){flipped = false;}
+  private BufferedImage ImageFlipY(BufferedImage img){ //gibt das gegebene Bild gespiegelt zurück
+    AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
+    tx.translate(0,-img.getHeight(null));
+    AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+    return op.filter(img, null);
+  }
+
+  public void flipX(){flippedX = !flippedX;}
+  public void flipY(){flippedY = !flippedY;}
+  public void faceUp(){flippedY = false;}
+  public void faceDown(){flippedY = true;}
+  public void faceLeft(){flippedX = true;}
+  public void faceRight(){flippedX = false;}
 
   public void draw(Graphics g,int x, int y, int size){    //dieses draw() muss in denen des zu animirenden Objektes aufrufen werden
     g.drawImage(curImage, x, y, size, size, null);  

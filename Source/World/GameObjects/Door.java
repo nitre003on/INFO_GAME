@@ -7,7 +7,9 @@ import java.awt.Rectangle;
 import Source.World.Game;
 import Source.Engine.Handler;
 import Source.Engine.ID;
+import Source.Engine.Graphics.animationHandler;
 import Source.World.GameObject;
+import sun.security.util.Length;
 
 public class Door extends GameObject{
   
@@ -17,6 +19,7 @@ public class Door extends GameObject{
   private int doorFacing;       //0 = norden, 1 = osten, 2 = sueden, 3 = westen.
   public int[] roomBounds;      //Um die Tuer zu oder auf zu machen
   public boolean isOpen;
+  private animationHandler ah;
   
   //Konstruktor
   public Door(float x, float y, ID id, Handler handler, int width, int height, float teleportPosX, float teleportPosY, int teleportID, int doorFacing, int[] roomBounds, boolean isOpen) {
@@ -29,6 +32,12 @@ public class Door extends GameObject{
     this.doorFacing = doorFacing;
     this.roomBounds = roomBounds;
     this.isOpen = isOpen;
+
+    ah = new animationHandler("Content/Environment/door.png", 47);
+    ah.createAnimation("Vopen", 1, 10);
+    ah.createAnimation("Hopen", 11, 20);
+    ah.createAnimation("Vclosed", 21,21);
+    ah.createAnimation("Hclosed", 22, 22);
   }
   
   public int getTeleportID(){
@@ -40,7 +49,32 @@ public class Door extends GameObject{
   }
   
   public void tick() {
-    //collision();
+    ah.tick();
+    if(isOpen && width > height){
+      if(ah.curPlaying != "Vopen")
+        ah.playAnimation("Vopen", 0.05f, true, true);
+    }else if (isOpen){
+      if(ah.curPlaying != "Hopen")
+        ah.playAnimation("Hopen", 0.05f, true, true);
+    }else if(width > height){
+      ah.playAnimation("Vclosed", 0.05f, true, true);
+    }else{
+      ah.playAnimation("Hclosed", 0.05f, true, true);
+    }
+
+    if(width > height){
+      if(Game.player.y < y){
+        ah.faceUp();
+      }else{
+        ah.faceDown();
+      }
+    }else{
+      if(Game.player.x < x){
+        ah.faceRight();
+      }else{
+        ah.faceLeft();
+      }
+    }
   }
   
   public void teleport(Player player, int door) {
@@ -101,18 +135,16 @@ public class Door extends GameObject{
   public boolean inRange(int toCheck, int start, int end){ return start <= toCheck && toCheck <= end; }
   
   public void render(Graphics g) {
-    //Farbe wird dem Status der Tuer angepasst
-    if (isOpen) {
-      g.setColor(Color.blue);
-    }
-    else {
-      g.setColor(Color.magenta);
-    }
+    g.setColor(Color.darkGray);
     g.fillRect((int)x, (int)y, width, height);                                    //Graphische Darstellung
     if (Game.debug) {
       g.fillRect((int)TPLocX, (int)TPLocY, 3, 3);
       g.setColor(Color.WHITE);
       g.drawString(Integer.toString(teleportID), (int)x, (int)y);
     }
-  } 
+    if(width > height)
+      ah.draw(g, (int)x, (int)y,width / 2 - 60, -58 / 2- height, 120);
+    else
+      ah.draw(g, (int)x, (int)y,(int)(width / 2 - 60 ), 14, 120);
+  }
 }
