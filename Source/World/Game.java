@@ -49,15 +49,9 @@ public class Game extends Canvas implements Runnable
   
   public static boolean debug = false;        //Wenn debug true ist werden alle debug funktionen ausgeführt
   
-  public Game() 
-  {
+  public void play(){
+    debug = false;
     curState = states.play;
-    handler =  new Handler();
-    cam = new Camera(0, 0);                         //Kamera wird initialisiert
-    this.addKeyListener(new KeyInput(handler));
-    this.addMouseListener(new MouseInput(handler));
-    new Windows(WIDTH, HEIGHT, "Dungeon Crawler", this);
-    hud = new HUD();
     player = new Player(1150, 1150, ID.Player, handler, Direction.None);
     handler.addObject(player);
     handler.addObject(new Gun(1300, 1200, ID.Item, handler));
@@ -72,6 +66,19 @@ public class Game extends Canvas implements Runnable
         tempDoor.checkIfOpen();
       }
     }
+  }
+
+
+  public Game() 
+  {
+    hud = new HUD();
+    curState = states.menu;
+    handler =  new Handler();
+    cam = new Camera(0, 0);                         //Kamera wird initialisiert
+    this.addKeyListener(new KeyInput(handler));
+    this.addMouseListener(new MouseInput(handler));
+    new Windows(WIDTH, HEIGHT, "Dungeon Crawler", this);
+    hud.drawMenu(this);
   }
   
   public synchronized void start() 
@@ -120,7 +127,7 @@ public class Game extends Canvas implements Runnable
       if(System.currentTimeMillis() - timer > 1000)
       {
         timer += 1000;
-        if (debug = true) {
+        if (debug == true) {
           System.out.println("FPS: "+ frames);
         }
         frames = 0;

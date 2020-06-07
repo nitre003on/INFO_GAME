@@ -6,6 +6,9 @@ import java.util.LinkedList;
 
 import Source.Engine.Handler;
 import Source.Engine.ID;
+import Source.Engine.UI.Buttons.exitButton;
+import Source.Engine.UI.Buttons.playButton;
+import Source.Engine.UI.Buttons.resumeButton;
 import Source.World.Game;
 import Source.World.GameObject;
 
@@ -32,6 +35,12 @@ public class HUD {
   }
   
   public void render(Graphics g) {
+    for (int i = 0; i < UIobj.size(); i++) {
+      GameObject tempObject = UIobj.get(i);
+      tempObject.render(g);
+    }
+    if(Game.curState == Game.states.menu)
+      return;
     g.setColor(Color.gray);
     g.fillRect(15, 15, 200, 32);
     g.setColor(new Color(175,(int)greenValue,0));                         // das Darstellen von Leben und Level
@@ -40,11 +49,6 @@ public class HUD {
     g.drawRect(15, 15, 200, 32);
     //g.drawString("Score: "+score, 15, 64);
     g.drawString("Level: "+level, 15, 80);
-
-    for (int i = 0; i < UIobj.size(); i++) {
-      GameObject tempObject = UIobj.get(i);
-      tempObject.render(g);                             // Hier alle rendermethoden
-    }
   }
 
   public void drawPause(){
@@ -56,6 +60,16 @@ public class HUD {
     addObject(new UIImage(width / 2 - 170 * 2 / 2, (int)(height * 0.2), 170 * 2,38 * 2, ID.UI, "Content/UI/Pause.png", handler));
     addObject(exit);
     addObject(resume);
+  }
+
+  public void drawMenu(Game game){
+    int width = Game.ScreenWidth;
+    int height = Game.ScreenHeight;
+    button exit = new exitButton(width / 3 - 170*2 / 2,(int)(height * 0.7),170 * 2,38 * 2,ID.UI, handler);
+    button play = new playButton(width / 3 - 170*2 / 2,(int)(height * 0.5),170 * 2,38 * 2,ID.UI, handler, game);
+    addObject(new UIImage(0,0, width,height, ID.UI, "Content/UI/GenericDungeonText.png", handler));
+    addObject(exit);
+    addObject(play);
   }
 
   public void clearQueue(){UIobj.clear();}
