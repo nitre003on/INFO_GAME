@@ -8,13 +8,11 @@ import java.awt.Rectangle;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-import Source.Engine.animationHandler;
-import Source.Engine.Image.displayTypes;
 import Source.Engine.Direction;
 import Source.Engine.Handler;
 import Source.Engine.ID;
-import Source.Engine.Image;
 import Source.Engine.Vector2;
+import Source.Engine.Graphics.animationHandler;
 import Source.Engine.UI.HUD;
 import Source.World.Game;
 import Source.World.GameObject;

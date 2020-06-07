@@ -1,8 +1,12 @@
-package Source.Engine;
+package Source.Engine.Graphics;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+
+import Source.Engine.Handler;
+import Source.Engine.ID;
+import Source.Engine.Vector2;
 import Source.World.GameObject;
 
 public class squareImage extends GameObject{
