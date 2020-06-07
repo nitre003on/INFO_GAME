@@ -1,4 +1,4 @@
-package Source.Engine;
+package Source.Engine.Graphics;
 
 import java.awt.Graphics;
 import java.awt.geom.AffineTransform;
@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.image.AffineTransformOp;
 import javax.imageio.ImageIO;
+
+import Source.Engine.Vector2;
 
 public class animationHandler { // Nachfragen an Piet richten
   

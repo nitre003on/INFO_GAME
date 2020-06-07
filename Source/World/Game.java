@@ -47,20 +47,10 @@ public class Game extends Canvas implements Runnable
   private Thread thread;
   private boolean running = false;
   
-  private Spawn spawn;
-  
   public static boolean debug = false;        //Wenn debug true ist werden alle debug funktionen ausgeführt
   
-  public Game() 
-  {
+  public void play(){
     curState = states.play;
-    handler =  new Handler();
-    cam = new Camera(0, 0);                         //Kamera wird initialisiert
-    this.addKeyListener(new KeyInput(handler));
-    this.addMouseListener(new MouseInput(handler));
-    new Windows(WIDTH, HEIGHT, "Dungeon Crawler", this);
-    hud = new HUD();
-    //spawn = new Spawn(handler, hud);
     player = new Player(1150, 1150, ID.Player, handler, Direction.None);
     handler.addObject(player);
     handler.addObject(new Gun(1300, 1200, ID.Item, handler));
@@ -75,11 +65,19 @@ public class Game extends Canvas implements Runnable
         tempDoor.checkIfOpen();
       }
     }
-    //handler.addObject(new Player((WIDTH/2)+16, (HEIGHT/2)+16, ID.Player, handler, Direction.None));
-    //handler.addObject(new Wall(100, 200, ID.Wall, handler, 20, 400));
-    //handler.addObject(new BasicEnemy(Game.ranInt(17, WIDTH-17), Game.ranInt(17, HEIGHT-17), ID.BasicEnemy, handler));         //Hier werden alle Objekte das erste mal gespawnt
-    //handler.addObject(new FastEnemy(Game.ranInt(17, WIDTH-17), Game.ranInt(17, HEIGHT-17), ID.FastEnemy, handler));
-    //handler.addObject(new SmartEnemy(Game.ranInt(17, WIDTH-17), Game.ranInt(17, HEIGHT-17), ID.SmartEnemy, handler));
+  }
+
+
+  public Game() 
+  {
+    hud = new HUD();
+    curState = states.menu;
+    handler =  new Handler();
+    cam = new Camera(0, 0);                         //Kamera wird initialisiert
+    this.addKeyListener(new KeyInput(handler));
+    this.addMouseListener(new MouseInput(handler));
+    new Windows(WIDTH, HEIGHT, "Dungeon Crawler", this);
+    hud.drawMenu(this);
   }
   
   public synchronized void start() 
@@ -128,7 +126,7 @@ public class Game extends Canvas implements Runnable
       if(System.currentTimeMillis() - timer > 1000)
       {
         timer += 1000;
-        if (debug = true) {
+        if (debug == true) {
           System.out.println("FPS: "+ frames);
         }
         frames = 0;

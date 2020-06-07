@@ -3,7 +3,6 @@ package Source.World.GameObjects;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.event.HierarchyBoundsAdapter;
 
 import Source.World.Game;
 import Source.Engine.Handler;
@@ -67,9 +66,10 @@ public class Door extends GameObject{
             tempY -= player.playerHeight/2;
           }
           
-          //Die Koordinaten des Spielers werden verändert
+          //Die Koordinaten des Spielers werden verï¿½ndert
           player.x = tempX;                                          
           player.y = tempY;
+          player.roomBounds = tempDoor.roomBounds;
           if (Game.debug) {
             System.out.println("tempX: " + tempX);
             System.out.println("tempY: " + tempY);
@@ -81,7 +81,7 @@ public class Door extends GameObject{
   
   public boolean isUnlocked(){
     boolean isUnlocked = true;
-    //Hier wird überprüft ob sich noch Gegner in dem Raum befinden an dem sich diese Tuer befindet
+    //Hier wird ï¿½berprï¿½ft ob sich noch Gegner in dem Raum befinden an dem sich diese Tuer befindet
     for (int i = 0; i < Game.handler.enemies.size(); i++) {
       GameObject tempObject = Game.handler.enemies.get(i);
       if (inRange((int)tempObject.x, this.roomBounds[0], this.roomBounds[0] + this.roomBounds[2]) && inRange((int)tempObject.y, this.roomBounds[1], this.roomBounds[1] + this.roomBounds[3])) {
@@ -98,14 +98,7 @@ public class Door extends GameObject{
     }
   }
   
-  //Einfache methode um zu gucken ob ein Wert zwischen zwei anderen Werten liegt
-  public boolean inRange(int toCheck, int start, int end){
-    boolean inRange = false;
-    if (start <= toCheck && toCheck <= end) {
-      inRange = true;
-    }
-    return inRange;
-  }
+  public boolean inRange(int toCheck, int start, int end){ return start <= toCheck && toCheck <= end; }
   
   public void render(Graphics g) {
     //Farbe wird dem Status der Tuer angepasst

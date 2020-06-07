@@ -1,16 +1,12 @@
 package Source.Engine;
 
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.event.HierarchyBoundsAdapter;
-import java.awt.Graphics2D;
-import java.util.Random;
-import java.lang.Math;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-import Source.Engine.Image.displayTypes;
+import Source.Engine.Graphics.Image;
+import Source.Engine.Graphics.squareImage;
+import Source.Engine.Graphics.Image.displayTypes;
 import Source.World.Game;
 import Source.World.GameObject;
 import Source.World.GameObjects.Wall;
@@ -196,8 +192,8 @@ public class DungeonGeneration {
   public static void createRoomRect (int posX, int posY, int length, int height, int[][] doorsFacing, int[] spawnEnemies, int obstacle){
     //Werte des Raumes werden entnommen um sie den Tueren mitzugeben
     int[] roomBounds = {posX, posY, length, height};
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length, posY), new Vector2(height, 158), ID.Image, Game.handler));
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height), new Vector2(158, length + 158), ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length, posY), new Vector2(height, 158),Color.BLACK, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height), new Vector2(158, length + 158),Color.BLACK, ID.Image, Game.handler));
 
     Game.handler.addObjectAsBG(new Image("Content\\Environment\\floor.png", new Vector2(posX, posY), new Vector2(height, length), 2, displayTypes.tiled, ID.Image, Game.handler));
     //Erzeugen des Raumes
@@ -358,13 +354,13 @@ public class DungeonGeneration {
   }
   
   public static void createRoomCross(int posX, int posY, int length, int height, int[][] doorsFacing, int[] spawnEnemies, int obstacle){
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY), new Vector2(height, length), ID.Image, Game.handler));
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX  + length*2, posY), new Vector2(height, length), ID.Image, Game.handler));
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height*2), new Vector2(height, length), ID.Image, Game.handler));
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length*2, posY + height*2), new Vector2(height + 168, length + 168), ID.Image, Game.handler));
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length*3, posY), new Vector2(length * 3, 168), ID.Image, Game.handler));
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height*3), new Vector2(168, height * 3), ID.Image, Game.handler));
-    Game.handler.addObjectAsBG(new Image("Content\\Environment\\floor.png", new Vector2(posX, posY), new Vector2(height * 3, length * 3), 2, displayTypes.tiled, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY), new Vector2(height, length),Color.BLACK, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX  + length*2, posY), new Vector2(height, length),Color.BLACK, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height*2), new Vector2(height, length),Color.BLACK, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length*2, posY + height*2), new Vector2(height + 168, length + 168),Color.BLACK, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length*3, posY), new Vector2(length * 3, 168),Color.BLACK, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height*3), new Vector2(168, height * 3),Color.BLACK, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new Image("Content\\Environment\\floor.png", new Vector2(posX, posY), new Vector2(height * 3, length * 3), 2, Source.Engine.Graphics.Image.displayTypes.tiled, ID.Image, Game.handler));
     
     //Erstellen der Wände welche keine Tueren haben können
     Game.handler.addObject(new Wall(posX + length - wallThicc, posY, ID.Wall, Game.handler, wallThicc, height));

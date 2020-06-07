@@ -3,10 +3,7 @@ package Source.World.GameObjects.Items;
 import java.awt.Color;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 import Source.Engine.Direction;
 import Source.Engine.Handler;
@@ -15,8 +12,6 @@ import Source.World.Game;
 import Source.World.GameObject;
 import Source.World.GameObjects.Player;
 import Source.World.GameObjects.BulletTypes.Shot;
-
-import java.util.Scanner;
 
 public class HealingPotionM extends GameObject {
   

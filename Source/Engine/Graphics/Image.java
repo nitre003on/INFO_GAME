@@ -1,4 +1,4 @@
-package Source.Engine;
+package Source.Engine.Graphics;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -7,17 +7,22 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.Rectangle;
 
+import Source.Engine.Handler;
+import Source.Engine.ID;
+import Source.Engine.Vector2;
 import Source.World.Game;
 import Source.World.GameObject;
 import java.awt.Color;
 
 public class Image extends GameObject{
     private BufferedImage img;
-    private int borderW, borderH,zoomLvl;
+    private int borderW, borderH;
+    private float zoomLvl;
     public static enum displayTypes{normal,stretched,tiled};
+    public Color color;
     private displayTypes displayType;
 
-    public Image(String imgURL, Vector2 pos, Vector2 size, int zoomLvl, displayTypes displayType, ID id, Handler handler){   //frag Piet bei nachfragen
+    public Image(String imgURL, Vector2 pos, Vector2 size, float zoomLvl, displayTypes displayType, ID id, Handler handler){   //frag Piet bei nachfragen
         super(pos.x, pos.y,(int)size.y,(int)size.x, id, handler);
         this.displayType = displayType;
         this.zoomLvl = zoomLvl;
@@ -25,6 +30,7 @@ public class Image extends GameObject{
         this.borderW = (int)size.y;
         try { img = loadImage(imgURL); } 
         catch (IOException e) { e.printStackTrace(); }
+        color = Color.WHITE;
     }
   
     private BufferedImage loadImage(String path) throws IOException {
@@ -39,7 +45,7 @@ public class Image extends GameObject{
     public void render(Graphics g){
         switch(displayType){
             case normal :
-                g.drawImage(img, (int)x, (int)y,img.getWidth() * zoomLvl,img.getHeight() * zoomLvl, null);
+                g.drawImage(img, (int)x, (int)y,(int)(img.getWidth() * zoomLvl),(int)(img.getHeight() * zoomLvl),color, null);
                 break;
             case stretched :
                 g.drawImage(img, (int)x, (int)y, borderW, borderH, null);
@@ -47,7 +53,7 @@ public class Image extends GameObject{
                 for(int i = 0; i < Math.floor(borderH / (img.getHeight() * zoomLvl)+1);i++){
                     for(int j = 0; j < Math.floor(borderW / (img.getWidth() * zoomLvl)+1);j++){
                         if((int)x + j * img.getWidth() * zoomLvl - Game.player.x + img.getWidth() * zoomLvl > 0 - Game.ScreenWidth / 2 && (int)x + j * img.getWidth() * zoomLvl - Game.player.x < 0 + Game.ScreenWidth / 2 && (int)y  + i * img.getHeight() * zoomLvl - Game.player.y + img.getHeight() * zoomLvl > 0 - Game.ScreenHeight / 2 && (int)y  + i * img.getHeight() * zoomLvl - Game.player.y < 0 + Game.ScreenHeight / 2)
-                            g.drawImage(img, (int)x + j * img.getWidth() * zoomLvl,(int)y  + i * img.getHeight() * zoomLvl,img.getWidth() * zoomLvl,img.getHeight() * zoomLvl , null);
+                            g.drawImage(img, (int)x + j * (int)(img.getWidth() * zoomLvl),(int)y  + i * (int)(img.getHeight() * zoomLvl),(int)(img.getWidth() * zoomLvl),(int)(img.getHeight() * zoomLvl) ,color, null);
                     }
                 }
                 if(Game.debug){
@@ -55,14 +61,6 @@ public class Image extends GameObject{
                     g.drawRect((int)x, (int)y, borderW, borderH);
                 }
         }
-    }
-
-    private BufferedImage clippedImage(BufferedImage img,int i,int j){
-        int width, height;
-        System.out.println(img.getWidth());
-        width = img.getWidth() * zoomLvl * (j ) > borderW? borderW - zoomLvl * img.getWidth() * (j ):img.getWidth();
-        height = img.getHeight() * zoomLvl * (i) > borderH? borderH - zoomLvl * img.getHeight() * (i ):img.getHeight();
-        return img.getSubimage(0,0,width / zoomLvl,height / zoomLvl);
     }
 }
 

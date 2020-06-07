@@ -1,10 +1,11 @@
-package Source.Engine.UI;
+package Source.Engine.UI.Buttons;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import Source.Engine.Handler;
 import Source.Engine.ID;
+import Source.Engine.UI.UIImage;
+import Source.Engine.UI.button;
 
 public class exitButton extends button {
 
