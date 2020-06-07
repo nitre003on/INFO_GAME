@@ -6,7 +6,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import Source.Engine.Graphics.Image;
 import Source.Engine.Graphics.squareImage;
 import Source.Engine.Graphics.Image.displayTypes;
-import Source.Engine.Graphics.Image;
 import Source.World.Game;
 import Source.World.GameObject;
 import Source.World.GameObjects.Wall;

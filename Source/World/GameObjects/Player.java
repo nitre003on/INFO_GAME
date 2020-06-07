@@ -3,22 +3,16 @@ package Source.World.GameObjects;
 import java.awt.Color;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 import Source.Engine.Direction;
 import Source.Engine.Handler;
 import Source.Engine.ID;
-import Source.Engine.Vector2;
 import Source.Engine.Graphics.animationHandler;
 import Source.Engine.UI.HUD;
 import Source.World.Game;
 import Source.World.GameObject;
 import Source.World.GameObjects.BulletTypes.Shot;
-
-import java.util.Scanner;
 
 public class Player extends GameObject {
   

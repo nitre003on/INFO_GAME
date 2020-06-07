@@ -3,11 +3,8 @@ package Source.World;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-import Source.Engine.Direction;
 import Source.Engine.Handler;
 import Source.Engine.ID;
-import Source.World.GameObjects.BulletTypes.Shot;
-import Source.World.GameObjects.Player;
 
 public abstract class GameObject 
 {

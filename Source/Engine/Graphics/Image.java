@@ -59,13 +59,5 @@ public class Image extends GameObject{
                 }
         }
     }
-
-    private BufferedImage clippedImage(BufferedImage img,int i,int j){
-        int width, height;
-        System.out.println(img.getWidth());
-        width = img.getWidth() * zoomLvl * (j ) > borderW? borderW - zoomLvl * img.getWidth() * (j ):img.getWidth();
-        height = img.getHeight() * zoomLvl * (i) > borderH? borderH - zoomLvl * img.getHeight() * (i ):img.getHeight();
-        return img.getSubimage(0,0,width / zoomLvl,height / zoomLvl);
-    }
 }
 

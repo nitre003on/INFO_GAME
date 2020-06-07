@@ -3,7 +3,6 @@ package Source.World.GameObjects;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.awt.event.HierarchyBoundsAdapter;
 
 import Source.World.Game;
 import Source.Engine.Handler;
