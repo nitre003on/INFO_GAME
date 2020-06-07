@@ -47,7 +47,7 @@ public class Game extends Canvas implements Runnable
   private Thread thread;
   private boolean running = false;
   
-  public static boolean debug = true;        //Wenn debug true ist werden alle debug funktionen ausgeführt
+  public static boolean debug = false;        //Wenn debug true ist werden alle debug funktionen ausgeführt
   
   public void play(){
     curState = states.play;
