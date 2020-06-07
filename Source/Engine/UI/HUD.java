@@ -6,11 +6,16 @@ import java.util.LinkedList;
 
 import Source.Engine.Handler;
 import Source.Engine.ID;
+import Source.Engine.Vector2;
+import Source.Engine.Graphics.Image;
+import Source.Engine.Graphics.particleHandler;
+import Source.Engine.Graphics.Image.displayTypes;
 import Source.Engine.UI.Buttons.exitButton;
 import Source.Engine.UI.Buttons.playButton;
 import Source.Engine.UI.Buttons.resumeButton;
 import Source.World.Game;
 import Source.World.GameObject;
+import javafx.scene.shape.Rectangle;
 
 public class HUD {
   
@@ -21,8 +26,14 @@ public class HUD {
   private float greenValue = 255;
   private int score = 0;
   private int level = 1;                                        //Gr�nwert, score, level
-  
+  private particleHandler ph;
+
+  public HUD(){
+    ph = new particleHandler(new Rectangle(0,Game.ScreenHeight -10,Game.ScreenWidth - 50,1), 3, new Vector2(0, -10), 50, Color.black, new Color(88,126,224,255));
+  }
+
   public void tick() {
+    ph.tick();
     HEALTH = Game.clamp(HEALTH, 0, 100);
     greenValue = Game.clamp(greenValue, 0, 255);                            //Gr�nwert und Leben werden nur in ihren Grenzen bleiben
     greenValue = HEALTH*2;
@@ -35,6 +46,8 @@ public class HUD {
   }
   
   public void render(Graphics g) {
+    if(Game.curState == Game.states.menu)
+      ph.render(g);
     for (int i = 0; i < UIobj.size(); i++) {
       GameObject tempObject = UIobj.get(i);
       tempObject.render(g);
@@ -63,6 +76,7 @@ public class HUD {
   }
 
   public void drawMenu(Game game){
+    ph.play();
     int width = Game.ScreenWidth;
     int height = Game.ScreenHeight;
     button exit = new exitButton(width / 3 - 170*2 / 2,(int)(height * 0.7),170 * 2,38 * 2,ID.UI, handler);

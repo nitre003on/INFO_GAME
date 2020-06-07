@@ -78,10 +78,10 @@ public class KeyInput extends KeyAdapter{
       }
     }
     if(key == KeyEvent.VK_ESCAPE){
-      if(Game.curState != Game.states.paused){
+      if(Game.curState == Game.states.play){
         Game.curState = Game.states.paused;
         Game.hud.drawPause();
-      }else{
+      }else if(Game.curState == Game.states.paused){
         Game.hud.clearQueue();
         Game.curState = Game.states.play;
       }
