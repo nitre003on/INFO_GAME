@@ -16,7 +16,7 @@ public class Door extends GameObject{
   public float TPLocX, TPLocY;  //Position an die der Spieler fuer die andere Tuer teleportiert werden soll
   public int teleportID;        //ID um zwei Tueren zu verbinden
   private int doorFacing;       //0 = norden, 1 = osten, 2 = sueden, 3 = westen.
-  public int[] roomBounds;
+  public int[] roomBounds;      //Um die Tuer zu oder auf zu machen
   public boolean isOpen;
   
   //Konstruktor
@@ -46,11 +46,12 @@ public class Door extends GameObject{
   
   public void teleport(Player player, int door) {
     for (int i = 0; i < handler.objects.size(); i++) {         
-      if(handler.objects.get(i) instanceof Door){
+      if(handler.objects.get(i) instanceof Door){                        //Liste aller Objekte wird nach Tueren durchsucht
         Door tempDoor = (Door)handler.objects.get(i);  
-        if (i != door && tempDoor.teleportID == this.teleportID) {
+        if (i != door && tempDoor.teleportID == this.teleportID) {       //Die korrespondierende Tuer wird entnommen
           float tempX = tempDoor.TPLocX;
           float tempY = tempDoor.TPLocY;
+          //Anpassen der teleporter Werte
           if (this.doorFacing == 2) {
             tempX -= player.playerLength/2;
           }
@@ -66,7 +67,8 @@ public class Door extends GameObject{
             tempY -= player.playerHeight/2;
           }
           
-          player.x = tempX;
+          //Die Koordinaten des Spielers werden verändert
+          player.x = tempX;                                          
           player.y = tempY;
           if (Game.debug) {
             System.out.println("tempX: " + tempX);
@@ -79,6 +81,7 @@ public class Door extends GameObject{
   
   public boolean isUnlocked(){
     boolean isUnlocked = true;
+    //Hier wird überprüft ob sich noch Gegner in dem Raum befinden an dem sich diese Tuer befindet
     for (int i = 0; i < Game.handler.enemies.size(); i++) {
       GameObject tempObject = Game.handler.enemies.get(i);
       if (inRange((int)tempObject.x, this.roomBounds[0], this.roomBounds[0] + this.roomBounds[2]) && inRange((int)tempObject.y, this.roomBounds[1], this.roomBounds[1] + this.roomBounds[3])) {
@@ -95,6 +98,7 @@ public class Door extends GameObject{
     }
   }
   
+  //Einfache methode um zu gucken ob ein Wert zwischen zwei anderen Werten liegt
   public boolean inRange(int toCheck, int start, int end){
     boolean inRange = false;
     if (start <= toCheck && toCheck <= end) {
@@ -104,6 +108,7 @@ public class Door extends GameObject{
   }
   
   public void render(Graphics g) {
+    //Farbe wird dem Status der Tuer angepasst
     if (isOpen) {
       g.setColor(Color.blue);
     }
