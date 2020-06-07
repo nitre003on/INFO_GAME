@@ -86,7 +86,7 @@ public class HUD {
     addObject(play);
   }
 
-  public void clearQueue(){UIobj.clear();}
+  public void clearQueue(){UIobj.clear();ph.pause();}
 
   public void score(int score) {
     this.score = score;
