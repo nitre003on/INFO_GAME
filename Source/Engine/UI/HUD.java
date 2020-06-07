@@ -15,30 +15,30 @@ import Source.Engine.UI.Buttons.playButton;
 import Source.Engine.UI.Buttons.resumeButton;
 import Source.World.Game;
 import Source.World.GameObject;
-import javafx.scene.shape.Rectangle;
+import java.awt.Rectangle;
 
 public class HUD {
   
   public static float HEALTH = 100;                         //Leben
   LinkedList<GameObject> UIobj = new LinkedList<GameObject>();
-
+  
   private Handler handler;
   private float greenValue = 255;
   private int score = 0;
   private int level = 1;                                        //Gr�nwert, score, level
   private particleHandler ph;
-
+  
   public HUD(){
     ph = new particleHandler(new Rectangle(0,Game.ScreenHeight -10,Game.ScreenWidth - 50,1), 3, new Vector2(0, -10), 50, Color.black, new Color(88,126,224,255));
   }
-
+  
   public void tick() {
     ph.tick();
     HEALTH = Game.clamp(HEALTH, 0, 100);
     greenValue = Game.clamp(greenValue, 0, 255);                            //Gr�nwert und Leben werden nur in ihren Grenzen bleiben
     greenValue = HEALTH*2;
     //score++;
-
+    
     for(int i = 0; i<UIobj.size(); i++) {
       GameObject tempObject = UIobj.get(i);
       tempObject.tick();

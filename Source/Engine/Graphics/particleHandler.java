@@ -6,7 +6,7 @@ import Source.Engine.ID;
 import Source.Engine.Vector2;
 import Source.World.Game;
 import java.awt.Color;
-import javafx.scene.shape.Rectangle;
+import java.awt.Rectangle;
 import java.util.Random;
 import java.awt.Graphics;
 
