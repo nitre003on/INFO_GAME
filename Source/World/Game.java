@@ -61,14 +61,12 @@ public class Game extends Canvas implements Runnable
   private Thread thread;
   private boolean running = false;
   private int[] items = {1,0,0,0}; 
-  private Spawn spawn;
   
   public static boolean debug = false;        //Wenn debug true ist werden alle debug funktionen ausgeführt
   
   public void play(){
     curState = states.play;
     player = new Player(1150, 1150, ID.Player, handler, Direction.None);
-    spawn = new Spawn(handler, hud);
     player = new Player(1150, 1150, ID.Player, handler, Direction.None);
     gun = new Gun(1250, 1250, ID.Item, handler);
     shotgun = new Shotgun(1250, 1400, ID.Item, handler);

@@ -51,8 +51,6 @@ public class Player extends GameObject {
       HUD.HEALTH += 50;
       itemPicked[0] = false;
       }
-    hitBox.x = (int)x; 
-    hitBox.y = (int)y;
     tempVelX = velX;
     tempVelY = velY;
     collision();
