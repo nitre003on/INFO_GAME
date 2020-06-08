@@ -11,6 +11,8 @@ import Source.World.Game;
 import Source.World.GameObject;
 import Source.World.GameObjects.BasicTrail;
 import Source.World.GameObjects.Door;
+import Source.World.GameObjects.Items.Ammo;
+import Source.World.GameObjects.Items.ShotgunAmmo;
 
 public class SmartEnemy extends GameObject{
   
@@ -39,6 +41,18 @@ public class SmartEnemy extends GameObject{
   }
   public void tick() {
     if (hp <= 0) {
+      int r = Game.ranInt(0, 3);
+      switch (r) {
+        case 0 : 
+          handler.addObject(new Ammo((int)x, (int)y, ID.Item, handler));
+          break;
+        case 1 : 
+          handler.addObject(new ShotgunAmmo((int)x, (int)y, ID.Item, handler));
+          break;
+        default: 
+          
+      }
+      
       handler.removeEnemy(this);
       for (int e = 0; e < Game.handler.objects.size(); e++) {
         GameObject tempObject2 = Game.handler.objects.get(e);

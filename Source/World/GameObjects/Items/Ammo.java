@@ -32,7 +32,7 @@ public class Ammo extends GameObject {
   }
   
   public Rectangle getBounds() {
-    return new Rectangle((int)x,(int)y,width,height);                                            //Methode um die Umrisse zu kriegen
+    return new Rectangle((int)x,(int)y,8,8);                                            //Methode um die Umrisse zu kriegen
   }
   
   public void tick() {

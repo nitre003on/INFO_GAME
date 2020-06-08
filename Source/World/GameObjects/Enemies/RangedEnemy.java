@@ -110,7 +110,7 @@ public class RangedEnemy extends GameObject{
   }   
   public void checkhp () {
     if (hp<1) {
-      int r = Game.ranInt(0, 1);
+      int r = Game.ranInt(0, 3);
       switch (r) {
         case 0 : 
           handler.addObject(new Ammo((int)x, (int)y, ID.Item, handler));
