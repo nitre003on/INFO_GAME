@@ -201,7 +201,7 @@ public class DungeonGeneration {
     //Werte des Raumes werden entnommen um sie den Tueren mitzugeben
     int[] roomBounds = {posX, posY, length, height};
     //bedecke bereiche außerhalb des Raumes um den überstehenden Boden zu verstecken
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length, posY), new Vector2(height, 200),Color.BLACK, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length, posY), new Vector2(height + 150, 200),Color.BLACK, ID.Image, Game.handler));
     Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height), new Vector2(200, length + 158),Color.BLACK, ID.Image, Game.handler));
     //boden einfügen
     Game.handler.addObjectAsBG(new Image("Content\\Environment\\floor.png", new Vector2(posX, posY), new Vector2(height, length), 2, displayTypes.tiled, ID.Image, Game.handler));
@@ -361,7 +361,7 @@ public class DungeonGeneration {
           int ran3X = getRandomInt(wallThicc, length - wallThicc - RangedEnemy.RangedEnemySize);
           int ran3Y = getRandomInt(wallThicc, height - wallThicc - RangedEnemy.RangedEnemySize);
           
-          GameObject tempEnemy3 = new RangedEnemy(posX + ran3X, posY + ran3Y, RangedEnemy.RangedEnemySize, RangedEnemy.RangedEnemySize,ID.RangedEnemy, Game.handler, RangedEnemy.usualCooldown);
+          GameObject tempEnemy3 = new RangedEnemy(posX + ran3X, posY + ran3Y, ID.RangedEnemy, Game.handler, RangedEnemy.usualCooldown);
           //Einfuegen des Gegners
           Game.handler.addEnemy(tempEnemy3);
           
@@ -392,7 +392,6 @@ public class DungeonGeneration {
     Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height*3), new Vector2(200, length * 3),Color.BLACK, ID.Image, Game.handler));
     //boden einfügen
     Game.handler.addObjectAsBG(new Image("Content\\Environment\\floor.png", new Vector2(posX, posY), new Vector2(height * 3, length * 3), 2, Source.Engine.Graphics.Image.displayTypes.tiled, ID.Image, Game.handler));
-    
     //Erstellen der Waende welche keine Tueren haben k�nnen
     Game.handler.addObject(new Wall(posX + length - wallThicc, posY, ID.Wall, Game.handler, wallThicc, height));
     Game.handler.addObject(new Wall(posX + length*2, posY, ID.Wall, Game.handler, wallThicc, height));
@@ -585,7 +584,7 @@ public class DungeonGeneration {
           else {
             ran3Y = getRandomInt(wallThicc, height*3 - wallThicc - RangedEnemy.RangedEnemySize);
           }
-          GameObject tempEnemy3 = new RangedEnemy(posX + ran3X, posY + ran3Y, RangedEnemy.RangedEnemySize, RangedEnemy.RangedEnemySize, ID.RangedEnemy, Game.handler, RangedEnemy.usualCooldown);
+          GameObject tempEnemy3 = new RangedEnemy(posX + ran3X, posY + ran3Y, ID.RangedEnemy, Game.handler, RangedEnemy.usualCooldown);
           //Einfuegen des Gegners
           Game.handler.addEnemy(tempEnemy3);
           //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint

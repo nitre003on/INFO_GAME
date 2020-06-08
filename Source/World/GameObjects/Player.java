@@ -77,7 +77,7 @@ public class Player extends GameObject {
     //Kollision mit Gegnern
     for (int i = 0; i < handler.enemies.size(); i++) {
       GameObject tempObject = handler.enemies.get(i);
-      if (tempObject.getID()==ID.BasicEnemy || tempObject.getID()==ID.FastEnemy||tempObject.getID()==ID.SmartEnemy || tempObject.getID() == ID.EnemyShot) {
+      if (tempObject.getID()==ID.BasicEnemy || tempObject.getID()==ID.FastEnemy||tempObject.getID()==ID.SmartEnemy || tempObject.getID() == ID.RangedEnemy) {
         if(getBounds().intersects(tempObject.getBounds())) {
           //collision code
           HUD.HEALTH -=2;                                                   //Das passiert, wenn man mit einer Art Gegner "kollidiert"(sich ueberschneidet)
