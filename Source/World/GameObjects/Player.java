@@ -71,10 +71,13 @@ public class Player extends GameObject {
     //Kollision mit Gegnern
     for (int i = 0; i < handler.enemies.size(); i++) {
       GameObject tempObject = handler.enemies.get(i);
-      if (tempObject.getID()==ID.BasicEnemy || tempObject.getID()==ID.FastEnemy||tempObject.getID()==ID.SmartEnemy) {
+      if (tempObject.getID()==ID.BasicEnemy || tempObject.getID()==ID.FastEnemy||tempObject.getID()==ID.SmartEnemy || tempObject.getID() == ID.EnemyShot) {
         if(getBounds().intersects(tempObject.getBounds())) {
           //collision code
           HUD.HEALTH -=2;                                                   //Das passiert, wenn man mit einer Art Gegner "kollidiert"(sich ueberschneidet)
+          if (tempObject.getID() == ID.EnemyShot) {
+            HUD.HEALTH -= 8;
+          }
         }
       }
       /*if(tempObject.getID()==ID.Item){
@@ -86,7 +89,7 @@ public class Player extends GameObject {
     
     //Kollision mit wand und Tuer
     this.x += velX;  //X Kollision
-    for (int i = 0; velX != 0 && i < handler.objects.size();i++) {         
+    for (int i = 0; i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
       if(tempObject instanceof Wall) { 
         if (this.getBounds().intersects(tempObject.getBounds())) {
@@ -99,6 +102,13 @@ public class Player extends GameObject {
           }                                                                       //Wenn dies der Fall ist, dann nähert sie den Spieler an die Wand ran.
           this.x -= Math.signum(velX);  
           velX = 0;
+        }
+      }
+      
+      if (tempObject.getID() == ID.EnemyShot) {
+        if (this.getBounds().intersects(tempObject.getBounds())) {
+          HUD.HEALTH -= 10;
+        Game.handler.removeObject(tempObject);
         }
       }
     }

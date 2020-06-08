@@ -13,6 +13,7 @@ import Source.World.GameObject;
 import Source.World.GameObjects.BasicTrail;
 import Source.Engine.Vector2;
 import Source.World.GameObjects.BulletTypes.DirectionalShot;
+import Source.World.GameObjects.Door;
 
 
 public class RangedEnemy extends GameObject{
@@ -21,17 +22,19 @@ public class RangedEnemy extends GameObject{
   int hp = 15;
   float ms;
   int cooldown;
+  public static int usualCooldown = 60;
   boolean aggroed = false;
   
   public static int RangedEnemySize = 32;
   
-  public RangedEnemy(int x, int y, int w, int h, ID id, Handler handler) {
+  public RangedEnemy(int x, int y, int w, int h, ID id, Handler handler, int cooldown) {
     super(x,y,w,h,id,handler);
     hitBox = new Rectangle((int)x,(int)y,w,h);
     velX = 2;
     velY = 2;
     Vector2 v = new Vector2(velX,velY);
     ms = (float) v.getLength();
+    this.cooldown = cooldown;
   }
   public void collision() {
     float velx = velX;
@@ -70,26 +73,34 @@ public class RangedEnemy extends GameObject{
     y = hitBox.y; 
   }
   public void attackmovement() {
-    Vector2 direction = Vector2.directionalvector(new Vector2(Game.player.getX()+40, Game.player.getY()+15),new Vector2(x,y));
+    Vector2 direction = Vector2.directionalvector(new Vector2(Game.player.getX()+Game.player.playerLength/2, Game.player.getY()+Game.player.playerHeight/2),new Vector2(x,y));
     velX= (int)(direction.x*ms);     // Bewegt sich in richtung des Spielers ohner Ruecksicht auf Waende 
     velY=(int) (direction.y*ms);
   }
   public void kite() {
     //Bewegt sich vom Gegner Weg
-    Vector2 direction = Vector2.directionalvector(new Vector2(Game.player.getX()+40, Game.player.getY()+15),new Vector2(x,y));
+    Vector2 direction = Vector2.directionalvector(new Vector2(Game.player.getX()+Game.player.playerLength/2, Game.player.getY()+Game.player.playerHeight/2),new Vector2(x,y));
     velX = -1*direction.x*ms;
     velY = -1* direction.y*ms;
   }
   public void shootatplayer () {
-    Vector2 v =  Vector2.directionalvector(new Vector2(Game.player.getX()+40, Game.player.getY()+15),new Vector2(x,y));
+    Vector2 v =  Vector2.directionalvector(new Vector2(Game.player.getX()+Game.player.playerLength/2, Game.player.getY()+Game.player.playerHeight/2),new Vector2(x,y));
     Vector2 offset = v;
     offset.normalize();
     offset.scale(50);
-    handler.addObject(new DirectionalShot(this,offset,v,new Vector2 (x,y),ID.Shot,handler));  // ersellte einen neues Schussobjekt in Richting des Spielers
+    handler.addObject(new DirectionalShot(this,offset,v,new Vector2 (x,y),ID.EnemyShot,handler));  // ersellte einen neues Schussobjekt in Richting des Spielers
   }   
   public void checkhp () {
     if (hp<1) {
-      handler.removeObject(this);
+      handler.removeEnemy(this);
+      
+      for (int e = 0; e < Game.handler.objects.size(); e++) {
+        GameObject tempObject2 = Game.handler.objects.get(e);
+        if (tempObject2 instanceof Door) {
+          Door tempDoor = (Door)tempObject2;
+          tempDoor.checkIfOpen();
+        }
+      }
     } // end of if
   }
   public void render(Graphics g) {
