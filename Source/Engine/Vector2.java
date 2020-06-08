@@ -28,7 +28,7 @@ public class Vector2 {
     }
     
     public static Vector2 getPos(GameObject g) {
-    return new Vector2(g.x,g.y);
+    return new Vector2(g.getX(),g.getY());
     }
     
     public void set(Vector2 a) {

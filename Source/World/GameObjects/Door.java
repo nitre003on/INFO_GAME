@@ -63,8 +63,8 @@ public class Door extends GameObject{
             tempY -= player.playerHeight/2;
           }
           
-          player.x = tempX;
-          player.y = tempY;
+          player.setX(tempX);
+          player.setY(tempY);
         }
       } 
     }

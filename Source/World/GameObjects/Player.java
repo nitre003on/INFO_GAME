@@ -30,7 +30,8 @@ public class Player extends GameObject {
   
   private animationHandler ah;
   
-  public static boolean[] itemPicked = new boolean[2];
+  public static boolean[] itemPicked = new boolean[/*Game.amountOfDiffItems*/4];
+  public static boolean[] chestOpened = new boolean[1];
   
   public static int playerLength = 30;
   public static int playerHeight = 80;
@@ -51,7 +52,10 @@ public class Player extends GameObject {
   }
   
   public void tick() {
-    if(itemPicked[0]) HUD.HEALTH += 50;
+    if(itemPicked[0]){
+      HUD.HEALTH += 50;
+      itemPicked[0] = false;
+      }
     hitBox.x = (int)x; 
     hitBox.y = (int)y;
     tempVelX = velX;
@@ -60,10 +64,10 @@ public class Player extends GameObject {
     if(velX == 0 && velY == 0){
       ah.playAnimation("idle", 0, false, true);
     }else if (ah.curPlaying != "walk"){
-      ah.playAnimation("walk", 0.05f, true, false);
-    }
+        ah.playAnimation("walk", 0.05f, true, false);
+      }
     if(velX > 0){ ah.faceLeft(); }
-    else if (velX < 0){ ah.faceRight(); }
+      else if (velX < 0){ ah.faceRight(); }
     ah.tick();
     x+=velX;                                                          //Bewegungsrichtumg
     y+=velY; 
@@ -71,7 +75,7 @@ public class Player extends GameObject {
     velY = tempVelY;                                                          
     x=Game.clamp(x, 0, Game.WIDTH-this.playerLength);                                              //das innerhalb des Fensters bleiben
     y=Game.clamp(y, 0, Game.HEIGHT-this.playerHeight);
-    //handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.white, 32, 32, 0.08f, handler));             //"Schwanz" ran h�ngen                                                  
+    //handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.blue, 32, 32, 0.08f, handler));             //"Schwanz" ran h�ngen                                                  
   }
   
   public void collision() {
@@ -158,6 +162,10 @@ public class Player extends GameObject {
     if(itemPicked[1]){
       g.setColor(Color.orange);
       g.fillRect((int)x+26, (int)y+26, 16,16);
+    }
+    if(itemPicked[2]){
+      g.setColor(Color.orange);
+      g.fillRect((int)x+26, (int)y+26, 32,16);
     } 
     ah.draw(g, (int)x, (int)y, -40, -10,100);
   }

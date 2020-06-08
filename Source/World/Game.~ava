@@ -26,6 +26,7 @@ import Source.World.GameObjects.Items.HealingPotionM;
 import Source.World.GameObjects.Items.Chest;
 import Source.World.GameObjects.Items.Shotgun;
 import Source.World.GameObjects.Items.Scroll;
+import Source.World.GameObjects.Enemies.BasicEnemy;
 
 public class Game extends Canvas implements Runnable
 {

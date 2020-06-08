@@ -18,36 +18,36 @@ import Source.World.GameObjects.BulletTypes.Shot;
 
 import java.util.Scanner;
 
-public class Gun extends GameObject {
+public class Shotgun extends GameObject {
   
   boolean picked = false;
   Direction direction;
-  public int totalAmmo = 90;
-  public int magazin = 30;
+  public int totalAmmo = 30;
+  public int magazin = 5;
   public boolean empty = false;
   
-  public Gun(int x, int y, ID id, Handler handler) {
+  public Shotgun(int x, int y, ID id, Handler handler) {
     super(x, y, id, handler);
   }
   
   public Rectangle getBounds() {
-    return new Rectangle((int)x,(int)y,16,16);                                            //Methode um die Umrisse zu kriegen
+    return new Rectangle((int)x,(int)y,32,16);                                            //Methode um die Umrisse zu kriegen
   }
   
   public void tick() {
     collision();
     
     if(picked){
-      Game.player.itemPicked[1] = true;
+      Player.itemPicked[2] = true;
       handler.removeObject(this);
-      if(Game.player.itemPicked[2]){
-        int tempMag = Game.shotgun.magazin;
-        int tempTA = Game.shotgun.totalAmmo;
-        Game.shotgun = new Shotgun((int)Game.player.getX()+30,(int)Game.player.getY(),ID.Item,handler);
-        Game.shotgun.magazin = tempMag;
-        Game.shotgun.totalAmmo = tempTA; 
-        handler.addObject(Game.shotgun);
-        Game.player.itemPicked[2] = false;
+      if(Game.player.itemPicked[1]){
+        int tempMag = Game.gun.magazin;
+        int tempTA = Game.gun.totalAmmo;
+        Game.gun = new Gun((int)Game.player.getX()+30,(int)Game.player.getY(),ID.Item,handler);
+        Game.gun.magazin = tempMag;
+        Game.gun.totalAmmo = tempTA; 
+        handler.addObject(Game.gun);
+        Game.player.itemPicked[1] = false;
         }
       }
     x+=velX;                                                          //Bewegungsrichtumg
@@ -78,13 +78,8 @@ public class Gun extends GameObject {
   
   
   public void render(Graphics g) {
-    
-    /*Graphics2D g2d = (Graphics2D) g;
-    g.setColor(Color.green);
-    g2d.draw(getBounds());*/
-    /*if(id == ID.Player)*/g.setColor(Color.orange);
-    g.fillRect((int)x, (int)y, 16, 16);                                                   // Form wird ge"zeichnet"
-    
+    g.setColor(Color.orange);
+    g.fillRect((int)x, (int)y, 32, 16);                                                   // Form wird ge"zeichnet"
   }
   
   

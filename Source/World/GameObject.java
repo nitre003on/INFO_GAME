@@ -13,7 +13,7 @@ public abstract class GameObject
 {
   protected ID id;
   protected float velX, velY;
-  public float x,y;
+  protected float x,y;
   public boolean dash;
   public Handler handler;
   
@@ -31,11 +31,11 @@ public abstract class GameObject
   
   public abstract Rectangle getBounds();
     
-  public void setX(int x) {
+  public void setX(float x) {
     this.x = x; 
   }
   
-  public void setY(int y) {
+  public void setY(float y) {
     this.y = y;
   }
 

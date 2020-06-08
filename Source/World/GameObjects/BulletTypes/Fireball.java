@@ -10,7 +10,7 @@ import Source.Engine.Vector2;
 import Source.World.GameObject;
 import Source.World.GameObjects.BasicTrail;
 
-public class DirectionalShot extends Shot{  //Schuss in richtung Maus (Piet)
+public class Fireball extends Shot{  //Schuss in richtung Maus (Piet)
   
   private Vector2 dir = new Vector2(0,0);
   private GameObject owner;
@@ -18,22 +18,22 @@ public class DirectionalShot extends Shot{  //Schuss in richtung Maus (Piet)
   
   Rectangle hitBox;
   
-  public DirectionalShot(GameObject owner, Vector2 target, ID id, Handler handler) {
+  public Fireball(GameObject owner, Vector2 target, ID id, Handler handler) {
     super((int)owner.getX(), (int)owner.getY(), null, id, handler);
     dir = Vector2.subtract(target, Vector2.getPos(owner));
     speed = 15;
     this.owner = owner;
     dir.normalize();
-    hitBox = new Rectangle((int)x, (int)y, 16, 16);
+    hitBox = new Rectangle((int)x, (int)y, 64, 64);
   }
 
-  public DirectionalShot(GameObject owner,Vector2 offset, Vector2 target, ID id, Handler handler) {
+  public Fireball(GameObject owner,Vector2 offset, Vector2 target, ID id, Handler handler) {
     super((int)owner.getX() + (int)offset.x, (int)owner.getY() + (int)offset.y, null, id, handler);
     dir = Vector2.subtract(target, Vector2.getPos(owner));
     speed = 15;
     this.owner = owner;
     dir.normalize();
-    hitBox = new Rectangle((int)x, (int)y, 16, 16);
+    hitBox = new Rectangle((int)x, (int)y, 64, 64);
   }
   
   public void tick() {
@@ -42,7 +42,7 @@ public class DirectionalShot extends Shot{  //Schuss in richtung Maus (Piet)
     collision();
     x += dir.x * speed;
     y += dir.y * speed;
-    handler.addObject(new BasicTrail((int)x+4, (int)y+4, ID.Trail, Color.blue, 8, 8, 0.08f, handler));
+    handler.addObject(new BasicTrail((int)x+16, (int)y+16, ID.Trail, Color.red, 32, 32, 0.08f, handler));
     if(despawnTimer < 0){handler.removeObject(this);}
     else{despawnTimer--;}
   }
@@ -79,7 +79,7 @@ public class DirectionalShot extends Shot{  //Schuss in richtung Maus (Piet)
     } 
   }
   public void render(Graphics g) {
-    g.setColor(Color.blue);
-    g.fillRect((int)x, (int)y, 16, 16);                                                                   //Darstellung
+    g.setColor(Color.red);
+    g.fillRect((int)x, (int)y, 64, 64);                                                                   //Darstellung
   }
 }

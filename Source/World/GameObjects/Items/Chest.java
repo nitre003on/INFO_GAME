@@ -18,50 +18,45 @@ import Source.World.GameObjects.BulletTypes.Shot;
 
 import java.util.Scanner;
 
-public class Gun extends GameObject {
+public class Chest extends GameObject {
   
-  boolean picked = false;
+  int picked = 0;
+  boolean open = false;
   Direction direction;
-  public int totalAmmo = 90;
-  public int magazin = 30;
-  public boolean empty = false;
   
-  public Gun(int x, int y, ID id, Handler handler) {
+  public static int[] items = new int[Game.amountOfDiffItems];
+  
+  public Chest(int x, int y, ID id, Handler handler, int[] items) {
     super(x, y, id, handler);
+    this.items = items;
   }
   
   public Rectangle getBounds() {
-    return new Rectangle((int)x,(int)y,16,16);                                            //Methode um die Umrisse zu kriegen
+    return new Rectangle((int)x,(int)y,64,48);                                            //Methode um die Umrisse zu kriegen
   }
   
   public void tick() {
     collision();
-    
-    if(picked){
-      Game.player.itemPicked[1] = true;
-      handler.removeObject(this);
-      if(Game.player.itemPicked[2]){
-        int tempMag = Game.shotgun.magazin;
-        int tempTA = Game.shotgun.totalAmmo;
-        Game.shotgun = new Shotgun((int)Game.player.getX()+30,(int)Game.player.getY(),ID.Item,handler);
-        Game.shotgun.magazin = tempMag;
-        Game.shotgun.totalAmmo = tempTA; 
-        handler.addObject(Game.shotgun);
-        Game.player.itemPicked[2] = false;
+    if(picked==1){
+      Player.chestOpened[0] = true;
+      if(items[0]==1) {
+        handler.addObject(new HealingPotionM((int)x, (int)y-60, ID.Item, handler));
+        picked = 2;
         }
-      }
+    }  
     x+=velX;                                                          //Bewegungsrichtumg
     y+=velY;                                                          
     x=Game.clamp(x, 0, Game.WIDTH-16);                                              //das innerhalb des Fensters bleiben
     y=Game.clamp(y, 0, Game.HEIGHT-16);
-    }
+  }
   
   public void collision() {
     for (int i = 0; i < handler.objects.size(); i++) {
       GameObject tempObject = handler.objects.get(i);
       if (tempObject.getID()==ID.Player) {
         if(getBounds().intersects(tempObject.getBounds())) {
-          picked = true;
+          picked += 1;
+          open = true;
         }
       }
     } 
@@ -82,10 +77,16 @@ public class Gun extends GameObject {
     /*Graphics2D g2d = (Graphics2D) g;
     g.setColor(Color.green);
     g2d.draw(getBounds());*/
-    /*if(id == ID.Player)*/g.setColor(Color.orange);
-    g.fillRect((int)x, (int)y, 16, 16);                                                   // Form wird ge"zeichnet"
+    /*if(id == ID.Player)*/
+    g.setColor(new Color(210,105,30));
+    if(open){
+      g.fillRect((int)x+30, (int)y, 64, 16);
+      g.fillRect((int)x, (int)y+16, 64, 32); 
+    }else{
+      g.fillRect((int)x, (int)y, 64, 48);                                                   // Form wird ge"zeichnet"
+    }
     
   }
-  
-  
+        
+        
 }
