@@ -7,20 +7,27 @@ zu kreieren mit tick- und render Loops, Animationshandler und weiteres.
 
 Arbeitsverteilung (Unter verwendung der Lernraum Benutzernamen):
 
-hieronymus:
--Kamera
--FPS cap
--DungeonGeneration
--Door
--Kollision
+**hieronymus:**  
+-Kamera  
+-FPS cap  
+-DungeonGeneration  
+-Door  
+-Kollision (mit den Wänden) 
 
-Piet:
--alle Sprites
--animationsHandler
--Vector2
--Image / UIImage
--button (und kinder)
--particleHandler
--Game states (menu, pause)
+**Piet (Rusting Robot):**  
+-alle Sprites  
+-animationsHandler  
+-Vector2  
+-Image / UIImage  
+-button (und kinder)  
+-particleHandler  
+-Game states (menu, pause) 
+
+**Nik:**
+-alle Items
+-den Rest vom Player
+-KeyInput
+-Grundgerüst des Spieles(also alles, was schon im Pitch war)
+
 
 
