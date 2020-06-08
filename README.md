@@ -24,11 +24,11 @@ Arbeitsverteilung (Unter verwendung der Lernraum Benutzernamen):
 -particleHandler  
 -Game states (menu, pause) 
 
-**Nik:**
--alle Items
--den Rest vom Player
--KeyInput
--Grundgerüst des Spieles(also alles, was schon im Pitch war)
+**Nik:**  
+-alle Items  
+-den Rest vom Player  
+-KeyInput  
+-Grundgerüst des Spieles(also alles, was schon im Pitch war)  
 
 
 
