@@ -24,27 +24,44 @@ public class RangedEnemy extends GameObject{
   int cooldown;
   public static int usualCooldown = 60;
   boolean aggroed = false;
+  int cd;
   
-  public static int RangedEnemySize = 32;
+  public int RangedEnemySize;
   
-  public RangedEnemy(float x, float y, ID id, Handler handler, int cooldown) {
-    super(x,y,RangedEnemySize,RangedEnemySize,id,handler);
-    hitBox = new Rectangle((int)x,(int)y,RangedEnemySize,RangedEnemySize);
+  public RangedEnemy(float x, float y, ID id, Handler handler, int cooldown, int size) {
+    super(x,y,size,size,id,handler);
+    this.RangedEnemySize = size;
+    hitBox = new Rectangle((int)x,(int)y,size,size);
     velX = 2;
     velY = 2;
     Vector2 v = new Vector2(velX,velY);
     ms = (float) v.getLength();
     this.cooldown = cooldown;
+    cd = cooldown;
   }
+  
+  public RangedEnemy(float x, float y, ID id, Handler handler, int cooldown, int size, int hp) {
+    super(x,y,size,size,id,handler);
+    this.RangedEnemySize = size;
+    hitBox = new Rectangle((int)x,(int)y,size,size);
+    velX = 2;
+    velY = 2;
+    Vector2 v = new Vector2(velX,velY);
+    ms = (float) v.getLength();
+    this.cooldown = cooldown;
+    this.hp = hp;
+    cd = cooldown;
+  }
+  
   public void collision() {
-    x += velX;
-    y += velY;
+    hitBox.x += velX;
+    hitBox.y += velY;
     for (int i = 0;i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
       if(tempObject.getID()==ID.Wall || tempObject.getID()==ID.Door){ 
         if (hitBox.intersects(tempObject.getBounds())){ 
-          x -= velX;
-          y -= velY;
+          hitBox.x -= velX;
+          hitBox.y -= velY;
           while (!hitBox.intersects(tempObject.getBounds())){ 
             hitBox.x += Math.signum(velX);
             hitBox.y += Math.signum(velY); 
@@ -68,11 +85,9 @@ public class RangedEnemy extends GameObject{
           handler.removeObject(tempObject);
         } 
       }
-    }
-    hitBox.x += velX;
-    hitBox.y += velY; 
+    } 
     x = hitBox.x;
-    y = hitBox.y; 
+    y = hitBox.y;  
   }
   public void attackmovement() {
     Vector2 direction = Vector2.directionalvector(new Vector2(Game.player.getX()+Game.player.playerLength/2, Game.player.getY()+Game.player.playerHeight/2),new Vector2(x,y));
@@ -125,23 +140,23 @@ public class RangedEnemy extends GameObject{
       if (((int)x-range/2)<Game.player.getX()+40 && Game.player.getX()+40<((int)x+range/2) && ((int)y-range/2)<Game.player.getY() && Game.player.getY()<((int)y+range/2)) {
         // Gegner handlet je nach Entfernung zum Spieler unterschiedlich
         aggroed=true;
-        if (cooldown==0) {  // Cooldown im Schuesse zu limentieren
+        if (cd==0) {  // Cooldown im Schuesse zu limentieren
           shootatplayer();
-          cooldown = 60;
+          cd = this.cooldown;
         } // end of if 
         else {
           kite();
-          cooldown--;
+          cd--;
         } // end of if-else 
       } // end of if
       else if (((int)x-50-range/2)<Game.player.getX()+40 && Game.player.getX()+40<((int)x+50+range/2) && ((int)y-50-range/2)<Game.player.getY() && Game.player.getY()<((int)y+50+range/2)) {
         // Zwischenzone ohne Bewegung
-        if (cooldown==0) {
+        if (cd==0) {
           shootatplayer();
-          cooldown = 60;
+          cd = this.cooldown;
         } // end of if 
         else {
-          cooldown--;
+          cd--;
         } // end of if-else 
       }
       else {

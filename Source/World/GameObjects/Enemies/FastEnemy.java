@@ -17,6 +17,8 @@ public class FastEnemy extends GameObject{
   
   public static int FastEnemySize = 32;
   
+  private int hp = 10;
+  
   Rectangle hitBox;
   
   public FastEnemy(int x, int y, ID id, Handler handler) {
@@ -30,6 +32,16 @@ public class FastEnemy extends GameObject{
     return new Rectangle((int)x,(int)y,FastEnemySize,FastEnemySize);
   }                                                                       
   public void tick() {
+    if (hp <= 0) {
+      handler.removeEnemy(this);
+      for (int e = 0; e < Game.handler.objects.size(); e++) {
+        GameObject tempObject2 = Game.handler.objects.get(e);
+        if (tempObject2 instanceof Door) {
+          Door tempDoor = (Door)tempObject2;
+          tempDoor.checkIfOpen();
+        }
+      }
+    }
     hitBox.x = (int)x; 
     hitBox.y = (int)y;
     collision();
@@ -63,18 +75,12 @@ public class FastEnemy extends GameObject{
           } 
           hitBox.x -= Math.signum(velX); 
           //collision code
-          Game.handler.removeEnemy(this);
-          for (int e = 0; e < Game.handler.objects.size(); e++) {
-            GameObject tempObject2 = Game.handler.objects.get(e);
-            if (tempObject2 instanceof Door) {
-              Door tempDoor = (Door)tempObject2;
-              tempDoor.checkIfOpen();
-            }
-          }
+          hp -= 5;
+          handler.removeObject(tempObject);
         } 
       } 
     } 
-     
+    
     hitBox.y += velY; 
     for (int i = 0;i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
@@ -97,17 +103,11 @@ public class FastEnemy extends GameObject{
           } 
           hitBox.y -= Math.signum(velY); 
           //collision code
-          Game.handler.removeEnemy(this);
-          for (int e = 0; e < Game.handler.objects.size(); e++) {
-            GameObject tempObject2 = Game.handler.objects.get(e);
-            if (tempObject2 instanceof Door) {
-              Door tempDoor = (Door)tempObject2;
-              tempDoor.checkIfOpen();
-            }
-          } 
+          hp -= 5;
+          handler.removeObject(tempObject);
         } 
       } 
-    }
+    } 
   }
   
   public void render(Graphics g) {

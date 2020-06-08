@@ -18,6 +18,8 @@ public class SmartEnemy extends GameObject{
   
   public static int SmartEnemySize = 32;
   
+  private int hp = 10;
+  
   private GameObject player;
   
   Rectangle hitBox;
@@ -36,6 +38,16 @@ public class SmartEnemy extends GameObject{
     return new Rectangle((int)x,(int)y,SmartEnemySize,SmartEnemySize);                                                      //Grenzen werden entnommen
   }
   public void tick() {
+    if (hp <= 0) {
+      handler.removeEnemy(this);
+      for (int e = 0; e < Game.handler.objects.size(); e++) {
+        GameObject tempObject2 = Game.handler.objects.get(e);
+        if (tempObject2 instanceof Door) {
+          Door tempDoor = (Door)tempObject2;
+          tempDoor.checkIfOpen();
+        }
+      }
+    }
     hitBox.x = (int)x; 
     hitBox.y = (int)y; 
     collision();
@@ -61,7 +73,7 @@ public class SmartEnemy extends GameObject{
             hitBox.x += Math.signum(velX); 
           } 
           hitBox.x -= Math.signum(velX); 
-          velX = 0; 
+          velX *= -1; 
           x = hitBox.x; 
         } 
       }
@@ -73,18 +85,12 @@ public class SmartEnemy extends GameObject{
           } 
           hitBox.x -= Math.signum(velX); 
           //collision code
-          Game.handler.removeEnemy(this);
-          for (int e = 0; e < Game.handler.objects.size(); e++) {
-            GameObject tempObject2 = Game.handler.objects.get(e);
-            if (tempObject2 instanceof Door) {
-              Door tempDoor = (Door)tempObject2;
-              tempDoor.checkIfOpen();
-            }
-          }
+          hp -=5;
+          handler.removeObject(tempObject);
         } 
       } 
     } 
-     
+    
     hitBox.y += velY; 
     for (int i = 0;i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
@@ -95,7 +101,7 @@ public class SmartEnemy extends GameObject{
             hitBox.y += Math.signum(velY); 
           } 
           hitBox.y -= Math.signum(velY); 
-          velY = 0; 
+          velY *= -1; 
           y = hitBox.y; 
         } 
       }
@@ -107,17 +113,11 @@ public class SmartEnemy extends GameObject{
           } 
           hitBox.y -= Math.signum(velY); 
           //collision code
-          Game.handler.removeEnemy(this);
-          for (int e = 0; e < Game.handler.objects.size(); e++) {
-            GameObject tempObject2 = Game.handler.objects.get(e);
-            if (tempObject2 instanceof Door) {
-              Door tempDoor = (Door)tempObject2;
-              tempDoor.checkIfOpen();
-            }
-          } 
+          hp -= 5;
+          handler.removeObject(tempObject);
         } 
       } 
-    }
+    } 
   }
   public void render(Graphics g) {
     g.setColor(Color.orange);
