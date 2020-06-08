@@ -357,7 +357,7 @@ public class DungeonGeneration {
           int ran3X = getRandomInt(wallThicc, length - wallThicc - RangedEnemy.RangedEnemySize);
           int ran3Y = getRandomInt(wallThicc, height - wallThicc - RangedEnemy.RangedEnemySize);
           
-          GameObject tempEnemy3 = new RangedEnemy(posX + ran3X, posY + ran3Y, RangedEnemy.RangedEnemySize, RangedEnemy.RangedEnemySize,ID.RangedEnemy, Game.handler, RangedEnemy.usualCooldown);
+          GameObject tempEnemy3 = new RangedEnemy(posX + ran3X, posY + ran3Y, ID.RangedEnemy, Game.handler, RangedEnemy.usualCooldown);
           //Einfuegen des Gegners
           Game.handler.addEnemy(tempEnemy3);
           
@@ -580,7 +580,7 @@ public class DungeonGeneration {
           else {
             ran3Y = getRandomInt(wallThicc, height*3 - wallThicc - RangedEnemy.RangedEnemySize);
           }
-          GameObject tempEnemy3 = new RangedEnemy(posX + ran3X, posY + ran3Y, RangedEnemy.RangedEnemySize, RangedEnemy.RangedEnemySize, ID.RangedEnemy, Game.handler, RangedEnemy.usualCooldown);
+          GameObject tempEnemy3 = new RangedEnemy(posX + ran3X, posY + ran3Y, ID.RangedEnemy, Game.handler, RangedEnemy.usualCooldown);
           //Einfuegen des Gegners
           Game.handler.addEnemy(tempEnemy3);
           //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint

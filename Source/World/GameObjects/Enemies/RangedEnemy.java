@@ -27,9 +27,9 @@ public class RangedEnemy extends GameObject{
   
   public static int RangedEnemySize = 32;
   
-  public RangedEnemy(int x, int y, int w, int h, ID id, Handler handler, int cooldown) {
-    super(x,y,w,h,id,handler);
-    hitBox = new Rectangle((int)x,(int)y,w,h);
+  public RangedEnemy(int x, int y, ID id, Handler handler, int cooldown) {
+    super(x,y,RangedEnemySize,RangedEnemySize,id,handler);
+    hitBox = new Rectangle((int)x,(int)y,RangedEnemySize,RangedEnemySize);
     velX = 2;
     velY = 2;
     Vector2 v = new Vector2(velX,velY);
@@ -105,7 +105,7 @@ public class RangedEnemy extends GameObject{
   }
   public void render(Graphics g) {
     g.setColor(Color.red);
-    g.fillRect((int)x, (int)y, w, h);
+    g.fillRect((int)x, (int)y, RangedEnemySize, RangedEnemySize);
     if (Game.debug) {
       g.drawString("X: " + x + "Y: " + y, (int)x, (int)y);
       System.out.println("Ist da");
