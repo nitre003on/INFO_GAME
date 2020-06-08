@@ -6,6 +6,8 @@ import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 
 import Source.Engine.Handler;
 import Source.Engine.ID;
@@ -65,6 +67,13 @@ public abstract class GameObject
         e.printStackTrace();
       }
     }
+  }
+
+  public BufferedImage SpriteFlipX(BufferedImage img){ //gibt das gegebene Bild gespiegelt (X Achse) zurück
+    AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+    tx.translate( -img.getHeight(null),0);
+    AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+    return op.filter(img, null);
   }
 
   public abstract void tick();
