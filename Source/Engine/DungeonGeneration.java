@@ -193,8 +193,8 @@ public class DungeonGeneration {
     //Werte des Raumes werden entnommen um sie den Tueren mitzugeben
     int[] roomBounds = {posX, posY, length, height};
     //bedecke bereiche auÃŸerhalb des Raumes um den Ã¼berstehenden Boden zu verstecken
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length, posY), new Vector2(height, 158),Color.BLACK, ID.Image, Game.handler));
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height), new Vector2(158, length + 158),Color.BLACK, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length, posY), new Vector2(height, 200),Color.BLACK, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height), new Vector2(200, length + 158),Color.BLACK, ID.Image, Game.handler));
     //boden einfÃ¼gen
     Game.handler.addObjectAsBG(new Image("Content\\Environment\\floor.png", new Vector2(posX, posY), new Vector2(height, length), 2, displayTypes.tiled, ID.Image, Game.handler));
     //Erzeugen des Raumes
@@ -361,12 +361,12 @@ public class DungeonGeneration {
     Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height*2), new Vector2(height, length),Color.BLACK, ID.Image, Game.handler));
     Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length*2, posY + height*2), new Vector2(height + 168, length + 168),Color.BLACK, ID.Image, Game.handler));
 
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length*3, posY), new Vector2(height * 3, 168),Color.BLACK, ID.Image, Game.handler));
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height*3), new Vector2(168, length * 3),Color.BLACK, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length*3, posY), new Vector2(height * 3, 200),Color.BLACK, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height*3), new Vector2(200, length * 3),Color.BLACK, ID.Image, Game.handler));
     //boden einfÃ¼gen
     Game.handler.addObjectAsBG(new Image("Content\\Environment\\floor.png", new Vector2(posX, posY), new Vector2(height * 3, length * 3), 2, Source.Engine.Graphics.Image.displayTypes.tiled, ID.Image, Game.handler));
     
-    //Erstellen der Waende welche keine Tueren haben können
+    //Erstellen der Waende welche keine Tueren haben kï¿½nnen
     Game.handler.addObject(new Wall(posX + length - wallThicc, posY, ID.Wall, Game.handler, wallThicc, height));
     Game.handler.addObject(new Wall(posX + length*2, posY, ID.Wall, Game.handler, wallThicc, height));
     Game.handler.addObject(new Wall(posX + length - wallThicc, posY + height*2, ID.Wall, Game.handler, wallThicc, height));
@@ -391,7 +391,7 @@ public class DungeonGeneration {
       Game.handler.addObject(new Door(posX + length + (length - doorWidth)/2, posY, ID.Door, Game.handler, doorWidth, wallThicc, TPPosX, TPPosY, doorsFacing[0][1], 0, roomBounds, false));
       
       if (doorsFacing[0][2] != 1) {     //Falls diese Tuer nicht schon mit einer anderen Tuer verbunden ist
-        doors.add(0);                   //Einfügen der Tuer in die Liste der ungenutzten Tueren
+        doors.add(0);                   //Einfï¿½gen der Tuer in die Liste der ungenutzten Tueren
         doors.add(doorsFacing[0][1]);
       }
       
@@ -412,7 +412,7 @@ public class DungeonGeneration {
       //Erzeugen der Tuer
       Game.handler.addObject(new Door(posX + length + (length - doorWidth)/2, posY + height*3 - wallThicc, ID.Door, Game.handler, doorWidth, wallThicc, TPPosX, TPPosY, doorsFacing[2][1], 2, roomBounds, false));
       if (doorsFacing[2][2] != 1) {    //Falls diese Tuer nicht schon mit einer anderen Tuer verbunden ist
-        doors.add(2);                  //Einfügen der Tuer in die Liste der ungenutzten Tueren
+        doors.add(2);                  //Einfï¿½gen der Tuer in die Liste der ungenutzten Tueren
         doors.add(doorsFacing[2][1]);
       }
       
@@ -433,7 +433,7 @@ public class DungeonGeneration {
       //Erzeugen der Tuer
       Game.handler.addObject(new Door(posX + length*3 - wallThicc, posY + height + (height - doorWidth)/2, ID.Door, Game.handler, wallThicc, doorWidth, TPPosX, TPPosY, doorsFacing[1][1], 1, roomBounds, false));
       if (doorsFacing[1][2] != 1) {      //Falls diese Tuer nicht schon mit einer anderen Tuer verbunden ist
-        doors.add(1);                    //Einfügen der Tuer in die Liste der ungenutzten Tueren
+        doors.add(1);                    //Einfï¿½gen der Tuer in die Liste der ungenutzten Tueren
         doors.add(doorsFacing[1][1]);
       }
       
@@ -454,7 +454,7 @@ public class DungeonGeneration {
       //Erzeugen der Tuer
       Game.handler.addObject(new Door(posX, posY + height + (height - doorWidth)/2, ID.Door, Game.handler, wallThicc, doorWidth, TPPosX, TPPosY, doorsFacing[3][1], 3, roomBounds, false));
       if (doorsFacing[3][2] != 1) {      //Falls diese Tuer nicht schon mit einer anderen Tuer verbunden ist
-        doors.add(3);                    //Einfügen der Tuer in die Liste der ungenutzten Tueren
+        doors.add(3);                    //Einfï¿½gen der Tuer in die Liste der ungenutzten Tueren
         doors.add(doorsFacing[3][1]);
       }
       
@@ -511,7 +511,7 @@ public class DungeonGeneration {
             ran1Y = getRandomInt(wallThicc, height*3 - wallThicc - BasicEnemy.BasicEnemySize);
           }
           GameObject tempEnemy1 = new FastEnemy(posX + ran1X, posY + ran1Y, ID.FastEnemy, Game.handler);
-          //Einfügen des Gegners
+          //Einfï¿½gen des Gegners
           Game.handler.addEnemy(tempEnemy1);
           //Verhindern dass der Gegner in einem Hinderniss erscheint
           for (int t = 0; t < Game.handler.objects.size(); t++) {         
@@ -535,7 +535,7 @@ public class DungeonGeneration {
             ran2Y = getRandomInt(wallThicc, height*3 - wallThicc - BasicEnemy.BasicEnemySize);
           }
           GameObject tempEnemy2 = new SmartEnemy(posX + ran2X, posY + ran2Y, ID.SmartEnemy, Game.handler);
-          //Einfügen des Gegners
+          //Einfï¿½gen des Gegners
           Game.handler.addEnemy(tempEnemy2);
           //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
           for (int t = 0; t < Game.handler.objects.size(); t++) {         
@@ -559,7 +559,7 @@ public class DungeonGeneration {
   
   
   public static void addObstacle(int obstacleType, int length, int height, int posX, int posY){
-    //switch für die verschidenen Hindernisstypen
+    //switch fï¿½r die verschidenen Hindernisstypen
     switch (obstacleType) {
       case 1 : 
         //Rechteck in der Mitte des Raumes

@@ -145,6 +145,12 @@ public class Game extends Canvas implements Runnable
           cam.tick(handler.objects.get(i));
         }
       }
+      if(hud.HEALTH < 1){   //tod :(
+        curState = states.menu;
+        player = null;
+        handler.clearQueue();
+        hud.drawMenu(this);
+      }
     }
   }
   

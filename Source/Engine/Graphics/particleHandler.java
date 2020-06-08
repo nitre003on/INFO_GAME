@@ -37,7 +37,12 @@ public class particleHandler {
     public void pause(){ active=false; }
 
     public void tick(){
-        for(int i = 0; i<particles.size(); i++) { if(particles.get(i).onScreen())particles.get(i).tick(); }
+        for(int i = 0; i<particles.size(); i++) { 
+            if(particles.get(i).onScreen()){
+                particles.get(i).tick(); 
+            }
+        }
+        
         if(active){
             timer++;
             if(timer > emissionRate){   //spawn einen Partikel
