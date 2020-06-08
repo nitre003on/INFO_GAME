@@ -64,7 +64,7 @@ public class Player extends GameObject {
     velY = tempVelY;                                                          
     x=Game.clamp(x, 0, Game.WIDTH-this.playerLength);                                              //das innerhalb des Fensters bleiben
     y=Game.clamp(y, 0, Game.HEIGHT-this.playerHeight);
-    //handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.white, 32, 32, 0.08f, handler));             //"Schwanz" ran h�ngen                                                  
+    //handler.addObject(new BasicTrail((int)x, (int)y, ID.Trail, Color.white, 32, 32, 0.08f, handler));             //"Schwanz" ran haengen                                                  
   }
   
   public void collision() {
@@ -74,7 +74,7 @@ public class Player extends GameObject {
       if (tempObject.getID()==ID.BasicEnemy || tempObject.getID()==ID.FastEnemy||tempObject.getID()==ID.SmartEnemy) {
         if(getBounds().intersects(tempObject.getBounds())) {
           //collision code
-          HUD.HEALTH -=2;                                                   //Das passiert, wenn man mit einer Art Gegner "kollidiert"(sich �berschneidet)
+          HUD.HEALTH -=2;                                                   //Das passiert, wenn man mit einer Art Gegner "kollidiert"(sich ueberschneidet)
         }
       }
       /*if(tempObject.getID()==ID.Item){
@@ -84,8 +84,8 @@ public class Player extends GameObject {
       }*/
     }
     
-    //Kollision mit wand oder tuer
-    this.x += velX; 
+    //Kollision mit wand und Tuer
+    this.x += velX;  //X Kollision
     for (int i = 0; velX != 0 && i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
       if(tempObject instanceof Wall) { 
@@ -95,8 +95,8 @@ public class Player extends GameObject {
           } 
           this.x -= velX; 
           while (!this.getBounds().intersects(tempObject.getBounds())) { 
-            this.x += Math.signum(velX);                           //Die Kollision prüft ob der Spieler nächsten Frame in einer Wand sein würde. 
-          }                                                          //Wenn dies der Fall ist, dann nähert sie den Spieler an die Wand ran.
+            this.x += Math.signum(velX);                                          //Die Kollision prüft ob der Spieler nächsten Frame in einer Wand sein würde. 
+          }                                                                       //Wenn dies der Fall ist, dann nähert sie den Spieler an die Wand ran.
           this.x -= Math.signum(velX);  
           velX = 0;
         }
@@ -109,12 +109,12 @@ public class Player extends GameObject {
         if (this.getBounds().intersects(tempObject.getBounds())) {
           if (Game.debug) {
             System.out.println("Hit Door");
-          } 
-          Door tempDoor = (Door)tempObject;
-          if (tempDoor.isUnlocked()) {
+          }                                                                       //Die Kollision der Tuer wird nach der Kollision der Waende gemacht um auf die
+          Door tempDoor = (Door)tempObject;                                       //Position in der Liste objects zu achten
+          if (tempDoor.isUnlocked()) {       //Wenn die Tuer offen ist, wird der Spieler teleportiert
             tempDoor.teleport(Game.player, i);
           }
-          else {
+          else {                             //Wenn die Tuer geschlossen ist, wird der die Tuer wie eine Wand behandelt
             this.x -= velX;
             while (!this.getBounds().intersects(tempDoor.getBounds())) { 
               this.x += Math.signum(velX);
@@ -128,7 +128,7 @@ public class Player extends GameObject {
     this.x -= velX;
     
     
-    this.y += velY; 
+    this.y += velY;    //Y Kollision genause wie X Kollision nur alle "X" wurden mit "Y" ersetzt
     for (int i = 0; velY != 0 && i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
       if(tempObject instanceof Wall) { 

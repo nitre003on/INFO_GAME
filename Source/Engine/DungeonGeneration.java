@@ -14,6 +14,7 @@ import Source.World.GameObjects.Door;
 import Source.World.GameObjects.Enemies.BasicEnemy;
 import Source.World.GameObjects.Enemies.FastEnemy;
 import Source.World.GameObjects.Enemies.SmartEnemy;
+import Source.World.GameObjects.Enemies.RangedEnemy;
 
 public class DungeonGeneration {
   static int wallThicc = 20;     //Allgemeine Breite der Waende
@@ -128,11 +129,14 @@ public class DungeonGeneration {
       }
       
       int r = getRandomInt(0, 1);                                               //Zufealliges Festlegen des naechsten Raumtypen
-      int numOfEnemies = getRandomInt(1, 4);                                    //Zufealliges Festlegen der Anzahl der Gegner
+      int numOfEnemies = getRandomInt(1, 5);                                    //Zufealliges Festlegen der Anzahl der Gegner
       int[] enemyArray = new int[numOfEnemies];                                 //Erstellen des Arrays der Gegner
       //Zufealliges Festlegen der Gegnertypen
       for (int f = 0; f < numOfEnemies; f++) {
-        int ranEnemyType = getRandomInt(0, 2);
+        int ranEnemyType = getRandomInt(0, 4);
+        if (ranEnemyType == 4) {
+          ranEnemyType = 3;
+        }
         enemyArray[f] = ranEnemyType;
       }
       int ranObstacle = getRandomInt(1, 2);                                     //Zufealliges Festlegen des Hindernisses in einem Raum
@@ -288,14 +292,14 @@ public class DungeonGeneration {
       addObstacle(obstacle, length/4, height/4, posX + length/2, posY + height/2);
     }
     
-    //Einf?gen der Gegner
+    //Einfuegen der Gegner
     for (int i = 0; i < spawnEnemies.length; i++) {
       switch (spawnEnemies[i]) {
         case 0 :
           //Zufaelliges Bestimmen der Position des Gegners
           int ran0X = getRandomInt(wallThicc, length - wallThicc - BasicEnemy.BasicEnemySize);
           int ran0Y = getRandomInt(wallThicc, height - wallThicc - BasicEnemy.BasicEnemySize);
-           
+          
           GameObject tempEnemy0 = new BasicEnemy(posX + ran0X, posY + ran0Y, ID.BasicEnemy, Game.handler); 
           //Einfuegen des Gegners
           Game.handler.addEnemy(tempEnemy0);
@@ -344,6 +348,25 @@ public class DungeonGeneration {
             if(tempObject instanceof Wall) {
               while (tempEnemy2.getBounds().intersects(tempObject.getBounds())) { 
                 tempEnemy2.x++;
+              }
+            }
+          }
+          break;
+        case 3 :
+          //Zufaelliges Bestimmen der Position des Gegners
+          int ran3X = getRandomInt(wallThicc, length - wallThicc - RangedEnemy.RangedEnemySize);
+          int ran3Y = getRandomInt(wallThicc, height - wallThicc - RangedEnemy.RangedEnemySize);
+          
+          GameObject tempEnemy3 = new RangedEnemy(posX + ran3X, posY + ran3Y, RangedEnemy.RangedEnemySize, RangedEnemy.RangedEnemySize,ID.RangedEnemy, Game.handler);
+          //Einfuegen des Gegners
+          Game.handler.addEnemy(tempEnemy3);
+          
+          //Verhindern dass der Gegner in einem Hinderniss erscheint
+          for (int t = 0; t < Game.handler.objects.size(); t++) {         
+            GameObject tempObject = Game.handler.objects.get(t); 
+            if(tempObject instanceof Wall) {
+              while (tempEnemy3.getBounds().intersects(tempObject.getBounds())) { 
+                tempEnemy3.x++;
               }
             }
           }
@@ -500,7 +523,7 @@ public class DungeonGeneration {
           }
           break;
         case 1 :
-        //Zufaelliges Bestimmen der Position des Gegners 
+          //Zufaelliges Bestimmen der Position des Gegners 
           int ran1X = getRandomInt(wallThicc, length*3 - wallThicc - BasicEnemy.BasicEnemySize);
           int ran1Y;
           //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
@@ -543,6 +566,30 @@ public class DungeonGeneration {
             if(tempObject instanceof Wall) {
               while (tempEnemy2.getBounds().intersects(tempObject.getBounds())) { 
                 tempEnemy2.x++;
+              }
+            }
+          }
+          break;
+          case 3 :
+          //Zufaelliges Bestimmen der Position des Gegners
+          int ran3X = getRandomInt(wallThicc, length*3 - wallThicc - RangedEnemy.RangedEnemySize);
+          int ran3Y;
+          //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
+          if (ran3X < length || ran3X > length*2 - RangedEnemy.RangedEnemySize) {
+            ran3Y = getRandomInt(height, height*2 - RangedEnemy.RangedEnemySize);
+          }
+          else {
+            ran3Y = getRandomInt(wallThicc, height*3 - wallThicc - RangedEnemy.RangedEnemySize);
+          }
+          GameObject tempEnemy3 = new RangedEnemy(posX + ran3X, posY + ran3Y, RangedEnemy.RangedEnemySize, RangedEnemy.RangedEnemySize, ID.RangedEnemy, Game.handler);
+          //Einfuegen des Gegners
+          Game.handler.addEnemy(tempEnemy3);
+          //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
+          for (int t = 0; t < Game.handler.objects.size(); t++) {         
+            GameObject tempObject = Game.handler.objects.get(t); 
+            if(tempObject instanceof Wall) {
+              while (tempEnemy3.getBounds().intersects(tempObject.getBounds())) { 
+                tempEnemy3.x++;
               }
             }
           }
