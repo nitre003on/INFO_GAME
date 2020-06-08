@@ -22,7 +22,7 @@ Arbeitsverteilung (Unter verwendung der Lernraum Benutzernamen):
 -Image / UIImage  
 -button (und kinder)  
 -particleHandler  
--Game states (menu, pause) 
+-Game states (menu, pause)  
 -selektives rendern / ticken  
 
 **Nik:**  
