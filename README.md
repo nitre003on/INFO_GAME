@@ -22,13 +22,14 @@ Arbeitsverteilung (Unter verwendung der Lernraum Benutzernamen):
 -Image / UIImage  
 -button (und kinder)  
 -particleHandler  
--Game states (menu, pause) 
+-Game states (menu, pause)  
+-selektives rendern / ticken  
 
-**Nik:**
--alle Items
--den Rest vom Player
--KeyInput
--Grundgerüst des Spieles(also alles, was schon im Pitch war)
+**Nik:**  
+-alle Items  
+-den Rest vom Player  
+-KeyInput  
+-Grundgerüst des Spieles(also alles, was schon im Pitch war)  
 
 
 
