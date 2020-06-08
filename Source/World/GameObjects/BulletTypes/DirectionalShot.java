@@ -35,7 +35,7 @@ public class DirectionalShot extends Shot{  //Schuss in richtung Maus (Piet)
     hitBox = new Rectangle((int)x, (int)y, 16, 16);
   }
     public DirectionalShot(GameObject owner, Vector2 offset, Vector2 target, Vector2 position, ID id, Handler handler){
-    super((int)owner.x + (int)offset.x, (int)owner.y + (int)offset.y,null, ID.Shot, handler);
+    super((int)owner.x + (int)offset.x, (int)owner.y + (int)offset.y,null, id, handler);
     dir = target;
     speed = 15;
     this.owner = owner;

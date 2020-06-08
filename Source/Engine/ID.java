@@ -13,5 +13,6 @@ public enum ID
   Door(),
   Item(),
   UI(),
+  EnemyShot(),
   Image();
 }
