@@ -8,6 +8,9 @@ import java.awt.Rectangle;
 import Source.Engine.Direction;
 import Source.Engine.Handler;
 import Source.Engine.ID;
+import Source.Engine.Vector2;
+import Source.Engine.Graphics.Image;
+import Source.Engine.Graphics.Image.displayTypes;
 import Source.World.Game;
 import Source.World.GameObject;
 import Source.World.GameObjects.Player;
@@ -20,11 +23,13 @@ public class Gun extends GameObject {
   public int totalAmmo = 90;
   public int magazin = 30;
   public boolean empty = false;
+  //String imgURL, Vector2 pos, Vector2 size, float zoomLvl, displayTypes displayType, ID id, Handler handler
   
   public int width, height = 16;
   
   public Gun(int x, int y, ID id, Handler handler) {
     super(x, y,16,16, id, handler);
+    imgUrl = "Content/items/gun.png";
   }
   
   public Rectangle getBounds() {
@@ -74,13 +79,8 @@ public class Gun extends GameObject {
   }
   
   
-  public void render(Graphics g) {
-    
-    /*Graphics2D g2d = (Graphics2D) g;
-    g.setColor(Color.green);
-    g2d.draw(getBounds());*/
-    /*if(id == ID.Player)*/g.setColor(Color.orange);
-    g.fillRect((int)x, (int)y, 16, 16);                                                   // Form wird ge"zeichnet"
+  public void render(Graphics g) { 
+    drawSprite(g,2);
     
   }
   

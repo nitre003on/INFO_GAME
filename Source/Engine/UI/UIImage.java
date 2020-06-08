@@ -24,13 +24,13 @@ public class UIImage extends GameObject{  // nachfragen an Piet
         this.w = w;
         this.h = h;
         try {
-            img = loadImage(imgURL);
+            img = loadImg(imgURL);
           } catch (IOException e) {
             e.printStackTrace();
           }
       }
 
-      private Image loadImage(String path) throws IOException {   //Spritesheet laden
+      private Image loadImg(String path) throws IOException {   //Spritesheet laden
         return ImageIO.read(new FileInputStream(path));
       }
   
