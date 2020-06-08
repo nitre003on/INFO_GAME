@@ -13,3 +13,14 @@ hieronymus:
 -DungeonGeneration
 -Door
 -Kollision
+
+Rusting Robot:
+-alle Sprites
+-animationsHandler
+-Vector2
+-Image / UIImage
+-button (und kinder)
+-particleHandler
+-Game states (menu, pause)
+
+
