@@ -29,6 +29,8 @@ import Source.World.GameObjects.Items.HealingPotionM;
 import Source.World.GameObjects.Items.Chest;
 import Source.World.GameObjects.Items.Shotgun;
 import Source.World.GameObjects.Items.Scroll;
+import Source.World.GameObjects.Items.Ammo;
+import Source.World.GameObjects.Items.ShotgunAmmo;
 
 public class Game extends Canvas implements Runnable {
   private static final long serialVersionUID = 358011174883387846L;
@@ -66,6 +68,7 @@ public class Game extends Canvas implements Runnable {
     curState = states.play;
     player = new Player(1150, 1150, ID.Player, handler, Direction.None);
     gun = new Gun(1250, 1250, ID.Item, handler);
+    handler.addObject(new Ammo(1255, 1255, ID.Item, handler));
     shotgun = new Shotgun(1250, 1400, ID.Item, handler);
     scroll = new Scroll(1150, 1400, ID.Item, handler);
     handler.addObject(player);
