@@ -77,7 +77,6 @@ public class HUD {
 
   public void drawMenu(Game game){
     HEALTH = 100;
-    System.out.println("drawMenu");
     ph.play();
     int width = Game.ScreenWidth;
     int height = Game.ScreenHeight;
