@@ -17,6 +17,9 @@ public class Gun extends GameObject {
   
   boolean picked = false;
   Direction direction;
+  public int totalAmmo = 90;
+  public int magazin = 30;
+  public boolean empty = false;
   
   public Gun(int x, int y, ID id, Handler handler) {
     super(x, y,16,16, id, handler);
@@ -28,15 +31,25 @@ public class Gun extends GameObject {
   
   public void tick() {
     collision();
+    
     if(picked){
-      Player.itemPicked[1] = true;
+      Game.player.itemPicked[1] = true;
       handler.removeObject(this);
+      if(Game.player.itemPicked[2]){
+        int tempMag = Game.shotgun.magazin;
+        int tempTA = Game.shotgun.totalAmmo;
+        Game.shotgun = new Shotgun((int)Game.player.getX()+30,(int)Game.player.getY(),ID.Item,handler);
+        Game.shotgun.magazin = tempMag;
+        Game.shotgun.totalAmmo = tempTA; 
+        handler.addObject(Game.shotgun);
+        Game.player.itemPicked[2] = false;
+        }
       }
     x+=velX;                                                          //Bewegungsrichtumg
     y+=velY;                                                          
     x=Game.clamp(x, 0, Game.WIDTH-16);                                              //das innerhalb des Fensters bleiben
     y=Game.clamp(y, 0, Game.HEIGHT-16);
-  }
+    }
   
   public void collision() {
     for (int i = 0; i < handler.objects.size(); i++) {

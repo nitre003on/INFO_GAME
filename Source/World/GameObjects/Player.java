@@ -26,7 +26,8 @@ public class Player extends GameObject {
   
   private animationHandler ah;
   
-  public static boolean[] itemPicked = new boolean[2];
+  public static boolean[] itemPicked = new boolean[/*Game.amountOfDiffItems*/4];
+  public static boolean[] chestOpened = new boolean[1];
   
   public static int playerLength = 30;
   public static int playerHeight = 80;
@@ -46,7 +47,12 @@ public class Player extends GameObject {
   }
   
   public void tick() {
-    if(itemPicked[0]) HUD.HEALTH += 50;
+    if(itemPicked[0]){
+      HUD.HEALTH += 50;
+      itemPicked[0] = false;
+      }
+    hitBox.x = (int)x; 
+    hitBox.y = (int)y;
     tempVelX = velX;
     tempVelY = velY;
     collision();
@@ -56,7 +62,7 @@ public class Player extends GameObject {
       ah.playAnimation("walk", 0.05f, true, false);
     }
     if(velX > 0){ ah.faceLeft(); }
-    else if (velX < 0){ ah.faceRight(); }
+      else if (velX < 0){ ah.faceRight(); }
     ah.tick();
     x+=velX;                                                          //Bewegungsrichtumg
     y+=velY; 
@@ -200,6 +206,10 @@ public class Player extends GameObject {
     if(itemPicked[1]){
       g.setColor(Color.orange);
       g.fillRect((int)x+26, (int)y+26, 16,16);
+    }
+    if(itemPicked[2]){
+      g.setColor(Color.orange);
+      g.fillRect((int)x+26, (int)y+26, 32,16);
     } 
     ah.draw(g, (int)x, (int)y, -40, -10,100);
     

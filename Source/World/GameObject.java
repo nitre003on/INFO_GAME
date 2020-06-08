@@ -25,6 +25,13 @@ public abstract class GameObject
     this.id = id;
     this.handler = handler;
   }
+  public GameObject(float x, float y, ID id, Handler handler) 
+  {
+    this.x = x;
+    this.y = y;
+    this.id = id;
+    this.handler = handler;
+  }
   
   public abstract void tick();
   public abstract void render(Graphics g);
@@ -49,7 +56,7 @@ public abstract class GameObject
     this.x = x; 
   }
   
-  public void setY(int y) {
+  public void setY(float y) {
     this.y = y;
   }
 

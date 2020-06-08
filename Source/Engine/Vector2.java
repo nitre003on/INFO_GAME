@@ -28,7 +28,7 @@ public class Vector2 {  // Mathematischer Vektor mit Standard komponentenweiser 
     }
     
     public static Vector2 getPos(GameObject g) {
-    return new Vector2(g.x,g.y);
+    return new Vector2(g.getX(),g.getY());
     }
     
     public void set(Vector2 a) {
@@ -40,7 +40,7 @@ public class Vector2 {  // Mathematischer Vektor mit Standard komponentenweiser 
       this.x = x;
       this.y = y;
     }
-  public static Vector2 directionalvector (Vector2 v1, Vector2 v2){    // Gibt einen Vektor der Einheitsgroesse in Richtung von v1 nach v2 zurück
+  public static Vector2 directionalvector (Vector2 v1, Vector2 v2){    // Gibt einen Vektor der Einheitsgroesse in Richtung von v1 nach v2 zurueck
     Vector2 directionalvector = new Vector2(v1.x-v2.x, v1.y-v2.y);
     directionalvector.normalize();
     return directionalvector;

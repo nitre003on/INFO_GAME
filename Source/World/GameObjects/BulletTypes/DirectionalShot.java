@@ -1,6 +1,7 @@
 package Source.World.GameObjects.BulletTypes;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import Source.Engine.Handler;
@@ -27,7 +28,7 @@ public class DirectionalShot extends Shot{  //Schuss in richtung Maus (Piet)
   }
 
   public DirectionalShot(GameObject owner,Vector2 offset, Vector2 target, ID id, Handler handler) {
-    super((int)owner.x + (int)offset.x, (int)owner.y + (int)offset.y, null, id, handler);
+    super((int)owner.getX() + (int)offset.x, (int)owner.getY() + (int)offset.y, null, id, handler);
     dir = Vector2.subtract(target, Vector2.getPos(owner));
     speed = 15;
     this.owner = owner;
@@ -83,5 +84,9 @@ public class DirectionalShot extends Shot{  //Schuss in richtung Maus (Piet)
         } 
       } 
     } 
+  }
+  public void render(Graphics g) {
+    g.setColor(Color.blue);
+    g.fillRect((int)x, (int)y, 16, 16);                                                                   //Darstellung
   }
 }

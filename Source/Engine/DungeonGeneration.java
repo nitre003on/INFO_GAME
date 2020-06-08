@@ -24,6 +24,10 @@ public class DungeonGeneration {
   
   static ArrayList<Integer> doors = new ArrayList<Integer>();   //Liste aller unbenutzten Tueren
   
+  public static int FastEnemySize = 32;
+  public static int SmartEnemySize = 32;
+  public static int BasicEnemySize = 32;
+  
   public static void drawDungeon() {
     //Umrandung des Spielfeldes
     Game.handler.addObject(new Wall(0, 0, ID.Wall, Game.handler, Game.WIDTH, 20));
@@ -297,8 +301,8 @@ public class DungeonGeneration {
       switch (spawnEnemies[i]) {
         case 0 :
           //Zufaelliges Bestimmen der Position des Gegners
-          int ran0X = getRandomInt(wallThicc, length - wallThicc - BasicEnemy.BasicEnemySize);
-          int ran0Y = getRandomInt(wallThicc, height - wallThicc - BasicEnemy.BasicEnemySize);
+          int ran0X = getRandomInt(wallThicc, length - wallThicc - BasicEnemySize);
+          int ran0Y = getRandomInt(wallThicc, height - wallThicc - BasicEnemySize);
           
           GameObject tempEnemy0 = new BasicEnemy(posX + ran0X, posY + ran0Y, ID.BasicEnemy, Game.handler); 
           //Einfuegen des Gegners
@@ -316,8 +320,8 @@ public class DungeonGeneration {
           break;
         case 1 :
           //Zufaelliges Bestimmen der Position des Gegners 
-          int ran1X = getRandomInt(wallThicc, length - wallThicc - FastEnemy.FastEnemySize);
-          int ran1Y = getRandomInt(wallThicc, height - wallThicc - FastEnemy.FastEnemySize);
+          int ran1X = getRandomInt(wallThicc, length - wallThicc - FastEnemySize);
+          int ran1Y = getRandomInt(wallThicc, height - wallThicc - FastEnemySize);
           
           GameObject tempEnemy1 = new FastEnemy(posX + ran1X, posY + ran1Y, ID.FastEnemy, Game.handler);
           //Einfuegen des Gegners
@@ -335,8 +339,8 @@ public class DungeonGeneration {
           break;
         case 2 :
           //Zufaelliges Bestimmen der Position des Gegners
-          int ran2X = getRandomInt(wallThicc, length - wallThicc - SmartEnemy.SmartEnemySize);
-          int ran2Y = getRandomInt(wallThicc, height - wallThicc - SmartEnemy.SmartEnemySize);
+          int ran2X = getRandomInt(wallThicc, length - wallThicc - SmartEnemySize);
+          int ran2Y = getRandomInt(wallThicc, height - wallThicc - SmartEnemySize);
           
           GameObject tempEnemy2 = new SmartEnemy(posX + ran2X, posY + ran2Y, ID.SmartEnemy, Game.handler);
           //Einfuegen des Gegners
