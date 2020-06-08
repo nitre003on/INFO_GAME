@@ -68,7 +68,6 @@ public class Game extends Canvas implements Runnable {
     curState = states.play;
     player = new Player(1150, 1150, ID.Player, handler, Direction.None);
     gun = new Gun(1250, 1250, ID.Item, handler);
-    handler.addObject(new Ammo(1255, 1255, ID.Item, handler));
     shotgun = new Shotgun(1250, 1400, ID.Item, handler);
     scroll = new Scroll(1150, 1400, ID.Item, handler);
     handler.addObject(player);

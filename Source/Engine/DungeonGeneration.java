@@ -84,7 +84,7 @@ public class DungeonGeneration {
   public static void createDungeonLayout(int posX, int posY, int minRoomSize, int maxRoomSize, int numberOfRooms){
     int minDoors = 0;
     int maxDoors = 0;
-    int startRoomSize = 500;      //Groesse des Startraumes
+    int startRoomSize = 700;      //Groesse des Startraumes
     int bossRoomSize = 2000;      //Groesse des Bossraumes
     int roomDistance = maxRoomSize + 1000;      //Ermitteln des Abstands zwischen zwei Raeumen sodass man sie nicht voneinander sehen kann
     
@@ -164,7 +164,7 @@ public class DungeonGeneration {
           getRandomInt(minRoomSize, maxRoomSize)/3, 
           makeDoorArray(minDoors, maxDoors, u + 1, doors.get(1)),
           enemyArray,
-          ranObstacle);
+          ranObstacle, 1);
           //Entfernen der Tuer an welche dieser Raum angrenzt
           doors.remove(0);
           doors.remove(0);
@@ -386,7 +386,7 @@ public class DungeonGeneration {
     }
   }
   
-  public static void createRoomCross(int posX, int posY, int length, int height, int[][] doorsFacing, int[] spawnEnemies, int obstacle){
+  public static void createRoomCross(int posX, int posY, int length, int height, int[][] doorsFacing, int[] spawnEnemies, int obstacle, int roomType){
     //bedecke bereiche außerhalb des Raumes um den überstehenden Boden zu verstecken
     Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY), new Vector2(height, length),Color.BLACK, ID.Image, Game.handler));
     Game.handler.addObjectAsBG(new squareImage(new Vector2(posX  + length*2, posY), new Vector2(height, length),Color.BLACK, ID.Image, Game.handler));
@@ -503,107 +503,109 @@ public class DungeonGeneration {
     
     
     //Einfuegen der Gegner
-    for (int i = 0; i < spawnEnemies.length; i++) {
-      switch (spawnEnemies[i]) {
-        case 0 :
-          //Zufaelliges Bestimmen der Position des Gegners
-          int ran0X = getRandomInt(wallThicc, length*3 - wallThicc - BasicEnemy.BasicEnemySize);
-          int ran0Y;
-          //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
-          if (ran0X < length || ran0X > length*2 - BasicEnemy.BasicEnemySize) {
-            ran0Y = getRandomInt(height, height*2 - BasicEnemy.BasicEnemySize);
-          }
-          else {
-            ran0Y = getRandomInt(wallThicc, height*3 - wallThicc - BasicEnemy.BasicEnemySize);
-          }
-          GameObject tempEnemy0 = new BasicEnemy(posX + ran0X, posY + ran0Y, ID.BasicEnemy, Game.handler); 
-          //Einfuegen des Gegners
-          Game.handler.addEnemy(tempEnemy0);
-          
-          //Verhindern dass der Gegner in einem Hinderniss erscheint
-          for (int t = 0; t < Game.handler.objects.size(); t++) {         
-            GameObject tempObject = Game.handler.objects.get(t); 
-            if(tempObject instanceof Wall) {
-              while (tempEnemy0.getBounds().intersects(tempObject.getBounds())) { 
-                tempEnemy0.x++;
+    if (roomType == 1) {
+      for (int i = 0; i < spawnEnemies.length; i++) {
+        switch (spawnEnemies[i]) {
+          case 0 :
+            //Zufaelliges Bestimmen der Position des Gegners
+            int ran0X = getRandomInt(wallThicc, length*3 - wallThicc - BasicEnemy.BasicEnemySize);
+            int ran0Y;
+            //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
+            if (ran0X < length || ran0X > length*2 - BasicEnemy.BasicEnemySize) {
+              ran0Y = getRandomInt(height, height*2 - BasicEnemy.BasicEnemySize);
+            }
+            else {
+              ran0Y = getRandomInt(wallThicc, height*3 - wallThicc - BasicEnemy.BasicEnemySize);
+            }
+            GameObject tempEnemy0 = new BasicEnemy(posX + ran0X, posY + ran0Y, ID.BasicEnemy, Game.handler); 
+            //Einfuegen des Gegners
+            Game.handler.addEnemy(tempEnemy0);
+            
+            //Verhindern dass der Gegner in einem Hinderniss erscheint
+            for (int t = 0; t < Game.handler.objects.size(); t++) {         
+              GameObject tempObject = Game.handler.objects.get(t); 
+              if(tempObject instanceof Wall) {
+                while (tempEnemy0.getBounds().intersects(tempObject.getBounds())) { 
+                  tempEnemy0.x++;
+                }
               }
             }
-          }
-          break;
-        case 1 :
-          //Zufaelliges Bestimmen der Position des Gegners 
-          int ran1X = getRandomInt(wallThicc, length*3 - wallThicc - BasicEnemy.BasicEnemySize);
-          int ran1Y;
-          //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
-          if (ran1X < length || ran1X > length*2 - BasicEnemy.BasicEnemySize) {
-            ran1Y = getRandomInt(height, height*2 - BasicEnemy.BasicEnemySize);
-          }
-          else {
-            ran1Y = getRandomInt(wallThicc, height*3 - wallThicc - BasicEnemy.BasicEnemySize);
-          }
-          GameObject tempEnemy1 = new FastEnemy(posX + ran1X, posY + ran1Y, ID.FastEnemy, Game.handler);
-          //Einf�gen des Gegners
-          Game.handler.addEnemy(tempEnemy1);
-          //Verhindern dass der Gegner in einem Hinderniss erscheint
-          for (int t = 0; t < Game.handler.objects.size(); t++) {         
-            GameObject tempObject = Game.handler.objects.get(t); 
-            if(tempObject instanceof Wall) {
-              while (tempEnemy1.getBounds().intersects(tempObject.getBounds())) { 
-                tempEnemy1.x++;
+            break;
+          case 1 :
+            //Zufaelliges Bestimmen der Position des Gegners 
+            int ran1X = getRandomInt(wallThicc, length*3 - wallThicc - BasicEnemy.BasicEnemySize);
+            int ran1Y;
+            //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
+            if (ran1X < length || ran1X > length*2 - BasicEnemy.BasicEnemySize) {
+              ran1Y = getRandomInt(height, height*2 - BasicEnemy.BasicEnemySize);
+            }
+            else {
+              ran1Y = getRandomInt(wallThicc, height*3 - wallThicc - BasicEnemy.BasicEnemySize);
+            }
+            GameObject tempEnemy1 = new FastEnemy(posX + ran1X, posY + ran1Y, ID.FastEnemy, Game.handler);
+            //Einf�gen des Gegners
+            Game.handler.addEnemy(tempEnemy1);
+            //Verhindern dass der Gegner in einem Hinderniss erscheint
+            for (int t = 0; t < Game.handler.objects.size(); t++) {         
+              GameObject tempObject = Game.handler.objects.get(t); 
+              if(tempObject instanceof Wall) {
+                while (tempEnemy1.getBounds().intersects(tempObject.getBounds())) { 
+                  tempEnemy1.x++;
+                }
               }
             }
-          }
-          break;
-        case 2 :
-          //Zufaelliges Bestimmen der Position des Gegners
-          int ran2X = getRandomInt(wallThicc, length*3 - wallThicc - BasicEnemy.BasicEnemySize);
-          int ran2Y;
-          //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
-          if (ran2X < length || ran2X > length*2 - BasicEnemy.BasicEnemySize) {
-            ran2Y = getRandomInt(height, height*2 - BasicEnemy.BasicEnemySize);
-          }
-          else {
-            ran2Y = getRandomInt(wallThicc, height*3 - wallThicc - BasicEnemy.BasicEnemySize);
-          }
-          GameObject tempEnemy2 = new SmartEnemy(posX + ran2X, posY + ran2Y, ID.SmartEnemy, Game.handler);
-          //Einf�gen des Gegners
-          Game.handler.addEnemy(tempEnemy2);
-          //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
-          for (int t = 0; t < Game.handler.objects.size(); t++) {         
-            GameObject tempObject = Game.handler.objects.get(t); 
-            if(tempObject instanceof Wall) {
-              while (tempEnemy2.getBounds().intersects(tempObject.getBounds())) { 
-                tempEnemy2.x++;
+            break;
+          case 2 :
+            //Zufaelliges Bestimmen der Position des Gegners
+            int ran2X = getRandomInt(wallThicc, length*3 - wallThicc - BasicEnemy.BasicEnemySize);
+            int ran2Y;
+            //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
+            if (ran2X < length || ran2X > length*2 - BasicEnemy.BasicEnemySize) {
+              ran2Y = getRandomInt(height, height*2 - BasicEnemy.BasicEnemySize);
+            }
+            else {
+              ran2Y = getRandomInt(wallThicc, height*3 - wallThicc - BasicEnemy.BasicEnemySize);
+            }
+            GameObject tempEnemy2 = new SmartEnemy(posX + ran2X, posY + ran2Y, ID.SmartEnemy, Game.handler);
+            //Einf�gen des Gegners
+            Game.handler.addEnemy(tempEnemy2);
+            //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
+            for (int t = 0; t < Game.handler.objects.size(); t++) {         
+              GameObject tempObject = Game.handler.objects.get(t); 
+              if(tempObject instanceof Wall) {
+                while (tempEnemy2.getBounds().intersects(tempObject.getBounds())) { 
+                  tempEnemy2.x++;
+                }
               }
             }
-          }
-          break;
-        case 3 :
-          //Zufaelliges Bestimmen der Position des Gegners
-          int ran3X = getRandomInt(wallThicc, length*3 - wallThicc - 32);
-          int ran3Y;
-          //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
-          if (ran3X < length || ran3X > length*2 - 32) {
-            ran3Y = getRandomInt(height, height*2 - 32);
-          }
-          else {
-            ran3Y = getRandomInt(wallThicc, height*3 - wallThicc - 32);
-          }
-          GameObject tempEnemy3 = new RangedEnemy(posX + ran3X, posY + ran3Y, ID.RangedEnemy, Game.handler, RangedEnemy.usualCooldown, 32);
-          //Einfuegen des Gegners
-          Game.handler.addEnemy(tempEnemy3);
-          //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
-          for (int t = 0; t < Game.handler.objects.size(); t++) {         
-            GameObject tempObject = Game.handler.objects.get(t); 
-            if(tempObject instanceof Wall) {
-              while (tempEnemy3.getBounds().intersects(tempObject.getBounds())) { 
-                tempEnemy3.x++;
+            break;
+          case 3 :
+            //Zufaelliges Bestimmen der Position des Gegners
+            int ran3X = getRandomInt(wallThicc, length*3 - wallThicc - 32);
+            int ran3Y;
+            //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
+            if (ran3X < length || ran3X > length*2 - 32) {
+              ran3Y = getRandomInt(height, height*2 - 32);
+            }
+            else {
+              ran3Y = getRandomInt(wallThicc, height*3 - wallThicc - 32);
+            }
+            GameObject tempEnemy3 = new RangedEnemy(posX + ran3X, posY + ran3Y, ID.RangedEnemy, Game.handler, RangedEnemy.usualCooldown, 32);
+            //Einfuegen des Gegners
+            Game.handler.addEnemy(tempEnemy3);
+            //Der Y wert wird so ermittelt, dass der Gegnern nicht ausserhalb des Raumes erscheint
+            for (int t = 0; t < Game.handler.objects.size(); t++) {         
+              GameObject tempObject = Game.handler.objects.get(t); 
+              if(tempObject instanceof Wall) {
+                while (tempEnemy3.getBounds().intersects(tempObject.getBounds())) { 
+                  tempEnemy3.x++;
+                }
               }
             }
-          }
-          break;
-        default: 
-          System.out.println("Enemy does not exist... probably");
+            break;
+          default: 
+            System.out.println("Enemy does not exist... probably");
+        }
       }
     }
   }
