@@ -28,7 +28,7 @@ public class ShotgunAmmo extends GameObject {
   
   public ShotgunAmmo(int x, int y, ID id, Handler handler) {
     super(x, y,8,8, id, handler);
-    imgUrl = "Content/items/gun.png";
+    imgUrl = "Content/items/SGbullet.png";
   }
   
   public Rectangle getBounds() {
@@ -68,8 +68,7 @@ public class ShotgunAmmo extends GameObject {
   
   
   public void render(Graphics g) { 
-    g.setColor(Color.green);
-    g.fillRect((int)x, (int)y, 8,8);
+    drawSprite(g, 2);
     
   }
   
