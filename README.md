@@ -14,7 +14,7 @@ hieronymus:
 -Door
 -Kollision
 
-Rusting Robot:
+Piet:
 -alle Sprites
 -animationsHandler
 -Vector2
