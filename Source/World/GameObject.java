@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 import Source.Engine.Handler;
 import Source.Engine.ID;
+import Source.Engine.Vector2;
 
 public abstract class GameObject 
 {
@@ -38,13 +39,25 @@ public abstract class GameObject
     this.handler = handler;
   }
   
-  private BufferedImage loadImage(String path) throws IOException {
+  public BufferedImage loadImage(String path) throws IOException {
     return ImageIO.read(new FileInputStream(path));
   }
 
   public void drawSprite(Graphics g,int zoomLvl){
     if(img != null){
       g.drawImage(img, (int)x, (int)y,(int)(img.getWidth() * zoomLvl),(int)(img.getHeight() * zoomLvl), null);
+    }else{
+      try {
+        img = loadImage(imgUrl);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  public void drawSprite(Graphics g,int zoomLvl, Vector2 offset){
+    if(img != null){
+      g.drawImage(img, (int)(x + offset.x), (int)(y + offset.y),(int)(img.getWidth() * zoomLvl),(int)(img.getHeight() * zoomLvl), null);
     }else{
       try {
         img = loadImage(imgUrl);

@@ -33,7 +33,7 @@ public class Image extends GameObject{
         color = Color.WHITE;
     }
   
-    private BufferedImage loadImage(String path) throws IOException {
+    public BufferedImage loadImage(String path) throws IOException {
         return ImageIO.read(new FileInputStream(path));
     }
 
