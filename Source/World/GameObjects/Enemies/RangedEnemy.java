@@ -109,6 +109,8 @@ public class RangedEnemy extends GameObject{
   }   
   public void checkhp () {
     if (hp<1) {
+      
+      
       handler.removeEnemy(this);
       
       for (int e = 0; e < Game.handler.objects.size(); e++) {
