@@ -21,7 +21,7 @@ public class HUD {
 
   public static float HEALTH = 100; // Leben
   LinkedList<GameObject> UIobj = new LinkedList<GameObject>();
-
+  
   private Handler handler;
   private float greenValue = 255;
   private int score = 0;
@@ -31,7 +31,7 @@ public class HUD {
   public HUD() {
     ph = new particleHandler(new Rectangle(0, Game.ScreenHeight - 10, Game.ScreenWidth - 50, 1), 3, new Vector2(0, -10),50, Color.black, new Color(88, 126, 224, 255));
   }
-
+  
   public void tick() {
     ph.tick();
     HEALTH = Game.clamp(HEALTH, 0, 100);

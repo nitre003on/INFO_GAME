@@ -18,9 +18,9 @@ public class Player extends GameObject {
   
   Direction direction;
   
-  public Rectangle hitBox;
+  
   public int[] roomBounds = new int[] {0, 0, 0};
-
+  
   float tempVelX;
   float tempVelY;
   
@@ -30,11 +30,11 @@ public class Player extends GameObject {
   
   public static int playerLength = 30;
   public static int playerHeight = 80;
-
+  
   public Player(int x, int y, ID id, Handler handler, Direction direction) {
     super(x, y,playerLength,playerHeight, id, handler);
     this.direction = direction;
-    hitBox = new Rectangle(x, y, this.playerLength, this.playerHeight);
+    
     
     ah = new animationHandler("Content/playerSprites.png", 35);
     ah.createAnimation("walk", 1, 4);
@@ -42,13 +42,11 @@ public class Player extends GameObject {
   }
   
   public Rectangle getBounds() {
-    return new Rectangle((int)x,(int)y,hitBox.width,hitBox.height);                                            //Methode um die Umrisse zu kriegen
+    return new Rectangle((int)x,(int)y,playerLength,playerHeight);                                            //Methode um die Umrisse zu kriegen
   }
   
   public void tick() {
     if(itemPicked[0]) HUD.HEALTH += 50;
-    hitBox.x = (int)x;
-    hitBox.y = (int)y;
     tempVelX = velX;
     tempVelY = velY;
     collision();
@@ -87,71 +85,89 @@ public class Player extends GameObject {
     }
     
     //Kollision mit wand oder tuer
-    hitBox.x += velX; 
-    for (int i = 0;i < handler.objects.size();i++) {         
+    this.x += velX; 
+    for (int i = 0; velX != 0 && i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
-      if(tempObject instanceof Wall || tempObject instanceof Door) { 
-        if (hitBox.intersects(tempObject.getBounds())) { 
-          if (tempObject instanceof Wall) {
-            hitBox.x -= velX; 
-            while (!hitBox.intersects(tempObject.getBounds())) { 
-              hitBox.x += Math.signum(velX);                           //Die Kollision prüft ob der Spieler nächsten Frame in einer Wand sein würde. 
-            }                                                          //Wenn dies der Fall ist, dann nähert sie den Spieler an die Wand ran.
-            hitBox.x -= Math.signum(velX);  
-            velX = 0;
-            x = hitBox.x;
+      if(tempObject instanceof Wall) { 
+        if (this.getBounds().intersects(tempObject.getBounds())) {
+          if (Game.debug) {
+            System.out.println("Hit Wall");
+          } 
+          this.x -= velX; 
+          while (!this.getBounds().intersects(tempObject.getBounds())) { 
+            this.x += Math.signum(velX);                           //Die Kollision prüft ob der Spieler nächsten Frame in einer Wand sein würde. 
+          }                                                          //Wenn dies der Fall ist, dann nähert sie den Spieler an die Wand ran.
+          this.x -= Math.signum(velX);  
+          velX = 0;
+        }
+      }
+    }
+    
+    for (int i = 0; velX != 0 && i < handler.objects.size();i++) {
+      GameObject tempObject = handler.objects.get(i);
+      if (tempObject instanceof Door) {
+        if (this.getBounds().intersects(tempObject.getBounds())) {
+          if (Game.debug) {
+            System.out.println("Hit Door");
+          } 
+          Door tempDoor = (Door)tempObject;
+          if (tempDoor.isUnlocked()) {
+            tempDoor.teleport(Game.player, i);
           }
-          else if(tempObject instanceof Door) {
-            Door tempDoor = (Door)tempObject;
-            if (tempDoor.isUnlocked()) {
-              tempDoor.teleport(Game.player, i);
+          else {
+            this.x -= velX;
+            while (!this.getBounds().intersects(tempDoor.getBounds())) { 
+              this.x += Math.signum(velX);
             }
-            else {
-              hitBox.x -= velX;
-              while (!hitBox.intersects(tempDoor.getBounds())) { 
-                hitBox.x += Math.signum(velX);
-              }
-              hitBox.x -= Math.signum(velX);  
-              velX = 0;
-              x = hitBox.x;
+            this.x -= Math.signum(velX);  
+            velX = 0;
+          }
+        }
+      }
+    }
+    this.x -= velX;
+    
+    
+    this.y += velY; 
+    for (int i = 0; velY != 0 && i < handler.objects.size();i++) {         
+      GameObject tempObject = handler.objects.get(i); 
+      if(tempObject instanceof Wall) { 
+        if (this.getBounds().intersects(tempObject.getBounds())) {
+          if (Game.debug) {
+            System.out.println("Hit Wall");
+          }
+          this.y -= velY; 
+          while (!this.getBounds().intersects(tempObject.getBounds())) { 
+            this.y += Math.signum(velY); 
+          } 
+          this.y -= Math.signum(velY); 
+          velY = 0;
+        } 
+      }
+    }
+    for (int i = 0; velY != 0 && i < handler.objects.size();i++) {
+      GameObject tempObject = handler.objects.get(i);
+      if (tempObject instanceof Door) {
+        if (this.getBounds().intersects(tempObject.getBounds())) {
+          if (Game.debug) {
+            System.out.println("Hit Door");
+          }
+          Door tempDoor = (Door)tempObject;
+          if (tempDoor.isUnlocked()) {
+            tempDoor.teleport(Game.player, i);
+          }
+          else {
+            this.y -= velY;
+            while (!this.getBounds().intersects(tempDoor.getBounds())) { 
+              this.y += Math.signum(velY);
             }
+            this.y -= Math.signum(velY);  
+            velY = 0;
           }
         }
       }
     } 
-    
-    hitBox.y += velY; 
-    for (int i = 0;i < handler.objects.size();i++) {         
-      GameObject tempObject = handler.objects.get(i); 
-      if(tempObject instanceof Wall || tempObject instanceof Door) { 
-        if (hitBox.intersects(tempObject.getBounds())) {
-          if (tempObject instanceof Wall) {  
-            hitBox.y -= velY; 
-            while (!hitBox.intersects(tempObject.getBounds())) { 
-              hitBox.y += Math.signum(velY); 
-            } 
-            hitBox.y -= Math.signum(velY); 
-            velY = 0;
-            y = hitBox.y;
-          }
-          else if (tempObject instanceof Door) {
-            Door tempDoor = (Door)tempObject;
-            if (tempDoor.isUnlocked()) {
-              tempDoor.teleport(Game.player, i);
-            }
-            else {
-              hitBox.y -= velY;
-              while (!hitBox.intersects(tempDoor.getBounds())) { 
-                hitBox.y += Math.signum(velY);
-              }
-              hitBox.y -= Math.signum(velY);  
-              velY = 0;
-              y = hitBox.y;
-            }
-          }
-        } 
-      }
-    } 
+    this.y -= velY;
   }
   
   public void shoot() {
@@ -185,6 +201,4 @@ public class Player extends GameObject {
       g.drawString(Integer.toString((int)this.y), (int)x + 25, (int)y + 100);
     }
   }
-  
-  
 }

@@ -140,7 +140,6 @@ public class Game extends Canvas implements Runnable
     hud.tick();
     if(curState == states.play){
       handler.tick();                                             //Hier werden alle Tickmethoden(bzw. im handler dann) aufgerufen
-      //spawn.tick();
       for (int i = 0;i < handler.objects.size();i++) {        
         if(handler.objects.get(i).getID() == ID.Player){
           cam.tick(handler.objects.get(i));
