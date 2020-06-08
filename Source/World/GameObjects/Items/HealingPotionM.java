@@ -23,6 +23,7 @@ public class HealingPotionM extends GameObject {
   
   public HealingPotionM(int x, int y, ID id, Handler handler) {
     super(x, y,16,16, id, handler);
+    imgUrl = "Content/items/healing.png";
   }
   
   public Rectangle getBounds() {
@@ -62,14 +63,8 @@ public class HealingPotionM extends GameObject {
   }
   
   
-  public void render(Graphics g) {
-    
-    /*Graphics2D g2d = (Graphics2D) g;
-    g.setColor(Color.green);
-    g2d.draw(getBounds());*/
-    /*if(id == ID.Player)*/g.setColor(Color.green);
-    g.fillRect((int)x, (int)y, 16, 16);                                                   // Form wird ge"zeichnet"
-    
+  public void render(Graphics g) {                                                  // Form wird ge"zeichnet"
+    drawSprite(g, 2);
   }
   
   public boolean onScreen(){

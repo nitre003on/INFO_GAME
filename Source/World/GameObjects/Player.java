@@ -203,17 +203,28 @@ public class Player extends GameObject {
 
     // g.setColor(Color.white);
     // g.fillRect((int)x + 50, (int)y, 89, 100); // Form wird ge"zeichnet"
+    Vector2 itemPos;
+    if(ah.flippedX){
+      itemPos = new Vector2(26, 26);
+    }else{
+      itemPos = new Vector2(-38, 26);
+    }
+
     if (itemPicked[1]) {
       try {
-        img = loadImage("Content/items/gun.png");
+        if(ah.flippedX)
+          img = loadImage("Content/items/gun.png");
+        else
+          img = SpriteFlipX(loadImage("Content/items/gun.png"));
       } catch (IOException e) {
         e.printStackTrace();
       }
-      drawSprite(g, 2,new Vector2(26, 26));
+
+      drawSprite(g, 2,itemPos);
     }
     if(itemPicked[2]){
       try {
-        img = loadImage("Content/items/shotgun.png");
+          img = loadImage("Content/items/shotgun.png");
       } catch (IOException e) {
         e.printStackTrace();
       }

@@ -22,7 +22,8 @@ public class animationHandler { // Nachfragen an Piet richten
   private List<Vector2> animFrameStamps = new ArrayList<Vector2>();
   private int first,last,curFrame,gridSize, timer;
   private float speed;
-  private boolean repeat,flippedX,flippedY, processing = false;
+  private boolean repeat,flippedY, processing = false;
+  public boolean flippedX;
   
   public animationHandler(String spriteSheetURL, int gridSize){   //"spriteSheetURL" ist der relative Pfad der Bilddatei und "gridSize" die größe eines Frames in Pixel.
     this.gridSize = gridSize;
