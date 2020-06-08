@@ -1,4 +1,5 @@
 package Source.World;
+import Source.World.Game;
 
 public class Camera {
   private float x, y;

@@ -9,12 +9,15 @@ import Source.Engine.ID;
 import Source.Engine.Vector2;
 import Source.World.GameObject;
 import Source.World.GameObjects.BasicTrail;
+import Source.World.Game;
 
 public class DirectionalShot extends Shot{  //Schuss in richtung Maus (Piet)
   
   private Vector2 dir = new Vector2(0,0);
   private GameObject owner;
   private float speed, despawnTimer = 100;
+  
+  private int width, height = 16;
   
   Rectangle hitBox;
   

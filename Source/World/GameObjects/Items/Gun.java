@@ -21,6 +21,8 @@ public class Gun extends GameObject {
   public int magazin = 30;
   public boolean empty = false;
   
+  public int width, height = 16;
+  
   public Gun(int x, int y, ID id, Handler handler) {
     super(x, y,16,16, id, handler);
   }
@@ -82,5 +84,11 @@ public class Gun extends GameObject {
     
   }
   
-  
+  public boolean onScreen(){
+    try{
+      return (x - Game.player.x + width > 0 - Game.ScreenWidth / 2 && x - Game.player.x < 0 + Game.ScreenWidth / 2 && y - Game.player.y + height > 0 - Game.ScreenHeight / 2 && y - Game.player.y < 0 + Game.ScreenHeight / 2);
+    }catch(Exception e){
+      return (x - Game.ScreenWidth / 2 + width > 0 - Game.ScreenWidth / 2 && x - Game.ScreenWidth / 2 < 0 + Game.ScreenWidth / 2 && y - Game.ScreenHeight / 2 + height > 0 - Game.ScreenHeight / 2 && y - Game.ScreenHeight / 2 < 0 + Game.ScreenHeight / 2);
+    }
+  }
 }

@@ -27,7 +27,7 @@ public class RangedEnemy extends GameObject{
   
   public static int RangedEnemySize = 32;
   
-  public RangedEnemy(int x, int y, ID id, Handler handler, int cooldown) {
+  public RangedEnemy(float x, float y, ID id, Handler handler, int cooldown) {
     super(x,y,RangedEnemySize,RangedEnemySize,id,handler);
     hitBox = new Rectangle((int)x,(int)y,RangedEnemySize,RangedEnemySize);
     velX = 2;
@@ -154,6 +154,14 @@ public class RangedEnemy extends GameObject{
       } // end of if
     } // end of if-else
     collision();
+  }
+  
+  public boolean onScreen(){
+    try{
+      return (x - Game.player.x + RangedEnemySize > 0 - Game.ScreenWidth / 2 && x - Game.player.x < 0 + Game.ScreenWidth / 2 && y - Game.player.y + RangedEnemySize > 0 - Game.ScreenHeight / 2 && y - Game.player.y < 0 + Game.ScreenHeight / 2);
+    }catch(Exception e){
+      return (x - Game.ScreenWidth / 2 + RangedEnemySize > 0 - Game.ScreenWidth / 2 && x - Game.ScreenWidth / 2 < 0 + Game.ScreenWidth / 2 && y - Game.ScreenHeight / 2 + RangedEnemySize > 0 - Game.ScreenHeight / 2 && y - Game.ScreenHeight / 2 < 0 + Game.ScreenHeight / 2);
+    }
   }  
 }
   

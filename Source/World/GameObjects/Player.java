@@ -51,8 +51,6 @@ public class Player extends GameObject {
       HUD.HEALTH += 50;
       itemPicked[0] = false;
       }
-    hitBox.x = (int)x; 
-    hitBox.y = (int)y;
     tempVelX = velX;
     tempVelY = velY;
     collision();
@@ -219,6 +217,14 @@ public class Player extends GameObject {
       g.drawString("Y:" ,(int)x + 15, (int)y + 100);
       g.drawString(Integer.toString((int)this.x), (int)x - 20, (int)y + 100); 
       g.drawString(Integer.toString((int)this.y), (int)x + 25, (int)y + 100);
+    }
+  }
+  
+  public boolean onScreen(){
+    try{
+      return (x - Game.player.x + playerLength > 0 - Game.ScreenWidth / 2 && x - Game.player.x < 0 + Game.ScreenWidth / 2 && y - Game.player.y + playerHeight > 0 - Game.ScreenHeight / 2 && y - Game.player.y < 0 + Game.ScreenHeight / 2);
+    }catch(Exception e){
+      return (x - Game.ScreenWidth / 2 + playerLength > 0 - Game.ScreenWidth / 2 && x - Game.ScreenWidth / 2 < 0 + Game.ScreenWidth / 2 && y - Game.ScreenHeight / 2 + playerHeight > 0 - Game.ScreenHeight / 2 && y - Game.ScreenHeight / 2 < 0 + Game.ScreenHeight / 2);
     }
   }
 }

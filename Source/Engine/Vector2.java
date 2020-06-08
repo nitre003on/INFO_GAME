@@ -1,6 +1,7 @@
 package Source.Engine;
 
 import Source.World.GameObject;
+import Source.World.Game;
 
 public class Vector2 {  // Mathematischer Vektor mit Standard komponentenweiser Multiplikation und Addition ueber den "Reellen" Zahlen
   
