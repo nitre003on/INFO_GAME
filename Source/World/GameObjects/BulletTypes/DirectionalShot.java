@@ -19,11 +19,11 @@ public class DirectionalShot extends Shot{  //Schuss in richtung Maus (Piet)
   Rectangle hitBox;
   
   public DirectionalShot(GameObject owner, Vector2 target, ID id, Handler handler) {
-    super((int)owner.getX(), (int)owner.getY(), null, id, handler);
-    dir = Vector2.subtract(target, Vector2.getPos(owner));
+    super((int)owner.x, (int)owner.y, null, id, handler);
+    dir = Vector2.subtract(target, Vector2.getPos(owner));  //Vector - Vector = Richtung
     speed = 15;
     this.owner = owner;
-    dir.normalize();
+    dir.normalize();  //damit das Projektil immer gleich schnell ist!
     hitBox = new Rectangle((int)x, (int)y, 16, 16);
   }
 

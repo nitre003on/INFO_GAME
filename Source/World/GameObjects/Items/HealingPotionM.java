@@ -3,10 +3,7 @@ package Source.World.GameObjects.Items;
 import java.awt.Color;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 import Source.Engine.Direction;
 import Source.Engine.Handler;
@@ -16,8 +13,6 @@ import Source.World.GameObject;
 import Source.World.GameObjects.Player;
 import Source.World.GameObjects.BulletTypes.Shot;
 
-import java.util.Scanner;
-
 public class HealingPotionM extends GameObject {
   
   boolean picked = false;
@@ -25,7 +20,7 @@ public class HealingPotionM extends GameObject {
   
   
   public HealingPotionM(int x, int y, ID id, Handler handler) {
-    super(x, y, id, handler);
+    super(x, y,16,16, id, handler);
   }
   
   public Rectangle getBounds() {

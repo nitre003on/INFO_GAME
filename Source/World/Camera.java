@@ -2,12 +2,12 @@ package Source.World;
 
 public class Camera {
   private float x, y;
-  
+  //Konstruktor
   public Camera (float x, float y) {
     this.x = x;
     this.y = y;
     }
-  
+  //Generelle get/set methoden
   public void setX(float x) {
     this.x = x;
     }

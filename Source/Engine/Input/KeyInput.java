@@ -45,14 +45,12 @@ public class KeyInput extends KeyAdapter{
           tempObject.setVelY(-playerSpeed); keyDown[0]= true;
           if(keyDown[2]){
             axes[1]="FS";
-            System.out.println("first s");
           }
         }
         if(key == KeyEvent.VK_S){
           tempObject.setVelY(playerSpeed); keyDown[2]= true;
           if(keyDown[0]){
             axes[1]="FW";
-            System.out.println("first w");
           }
         }
         
@@ -61,14 +59,12 @@ public class KeyInput extends KeyAdapter{
           tempObject.setVelX(-playerSpeed); keyDown[1]= true;
           if(keyDown[3]){
             axes[0]="FD";
-            System.out.println("first d");
           }
         }
         if(key == KeyEvent.VK_D) {
           tempObject.setVelX(playerSpeed); keyDown[3]= true;
           if(keyDown[1]){
             axes[0]="FA";
-            System.out.println("first a");
           }
         }                                                                   //KeyEvents falls es ein spieler ist(Die Unterscheidung ist wichtig, falls mann mehrspieler-Modi oder verschiedene Charaktere oder so haben will)
         
@@ -144,7 +140,17 @@ public class KeyInput extends KeyAdapter{
         }
       }
     }
-  }    
+    if(key == KeyEvent.VK_ESCAPE){
+      if(Game.curState == Game.states.play){
+        Game.curState = Game.states.paused;
+        Game.hud.drawPause();
+      }else if(Game.curState == Game.states.paused){
+        Game.hud.clearQueue();
+        Game.curState = Game.states.play;
+      }
+    }
+  }
+  
   public void keyReleased(KeyEvent e) {
     int key = e.getKeyCode();
     for(int i=0;i<handler.objects.size();i++) {

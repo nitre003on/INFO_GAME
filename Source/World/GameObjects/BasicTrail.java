@@ -21,7 +21,7 @@ public class BasicTrail extends GameObject {
   
   
   public BasicTrail(int x, int y, ID id, Color color, int width, int height, float life, Handler handler) {
-    super(x, y, id, handler);
+    super(x, y,width,height, id, handler);
     this.color = color;
     this.width = width;
     this.height = height;                                                     //Konstruktor
@@ -34,6 +34,7 @@ public class BasicTrail extends GameObject {
     } else {                                                            //TAil wird gel�scht/Gelassen
       handler.removeObject(this);
     } 
+    if(!onScreen()) handler.removeObject(this);
   }
   
   public void render(Graphics g) {

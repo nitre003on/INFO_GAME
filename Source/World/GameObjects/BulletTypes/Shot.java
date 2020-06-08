@@ -17,7 +17,7 @@ public class Shot extends GameObject{
   
   
   public Shot(int x, int y, Direction direction, ID id, Handler handler) {
-    super(x, y, id, handler);
+    super(x, y,16,16, id, handler);
     this.direction = direction;
     velX=7;
     velY=7;                                          //Schussgeschwindigkeit

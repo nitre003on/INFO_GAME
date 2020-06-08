@@ -11,5 +11,6 @@ public enum ID
   Wall(),
   Door(),
   Item(),
-  UI();
+  UI(),
+  Image();
 }

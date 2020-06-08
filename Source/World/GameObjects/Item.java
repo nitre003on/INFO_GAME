@@ -3,10 +3,7 @@ package Source.World.GameObjects;
 import java.awt.Color;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 import Source.Engine.Direction;
 import Source.Engine.Handler;
@@ -15,15 +12,13 @@ import Source.World.Game;
 import Source.World.GameObject;
 import Source.World.GameObjects.BulletTypes.Shot;
 
-import java.util.Scanner;
-
 public class Item extends GameObject {
   
   boolean picked = false;
   Direction direction;
   
   public Item(int x, int y, ID id, Handler handler) {
-    super(x, y, id, handler);
+    super(x, y,16,16, id, handler);
   }
   
   public Rectangle getBounds() {

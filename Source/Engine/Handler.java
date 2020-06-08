@@ -8,23 +8,32 @@ import Source.World.GameObject;
 public class Handler 
 {
   public LinkedList<GameObject> objects = new LinkedList<GameObject>();
+  public LinkedList<GameObject> enemies = new LinkedList<GameObject>();
   public void tick() {
-    for(int i = 0; i<objects.size(); i++) {
-      GameObject tempObject = objects.get(i);
-      tempObject.tick();                                //hier werden alle Tickmethoden getan.
-    }
+      for(int i = 0; i<objects.size(); i++) { if(objects.get(i).onScreen() || objects.get(i).getID() == ID.Trail)objects.get(i).tick(); }                            //hier werden alle Tickmethoden getan.
+      for(int i = 0; i<enemies.size(); i++) { if(enemies.get(i).inRoom()) enemies.get(i).tick(); }
   }
   public void render(Graphics g) {
-    for (int i = 0; i < objects.size(); i++) {
-      GameObject tempObject = objects.get(i);
-      tempObject.render(g);                             // Hier alle rendermethoden
-    }   
+      for (int i = 0; i < objects.size(); i++) { if(objects.get(i).onScreen())objects.get(i).render(g); }                             // Hier alle rendermethoden 
   }
   public void addObject(GameObject object) {
     this.objects.add(object);
   }
+  public void addObjectAsBG(GameObject object) {
+    this.objects.add(0, object);
+  }
   public void removeObject(GameObject object) {
     this.objects.remove(object);
+    object = null;
+  }
+  
+  public void addEnemy(GameObject object) {
+    this.enemies.add(object);
+  }
+  
+  public void removeEnemy(GameObject object) {
+    this.enemies.remove(object);
+    object = null;
   }
 }
 

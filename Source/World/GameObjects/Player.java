@@ -3,27 +3,23 @@ package Source.World.GameObjects;
 import java.awt.Color;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
-import Source.Engine.animationHandler;
 import Source.Engine.Direction;
 import Source.Engine.Handler;
 import Source.Engine.ID;
+import Source.Engine.Graphics.animationHandler;
 import Source.Engine.UI.HUD;
 import Source.World.Game;
 import Source.World.GameObject;
 import Source.World.GameObjects.BulletTypes.Shot;
 
-import java.util.Scanner;
-
 public class Player extends GameObject {
   
   Direction direction;
   
-  public Rectangle hitBox;
+  
+  public int[] roomBounds = new int[] {0, 0, 0};
   
   float tempVelX;
   float tempVelY;
@@ -37,18 +33,17 @@ public class Player extends GameObject {
   public static int playerHeight = 80;
   
   public Player(int x, int y, ID id, Handler handler, Direction direction) {
-    super(x, y, id, handler);
+    super(x, y,playerLength,playerHeight, id, handler);
     this.direction = direction;
-    hitBox = new Rectangle(x, y, this.playerLength, this.playerHeight);
+    
     
     ah = new animationHandler("Content/playerSprites.png", 35);
     ah.createAnimation("walk", 1, 4);
     ah.createAnimation("idle", 5, 5);
-    //ah.playAnimation("walk", 0.05f, false, false);
   }
   
   public Rectangle getBounds() {
-    return new Rectangle((int)x,(int)y,hitBox.width,hitBox.height);                                            //Methode um die Umrisse zu kriegen
+    return new Rectangle((int)x,(int)y,playerLength,playerHeight);                                            //Methode um die Umrisse zu kriegen
   }
   
   public void tick() {
@@ -63,9 +58,9 @@ public class Player extends GameObject {
     collision();
     if(velX == 0 && velY == 0){
       ah.playAnimation("idle", 0, false, true);
-    }else if (ah.curPlaying != "walk"){
-        ah.playAnimation("walk", 0.05f, true, false);
-      }
+    }else if (ah.curPlaying != "walk"){ //starte die animation nicht neu, falls sie schon läuft
+      ah.playAnimation("walk", 0.05f, true, false);
+    }
     if(velX > 0){ ah.faceLeft(); }
       else if (velX < 0){ ah.faceRight(); }
     ah.tick();
@@ -80,8 +75,8 @@ public class Player extends GameObject {
   
   public void collision() {
     //Kollision mit Gegnern
-    for (int i = 0; i < handler.objects.size(); i++) {
-      GameObject tempObject = handler.objects.get(i);
+    for (int i = 0; i < handler.enemies.size(); i++) {
+      GameObject tempObject = handler.enemies.get(i);
       if (tempObject.getID()==ID.BasicEnemy || tempObject.getID()==ID.FastEnemy||tempObject.getID()==ID.SmartEnemy) {
         if(getBounds().intersects(tempObject.getBounds())) {
           //collision code
@@ -95,50 +90,90 @@ public class Player extends GameObject {
       }*/
     }
     
-    //Kollision mit wand
-    hitBox.x += velX; 
-    for (int i = 0;i < handler.objects.size();i++) {         
+    //Kollision mit wand oder tuer
+    this.x += velX; 
+    for (int i = 0; velX != 0 && i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
-      if(handler.objects.get(i) instanceof Wall){ 
-        if (hitBox.intersects(tempObject.getBounds())){ 
-          hitBox.x -= velX; 
-          while (!hitBox.intersects(tempObject.getBounds())){ 
-            hitBox.x += Math.signum(velX); 
+      if(tempObject instanceof Wall) { 
+        if (this.getBounds().intersects(tempObject.getBounds())) {
+          if (Game.debug) {
+            System.out.println("Hit Wall");
           } 
-          hitBox.x -= Math.signum(velX);  
+          this.x -= velX; 
+          while (!this.getBounds().intersects(tempObject.getBounds())) { 
+            this.x += Math.signum(velX);                           //Die Kollision prüft ob der Spieler nächsten Frame in einer Wand sein würde. 
+          }                                                          //Wenn dies der Fall ist, dann nähert sie den Spieler an die Wand ran.
+          this.x -= Math.signum(velX);  
           velX = 0;
-          x = hitBox.x; 
         }
-      } 
-    } 
-    
-    hitBox.y += velY; 
-    for (int i = 0;i < handler.objects.size();i++) {         
-      GameObject tempObject = handler.objects.get(i); 
-      if(handler.objects.get(i) instanceof Wall){ 
-        if (hitBox.intersects(tempObject.getBounds())){ 
-          hitBox.y -= velY; 
-          while (!hitBox.intersects(tempObject.getBounds())){ 
-            hitBox.y += Math.signum(velY); 
-          } 
-          hitBox.y -= Math.signum(velY); 
-          velY = 0;
-          y = hitBox.y; 
-        } 
-      } 
+      }
     }
     
-    
-    //Teleport 
-    for (int i = 0;i < handler.objects.size();i++) {         
-      GameObject tempObject = handler.objects.get(i); 
-      if(handler.objects.get(i) instanceof Door){
-        if (hitBox.intersects(tempObject.getBounds())){
-          Door tempDoor = (Door)tempObject; 
-          tempDoor.teleport(Game.player, i);
+    for (int i = 0; velX != 0 && i < handler.objects.size();i++) {
+      GameObject tempObject = handler.objects.get(i);
+      if (tempObject instanceof Door) {
+        if (this.getBounds().intersects(tempObject.getBounds())) {
+          if (Game.debug) {
+            System.out.println("Hit Door");
+          } 
+          Door tempDoor = (Door)tempObject;
+          if (tempDoor.isUnlocked()) {
+            tempDoor.teleport(Game.player, i);
+          }
+          else {
+            this.x -= velX;
+            while (!this.getBounds().intersects(tempDoor.getBounds())) { 
+              this.x += Math.signum(velX);
+            }
+            this.x -= Math.signum(velX);  
+            velX = 0;
+          }
         }
-      } 
+      }
+    }
+    this.x -= velX;
+    
+    
+    this.y += velY; 
+    for (int i = 0; velY != 0 && i < handler.objects.size();i++) {         
+      GameObject tempObject = handler.objects.get(i); 
+      if(tempObject instanceof Wall) { 
+        if (this.getBounds().intersects(tempObject.getBounds())) {
+          if (Game.debug) {
+            System.out.println("Hit Wall");
+          }
+          this.y -= velY; 
+          while (!this.getBounds().intersects(tempObject.getBounds())) { 
+            this.y += Math.signum(velY); 
+          } 
+          this.y -= Math.signum(velY); 
+          velY = 0;
+        } 
+      }
+    }
+    for (int i = 0; velY != 0 && i < handler.objects.size();i++) {
+      GameObject tempObject = handler.objects.get(i);
+      if (tempObject instanceof Door) {
+        if (this.getBounds().intersects(tempObject.getBounds())) {
+          if (Game.debug) {
+            System.out.println("Hit Door");
+          }
+          Door tempDoor = (Door)tempObject;
+          if (tempDoor.isUnlocked()) {
+            tempDoor.teleport(Game.player, i);
+          }
+          else {
+            this.y -= velY;
+            while (!this.getBounds().intersects(tempDoor.getBounds())) { 
+              this.y += Math.signum(velY);
+            }
+            this.y -= Math.signum(velY);  
+            velY = 0;
+          }
+        }
+      }
     } 
+    this.y -= velY;
   }
   
   public void shoot() {
@@ -152,7 +187,6 @@ public class Player extends GameObject {
 
   
   public void render(Graphics g) {
-    
     /*Graphics2D g2d = (Graphics2D) g;
     g.setColor(Color.green);
     g2d.draw(getBounds());*/
@@ -168,7 +202,13 @@ public class Player extends GameObject {
       g.fillRect((int)x+26, (int)y+26, 32,16);
     } 
     ah.draw(g, (int)x, (int)y, -40, -10,100);
+    
+    if (Game.debug) {
+      g.setColor(Color.WHITE);
+      g.drawString("X:" ,(int)x - 30, (int)y + 100);
+      g.drawString("Y:" ,(int)x + 15, (int)y + 100);
+      g.drawString(Integer.toString((int)this.x), (int)x - 20, (int)y + 100); 
+      g.drawString(Integer.toString((int)this.y), (int)x + 25, (int)y + 100);
+    }
   }
-  
-  
 }
