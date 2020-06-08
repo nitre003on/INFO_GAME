@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import Source.Engine.Handler;
 import Source.Engine.ID;
 import Source.World.GameObject;
+import Source.World.Game;
 
 
 public class UIImage extends GameObject{  // nachfragen an Piet
@@ -47,5 +48,13 @@ public class UIImage extends GameObject{  // nachfragen an Piet
           g.fillRect((int)x, (int)y, w, h);
         }
       }
+  
+  public boolean onScreen(){
+    try{
+      return (x - Game.player.x + w > 0 - Game.ScreenWidth / 2 && x - Game.player.x < 0 + Game.ScreenWidth / 2 && y - Game.player.y + h > 0 - Game.ScreenHeight / 2 && y - Game.player.y < 0 + Game.ScreenHeight / 2);
+    }catch(Exception e){
+      return (x - Game.ScreenWidth / 2 + w > 0 - Game.ScreenWidth / 2 && x - Game.ScreenWidth / 2 < 0 + Game.ScreenWidth / 2 && y - Game.ScreenHeight / 2 + h > 0 - Game.ScreenHeight / 2 && y - Game.ScreenHeight / 2 < 0 + Game.ScreenHeight / 2);
+    }
+  }
 }
 

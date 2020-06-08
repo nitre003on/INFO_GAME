@@ -36,9 +36,7 @@ public class Image extends GameObject{
     this.height = (int)size.x;
   }
   
-  private BufferedImage loadImage(String path) throws IOException {
-    return ImageIO.read(new FileInputStream(path));
-  }
+  
 
   public Rectangle getBounds() {
     return new Rectangle((int)x,(int)y,16,16);                              //Grenzen werden hierdurch entnommen

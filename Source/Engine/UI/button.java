@@ -61,4 +61,12 @@ public abstract class button extends GameObject {  //generische button Klasse (P
       if (txt != null) g.drawString(txt, (int)x + w / 2, (int)y + h / 2);
       if (img != null) img.render(g);
     }
+  
+  public boolean onScreen(){
+    try{
+      return (x - Game.player.x + w > 0 - Game.ScreenWidth / 2 && x - Game.player.x < 0 + Game.ScreenWidth / 2 && y - Game.player.y + h > 0 - Game.ScreenHeight / 2 && y - Game.player.y < 0 + Game.ScreenHeight / 2);
+    }catch(Exception e){
+      return (x - Game.ScreenWidth / 2 + w > 0 - Game.ScreenWidth / 2 && x - Game.ScreenWidth / 2 < 0 + Game.ScreenWidth / 2 && y - Game.ScreenHeight / 2 + h > 0 - Game.ScreenHeight / 2 && y - Game.ScreenHeight / 2 < 0 + Game.ScreenHeight / 2);
+    }
+  }
 }

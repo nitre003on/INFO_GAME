@@ -37,20 +37,22 @@ public class RangedEnemy extends GameObject{
     this.cooldown = cooldown;
   }
   public void collision() {
-    float velx = velX;
-    float vely =velY;
+    x += velX;
+    y += velY;
     for (int i = 0;i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
       if(tempObject.getID()==ID.Wall || tempObject.getID()==ID.Door){ 
         if (hitBox.intersects(tempObject.getBounds())){ 
+          x -= velX;
+          y -= velY;
           while (!hitBox.intersects(tempObject.getBounds())){ 
             hitBox.x += Math.signum(velX);
             hitBox.y += Math.signum(velY); 
           } 
           hitBox.x -= Math.signum(velX);
           hitBox.y -= Math.signum(velY); 
-          velX = -velx;
-          velY = -vely;
+          velX *= -1;
+          velY *= -1;
         } 
       }
       if(tempObject.getID()==ID.Shot){ 
