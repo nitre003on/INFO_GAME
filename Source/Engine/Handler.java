@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.LinkedList;
 
 import Source.World.GameObject;
+import Source.World.Game;
 
 public class Handler 
 {

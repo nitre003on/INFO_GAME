@@ -123,4 +123,12 @@ public class SmartEnemy extends GameObject{
     g.setColor(Color.orange);
     g.fillRect((int)x, (int)y, SmartEnemySize, SmartEnemySize);                                                       //grafische Darstellung
   }
+  
+  public boolean onScreen(){
+    try{
+      return (x - Game.player.x + SmartEnemySize > 0 - Game.ScreenWidth / 2 && x - Game.player.x < 0 + Game.ScreenWidth / 2 && y - Game.player.y + SmartEnemySize > 0 - Game.ScreenHeight / 2 && y - Game.player.y < 0 + Game.ScreenHeight / 2);
+    }catch(Exception e){
+      return (x - Game.ScreenWidth / 2 + SmartEnemySize > 0 - Game.ScreenWidth / 2 && x - Game.ScreenWidth / 2 < 0 + Game.ScreenWidth / 2 && y - Game.ScreenHeight / 2 + SmartEnemySize > 0 - Game.ScreenHeight / 2 && y - Game.ScreenHeight / 2 < 0 + Game.ScreenHeight / 2);
+    }
+  }
 }

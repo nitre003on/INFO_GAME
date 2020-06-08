@@ -27,7 +27,7 @@ public class RangedEnemy extends GameObject{
   
   public static int RangedEnemySize = 32;
   
-  public RangedEnemy(int x, int y, ID id, Handler handler, int cooldown) {
+  public RangedEnemy(float x, float y, ID id, Handler handler, int cooldown) {
     super(x,y,RangedEnemySize,RangedEnemySize,id,handler);
     hitBox = new Rectangle((int)x,(int)y,RangedEnemySize,RangedEnemySize);
     velX = 2;
@@ -37,20 +37,22 @@ public class RangedEnemy extends GameObject{
     this.cooldown = cooldown;
   }
   public void collision() {
-    float velx = velX;
-    float vely =velY;
+    x += velX;
+    y += velY;
     for (int i = 0;i < handler.objects.size();i++) {         
       GameObject tempObject = handler.objects.get(i); 
       if(tempObject.getID()==ID.Wall || tempObject.getID()==ID.Door){ 
         if (hitBox.intersects(tempObject.getBounds())){ 
+          x -= velX;
+          y -= velY;
           while (!hitBox.intersects(tempObject.getBounds())){ 
             hitBox.x += Math.signum(velX);
             hitBox.y += Math.signum(velY); 
           } 
           hitBox.x -= Math.signum(velX);
           hitBox.y -= Math.signum(velY); 
-          velX = -velx;
-          velY = -vely;
+          velX *= -1;
+          velY *= -1;
         } 
       }
       if(tempObject.getID()==ID.Shot){ 
@@ -154,6 +156,14 @@ public class RangedEnemy extends GameObject{
       } // end of if
     } // end of if-else
     collision();
+  }
+  
+  public boolean onScreen(){
+    try{
+      return (x - Game.player.x + RangedEnemySize > 0 - Game.ScreenWidth / 2 && x - Game.player.x < 0 + Game.ScreenWidth / 2 && y - Game.player.y + RangedEnemySize > 0 - Game.ScreenHeight / 2 && y - Game.player.y < 0 + Game.ScreenHeight / 2);
+    }catch(Exception e){
+      return (x - Game.ScreenWidth / 2 + RangedEnemySize > 0 - Game.ScreenWidth / 2 && x - Game.ScreenWidth / 2 < 0 + Game.ScreenWidth / 2 && y - Game.ScreenHeight / 2 + RangedEnemySize > 0 - Game.ScreenHeight / 2 && y - Game.ScreenHeight / 2 < 0 + Game.ScreenHeight / 2);
+    }
   }  
 }
   

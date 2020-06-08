@@ -147,4 +147,12 @@ public class Door extends GameObject{
     else
       ah.draw(g, (int)x, (int)y,(int)(width / 2 - 60 ), 14, 120);
   }
+  
+  public boolean onScreen(){
+    try{
+      return (x - Game.player.x + width > 0 - Game.ScreenWidth / 2 && x - Game.player.x < 0 + Game.ScreenWidth / 2 && y - Game.player.y + height > 0 - Game.ScreenHeight / 2 && y - Game.player.y < 0 + Game.ScreenHeight / 2);
+    }catch(Exception e){
+      return (x - Game.ScreenWidth / 2 + width > 0 - Game.ScreenWidth / 2 && x - Game.ScreenWidth / 2 < 0 + Game.ScreenWidth / 2 && y - Game.ScreenHeight / 2 + height > 0 - Game.ScreenHeight / 2 && y - Game.ScreenHeight / 2 < 0 + Game.ScreenHeight / 2);
+    }
+  }
 }

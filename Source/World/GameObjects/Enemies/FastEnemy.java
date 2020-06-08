@@ -114,4 +114,12 @@ public class FastEnemy extends GameObject{
     g.setColor(Color.cyan);
     g.fillRect((int)x, (int)y, FastEnemySize, FastEnemySize);                                                       //wird gezeichnet
   }
+  
+  public boolean onScreen(){
+    try{
+      return (x - Game.player.x + FastEnemySize > 0 - Game.ScreenWidth / 2 && x - Game.player.x < 0 + Game.ScreenWidth / 2 && y - Game.player.y + FastEnemySize > 0 - Game.ScreenHeight / 2 && y - Game.player.y < 0 + Game.ScreenHeight / 2);
+    }catch(Exception e){
+      return (x - Game.ScreenWidth / 2 + FastEnemySize > 0 - Game.ScreenWidth / 2 && x - Game.ScreenWidth / 2 < 0 + Game.ScreenWidth / 2 && y - Game.ScreenHeight / 2 + FastEnemySize > 0 - Game.ScreenHeight / 2 && y - Game.ScreenHeight / 2 < 0 + Game.ScreenHeight / 2);
+    }
+  }
 }

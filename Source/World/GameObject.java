@@ -11,6 +11,7 @@ import java.awt.image.AffineTransformOp;
 
 import Source.Engine.Handler;
 import Source.Engine.ID;
+import Source.World.Game;
 import Source.Engine.Vector2;
 
 public abstract class GameObject 
@@ -81,13 +82,7 @@ public abstract class GameObject
   
   public abstract Rectangle getBounds();
 
-  public boolean onScreen(){
-    try{
-      return (x - Game.player.x + w > 0 - Game.ScreenWidth / 2 && x - Game.player.x < 0 + Game.ScreenWidth / 2 && y - Game.player.y + h > 0 - Game.ScreenHeight / 2 && y - Game.player.y < 0 + Game.ScreenHeight / 2);
-    }catch(Exception e){
-      return (x - Game.ScreenWidth / 2 + w > 0 - Game.ScreenWidth / 2 && x - Game.ScreenWidth / 2 < 0 + Game.ScreenWidth / 2 && y - Game.ScreenHeight / 2 + h > 0 - Game.ScreenHeight / 2 && y - Game.ScreenHeight / 2 < 0 + Game.ScreenHeight / 2);
-    }
-  }
+  public abstract boolean onScreen();
 
   public boolean inRoom(){
     return (inRange((int)x, Game.player.roomBounds[0], Game.player.roomBounds[0] + Game.player.roomBounds[2]) && inRange((int)y, Game.player.roomBounds[1], Game.player.roomBounds[1] + Game.player.roomBounds[3]));

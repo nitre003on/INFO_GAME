@@ -30,9 +30,7 @@ import Source.World.GameObjects.Items.Chest;
 import Source.World.GameObjects.Items.Shotgun;
 import Source.World.GameObjects.Items.Scroll;
 
-public class Game extends Canvas implements Runnable
-{
-  
+public class Game extends Canvas implements Runnable {
   private static final long serialVersionUID = 358011174883387846L;
   
   public static final int WIDTH = 20000, HEIGHT = 20000;              //Höhe und Breite des Gesamten Spielfeldes
@@ -62,11 +60,10 @@ public class Game extends Canvas implements Runnable
   private boolean running = false;
   private int[] items = {1,0,0,0}; 
   
-  public static boolean debug = false;        //Wenn debug true ist werden alle debug funktionen ausgeführt
+  public static boolean debug = true;        //Wenn debug true ist werden alle debug funktionen ausgeführt
   
   public void play(){
     curState = states.play;
-    player = new Player(1150, 1150, ID.Player, handler, Direction.None);
     player = new Player(1150, 1150, ID.Player, handler, Direction.None);
     gun = new Gun(1250, 1250, ID.Item, handler);
     shotgun = new Shotgun(1250, 1400, ID.Item, handler);
