@@ -68,9 +68,16 @@ public class Game extends Canvas implements Runnable
   public void play(){
     curState = states.play;
     player = new Player(1150, 1150, ID.Player, handler, Direction.None);
+    spawn = new Spawn(handler, hud);
+    player = new Player(1150, 1150, ID.Player, handler, Direction.None);
+    gun = new Gun(1250, 1250, ID.Item, handler);
+    shotgun = new Shotgun(1250, 1400, ID.Item, handler);
+    scroll = new Scroll(1150, 1400, ID.Item, handler);
     handler.addObject(player);
-    handler.addObject(new Gun(1300, 1200, ID.Item, handler));
-    handler.addObject(new HealingPotionM(1300, 1250, ID.Item, handler));
+    handler.addObject(gun);
+    handler.addObject(shotgun);
+    handler.addObject(scroll);
+    handler.addObject(new Chest(1350, 1250, ID.Item, handler, items));
     DungeonGeneration.drawDungeon();                                                    //Zeichnen des Dungeons
     
     //Update für alle Tueren einmal am Anfang, da sonnst der Startraum geschlossen waere
@@ -92,25 +99,13 @@ public class Game extends Canvas implements Runnable
     cam = new Camera(0, 0);                         //Kamera wird initialisiert
     this.addKeyListener(new KeyInput(handler));
     this.addMouseListener(new MouseInput(handler));
-    hud = new HUD();
-    spawn = new Spawn(handler, hud);
-    player = new Player(1150, 1150, ID.Player, handler, Direction.None);
-    gun = new Gun(1250, 1250, ID.Item, handler);
-    shotgun = new Shotgun(1250, 1400, ID.Item, handler);
-    scroll = new Scroll(1150, 1400, ID.Item, handler);
-    handler.addObject(player);
-    handler.addObject(gun);
-    handler.addObject(shotgun);
-    handler.addObject(scroll);
-    handler.addObject(new Chest(1350, 1250, ID.Item, handler, items));
-    DungeonGeneration.drawDungeon();
     
     
     //handler.addObject(new HealingPotionM(1300, 1250, ID.Item, handler));
     //handler.addObject(new HealingPotionM(1300, 1150, ID.Item, handler));
     //handler.addObject(new Player((WIDTH/2)+16, (HEIGHT/2)+16, ID.Player, handler, Direction.None));
     //handler.addObject(new Wall(100, 200, ID.Wall, handler, 20, 400));
-    handler.addObject(new BasicEnemy(1250, 1400, ID.BasicEnemy, handler));         //Hier werden alle Objekte das erste mal gespawnt
+    //handler.addObject(new BasicEnemy(1250, 1400, ID.BasicEnemy, handler));         //Hier werden alle Objekte das erste mal gespawnt
     //handler.addObject(new FastEnemy(Game.ranInt(17, WIDTH-17), Game.ranInt(17, HEIGHT-17), ID.FastEnemy, handler));
     //handler.addObject(new SmartEnemy(Game.ranInt(17, WIDTH-17), Game.ranInt(17, HEIGHT-17), ID.SmartEnemy, handler));
     new Windows(WIDTH, HEIGHT, "Dungeon Crawler", this);                                                                                                           //LEWIS IS N GOTT
@@ -187,6 +182,12 @@ public class Game extends Canvas implements Runnable
         if(handler.objects.get(i).getID() == ID.Player){
           cam.tick(handler.objects.get(i));
         }
+      }
+      if(hud.HEALTH < 1){   //tod :(
+        curState = states.menu;
+        player = null;
+        handler.clearQueue();
+        hud.drawMenu(this);
       }
     }
   }

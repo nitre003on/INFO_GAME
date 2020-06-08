@@ -20,10 +20,10 @@ public class DirectionalShot extends Shot{  //Schuss in richtung Maus (Piet)
   
   public DirectionalShot(GameObject owner, Vector2 target, ID id, Handler handler) {
     super((int)owner.x, (int)owner.y, null, id, handler);
-    dir = Vector2.subtract(target, Vector2.getPos(owner));  //Vector - Vector = Richtung
+    dir = Vector2.subtract(target, Vector2.getPos(owner));
     speed = 15;
     this.owner = owner;
-    dir.normalize();  //damit das Projektil immer gleich schnell ist!
+    dir.normalize();
     hitBox = new Rectangle((int)x, (int)y, 16, 16);
   }
 
@@ -35,7 +35,14 @@ public class DirectionalShot extends Shot{  //Schuss in richtung Maus (Piet)
     dir.normalize();
     hitBox = new Rectangle((int)x, (int)y, 16, 16);
   }
-  
+    public DirectionalShot(GameObject owner, Vector2 offset, Vector2 target, Vector2 position, ID id, Handler handler){
+    super((int)owner.x + (int)offset.x, (int)owner.y + (int)offset.y,null, id, handler);
+    dir = target;
+    speed = 15;
+    this.owner = owner;
+    dir.normalize();
+    hitBox = new Rectangle((int)x, (int)y, 16, 16);
+    }
   public void tick() {
     hitBox.x = (int)x; 
     hitBox.y = (int)y;

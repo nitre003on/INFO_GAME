@@ -22,7 +22,7 @@ public class playButton extends button {
     super.tick();
   }
     
-  public void event(){ game.play(); Game.hud.clearQueue(); }
+  public void event(){ game.play(); Game.hud.clearQueue();}
 
   public void render(Graphics g){
     super.render(g);

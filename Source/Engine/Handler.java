@@ -14,7 +14,13 @@ public class Handler
       for(int i = 0; i<enemies.size(); i++) { if(enemies.get(i).inRoom()) enemies.get(i).tick(); }
   }
   public void render(Graphics g) {
-      for (int i = 0; i < objects.size(); i++) { if(objects.get(i).onScreen())objects.get(i).render(g); }                             // Hier alle rendermethoden 
+    for (int i = 0; i < objects.size(); i++) { 
+      if(objects.get(i).onScreen())objects.get(i).render(g);       // Hier alle rendermethoden
+    }                             
+    
+    for (int i = 0; i < enemies.size(); i++) {
+      if(enemies.get(i).onScreen())enemies.get(i).render(g);
+    }
   }
   public void addObject(GameObject object) {
     this.objects.add(object);
@@ -35,6 +41,8 @@ public class Handler
     this.enemies.remove(object);
     object = null;
   }
+
+  public void clearQueue(){objects.clear();enemies.clear();}
 }
 
 //Der handler ist daf�r da mit den Objekten um zu gehen. Also Hinzuf�gen, Entfernen. Auch Alle Objekte in einer Liste zu haben.

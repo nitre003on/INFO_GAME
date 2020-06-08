@@ -6,11 +6,13 @@ public enum ID
   BasicEnemy(),
   FastEnemy(),
   SmartEnemy(),
-  Trail(),                                                //Alle IDs f�r die Objekte werden hier festgelegt
+  RangedEnemy(),
+  Trail(),                                                //Alle IDs fuer die Objekte werden hier festgelegt
   Shot(),
   Wall(),
   Door(),
   Item(),
   UI(),
+  EnemyShot(),
   Image();
 }

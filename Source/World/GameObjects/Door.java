@@ -9,7 +9,7 @@ import Source.Engine.Handler;
 import Source.Engine.ID;
 import Source.Engine.Graphics.animationHandler;
 import Source.World.GameObject;
-import sun.security.util.Length;
+
 
 public class Door extends GameObject{
   

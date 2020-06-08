@@ -30,10 +30,10 @@ public class Scroll extends GameObject {
   }
   
   public Rectangle getBounds() {
-    return new Rectangle((int)x,(int)y,16,32);                                            //Methode um die Umrisse zu kriegen
+    return new Rectangle((int)x,(int)y,16,20);                                            //Methode um die Umrisse zu kriegen
   }
   
-  public void tick() {
+  public void tick() {         
     collision();
     
     if(picked){
@@ -74,7 +74,7 @@ public class Scroll extends GameObject {
     g2d.draw(getBounds());*/
     /*if(id == ID.Player)*/
     g.setColor(Color.white);
-    g.fillRect((int)x, (int)y, 16, 32);                                                   // Form wird ge"zeichnet"
+    g.fillRect((int)x, (int)y, 16, 20);                                                   // Form wird ge"zeichnet"
   }
   
   

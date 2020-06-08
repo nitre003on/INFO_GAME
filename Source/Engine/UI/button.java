@@ -45,8 +45,8 @@ public abstract class button extends GameObject {  //generische button Klasse (P
         if(img != null) img.color = null;
       }
       if (img != null){
-        img.setX((float)x);
-        img.setY((float)y);
+        img.setX((int)x);
+        img.setY((int)y);
         img.w = w;  //ja, die Bilder werden gestretcht falls sie nicht passen
         img.h = h;
       }

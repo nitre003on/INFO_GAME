@@ -114,7 +114,7 @@ public class KeyInput extends KeyAdapter{
         if(key == KeyEvent.VK_E){
           if(Game.player.itemPicked[3]){
             if(Game.scroll.uses !=0){
-              handler.addObject(new Fireball(Game.player,new Vector2(0, Game.player.hitBox.height / 2),new Vector2((float)Game.pi.getLocation().getX() - Game.cam.getX(),(float)Game.pi.getLocation().getY() - Game.cam.getY()),ID.Shot,handler));
+              handler.addObject(new Fireball(Game.player,new Vector2(0, Game.player.playerHeight / 2),new Vector2((float)Game.pi.getLocation().getX() - Game.cam.getX(),(float)Game.pi.getLocation().getY() - Game.cam.getY()),ID.Shot,handler));
               Game.scroll.uses -=1;
               if(Game.scroll.uses ==0){
                 Game.player.itemPicked[3] = false;

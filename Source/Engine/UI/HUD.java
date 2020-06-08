@@ -2,6 +2,8 @@ package Source.Engine.UI;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.util.LinkedList;
 
 import Source.Engine.Handler;
@@ -90,6 +92,8 @@ public class HUD {
   }
 
   public void drawMenu(Game game){
+    HEALTH = 100;
+    System.out.println("drawMenu");
     ph.play();
     int width = Game.ScreenWidth;
     int height = Game.ScreenHeight;
