@@ -12,7 +12,7 @@ Arbeitsverteilung (Unter verwendung der Lernraum Benutzernamen):
 -FPS cap  
 -DungeonGeneration  
 -Door  
--Kollision  
+-Kollision (mit den Wänden) 
 
 **Piet (Rusting Robot):**  
 -alle Sprites  
@@ -21,6 +21,13 @@ Arbeitsverteilung (Unter verwendung der Lernraum Benutzernamen):
 -Image / UIImage  
 -button (und kinder)  
 -particleHandler  
--Game states (menu, pause)  
+-Game states (menu, pause) 
+
+**Nik:**
+-alle Items
+-den Rest vom Player
+-KeyInput
+-Grundgerüst des Spieles(also alles, was schon im Pitch war)
+
 
 
