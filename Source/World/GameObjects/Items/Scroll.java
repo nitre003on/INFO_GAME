@@ -27,6 +27,7 @@ public class Scroll extends GameObject {
   
   public Scroll(int x, int y, ID id, Handler handler) {
     super(x, y, id, handler);
+    imgUrl = "Content/items/scroll.png";
   }
   
   public Rectangle getBounds() {
@@ -68,13 +69,7 @@ public class Scroll extends GameObject {
   
   
   public void render(Graphics g) {
-    
-    /*Graphics2D g2d = (Graphics2D) g;
-    g.setColor(Color.green);
-    g2d.draw(getBounds());*/
-    /*if(id == ID.Player)*/
-    g.setColor(Color.white);
-    g.fillRect((int)x, (int)y, 16, 20);                                                   // Form wird ge"zeichnet"
+    drawSprite(g, 2);                                                // Form wird ge"zeichnet"
   }
   
   

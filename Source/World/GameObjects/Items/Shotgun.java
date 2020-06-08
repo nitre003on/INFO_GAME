@@ -28,6 +28,7 @@ public class Shotgun extends GameObject {
   
   public Shotgun(int x, int y, ID id, Handler handler) {
     super(x, y, id, handler);
+    imgUrl = "Content/items/shotgun.png";
   }
   
   public Rectangle getBounds() {
@@ -78,8 +79,7 @@ public class Shotgun extends GameObject {
   
   
   public void render(Graphics g) {
-    g.setColor(Color.orange);
-    g.fillRect((int)x, (int)y, 32, 16);                                                   // Form wird ge"zeichnet"
+      drawSprite(g, 2);                                                // Form wird ge"zeichnet"
   }
   
   

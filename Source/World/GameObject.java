@@ -2,6 +2,10 @@ package Source.World;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 import Source.Engine.Handler;
 import Source.Engine.ID;
@@ -14,7 +18,8 @@ public abstract class GameObject
   public int w,h;
   public boolean dash;
   public Handler handler;
-  
+  public String imgUrl;
+  public BufferedImage img;
   
   public GameObject(float x, float y, int w, int h, ID id, Handler handler) 
   {
@@ -33,6 +38,22 @@ public abstract class GameObject
     this.handler = handler;
   }
   
+  private BufferedImage loadImage(String path) throws IOException {
+    return ImageIO.read(new FileInputStream(path));
+  }
+
+  public void drawSprite(Graphics g,int zoomLvl){
+    if(img != null){
+      g.drawImage(img, (int)x, (int)y,(int)(img.getWidth() * zoomLvl),(int)(img.getHeight() * zoomLvl), null);
+    }else{
+      try {
+        img = loadImage(imgUrl);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
   public abstract void tick();
   public abstract void render(Graphics g);
   
