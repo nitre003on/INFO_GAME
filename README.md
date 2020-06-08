@@ -1,4 +1,4 @@
-# INFO_GAME_NKPLP
+# INFO_GAME_NKPLP![icon](/Content/logo.png) 
 [Github page](https://github.com/nitre003on/INFO_GAME_NKPLP)  
 das Informatikprojekt für Q2 von Nik, Karl, Piet, Paulo und Lewis
 
