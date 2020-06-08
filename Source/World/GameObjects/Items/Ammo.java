@@ -69,7 +69,7 @@ public class Ammo extends GameObject {
   
   public void render(Graphics g) { 
     g.setColor(Color.yellow);
-    g.fillRect((int)x, (int)y, width,height);
+    g.fillRect((int)x, (int)y, 8,8);
     
   }
   

@@ -14,7 +14,8 @@ import Source.World.GameObjects.BasicTrail;
 import Source.Engine.Vector2;
 import Source.World.GameObjects.BulletTypes.DirectionalShot;
 import Source.World.GameObjects.Door;
-
+import Source.World.GameObjects.Items.Ammo;
+import Source.World.GameObjects.Items.ShotgunAmmo;
 
 public class RangedEnemy extends GameObject{
   Rectangle hitBox;
@@ -109,7 +110,17 @@ public class RangedEnemy extends GameObject{
   }   
   public void checkhp () {
     if (hp<1) {
-      
+      int r = Game.ranInt(0, 1);
+      switch (r) {
+        case 0 : 
+          handler.addObject(new Ammo((int)x, (int)y, ID.Item, handler));
+          break;
+        case 1 : 
+          handler.addObject(new ShotgunAmmo((int)x, (int)y, ID.Item, handler));
+          break;
+        default: 
+          
+      }
       
       handler.removeEnemy(this);
       
