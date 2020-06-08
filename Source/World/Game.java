@@ -181,6 +181,9 @@ public class Game extends Canvas implements Runnable {
       if(hud.HEALTH < 1){   //tod :(
         curState = states.menu;
         player = null;
+        Game.player.itemPicked[1] = false;
+        Game.player.itemPicked[2] = false;
+        Game.player.itemPicked[3] = false;
         handler.clearQueue();
         hud.drawMenu(this);
       }
