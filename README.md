@@ -23,6 +23,7 @@ Arbeitsverteilung (Unter verwendung der Lernraum Benutzernamen):
 -button (und kinder)  
 -particleHandler  
 -Game states (menu, pause) 
+-selektives rendern / ticken  
 
 **Nik:**  
 -alle Items  
