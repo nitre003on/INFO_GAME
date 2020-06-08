@@ -41,6 +41,8 @@ public class Handler
     this.enemies.remove(object);
     object = null;
   }
+
+  public void clearQueue(){objects.clear();enemies.clear();}
 }
 
 //Der handler ist daf�r da mit den Objekten um zu gehen. Also Hinzuf�gen, Entfernen. Auch Alle Objekte in einer Liste zu haben.

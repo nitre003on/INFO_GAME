@@ -197,8 +197,8 @@ public class DungeonGeneration {
     //Werte des Raumes werden entnommen um sie den Tueren mitzugeben
     int[] roomBounds = {posX, posY, length, height};
     //bedecke bereiche außerhalb des Raumes um den überstehenden Boden zu verstecken
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length, posY), new Vector2(height, 158),Color.BLACK, ID.Image, Game.handler));
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height), new Vector2(158, length + 158),Color.BLACK, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length, posY), new Vector2(height, 200),Color.BLACK, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height), new Vector2(200, length + 158),Color.BLACK, ID.Image, Game.handler));
     //boden einfügen
     Game.handler.addObjectAsBG(new Image("Content\\Environment\\floor.png", new Vector2(posX, posY), new Vector2(height, length), 2, displayTypes.tiled, ID.Image, Game.handler));
     //Erzeugen des Raumes
@@ -383,9 +383,9 @@ public class DungeonGeneration {
     Game.handler.addObjectAsBG(new squareImage(new Vector2(posX  + length*2, posY), new Vector2(height, length),Color.BLACK, ID.Image, Game.handler));
     Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height*2), new Vector2(height, length),Color.BLACK, ID.Image, Game.handler));
     Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length*2, posY + height*2), new Vector2(height + 168, length + 168),Color.BLACK, ID.Image, Game.handler));
-    
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length*3, posY), new Vector2(height * 3, 168),Color.BLACK, ID.Image, Game.handler));
-    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height*3), new Vector2(168, length * 3),Color.BLACK, ID.Image, Game.handler));
+
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX + length*3, posY), new Vector2(height * 3, 200),Color.BLACK, ID.Image, Game.handler));
+    Game.handler.addObjectAsBG(new squareImage(new Vector2(posX, posY + height*3), new Vector2(200, length * 3),Color.BLACK, ID.Image, Game.handler));
     //boden einfügen
     Game.handler.addObjectAsBG(new Image("Content\\Environment\\floor.png", new Vector2(posX, posY), new Vector2(height * 3, length * 3), 2, Source.Engine.Graphics.Image.displayTypes.tiled, ID.Image, Game.handler));
     
