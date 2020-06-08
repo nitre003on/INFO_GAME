@@ -44,12 +44,12 @@ public class Image extends GameObject{
 
     public void render(Graphics g){
         switch(displayType){
-            case normal :
+            case normal :   //Bild wird normal gezeichnet (originale Größe)
                 g.drawImage(img, (int)x, (int)y,(int)(img.getWidth() * zoomLvl),(int)(img.getHeight() * zoomLvl),color, null);
                 break;
-            case stretched :
+            case stretched : //Bild wird gezeichnet, ohne die originale Größe zu beachten
                 g.drawImage(img, (int)x, (int)y, borderW, borderH, null);
-            case tiled :
+            case tiled :    //Bild wird wiederholend gezeichnet um einen Bereich auszufüllen (kein clipping!!)
                 for(int i = 0; i < Math.floor(borderH / (img.getHeight() * zoomLvl)+1);i++){
                     for(int j = 0; j < Math.floor(borderW / (img.getWidth() * zoomLvl)+1);j++){
                         if((int)x + j * img.getWidth() * zoomLvl - Game.player.x + img.getWidth() * zoomLvl > 0 - Game.ScreenWidth / 2 && (int)x + j * img.getWidth() * zoomLvl - Game.player.x < 0 + Game.ScreenWidth / 2 && (int)y  + i * img.getHeight() * zoomLvl - Game.player.y + img.getHeight() * zoomLvl > 0 - Game.ScreenHeight / 2 && (int)y  + i * img.getHeight() * zoomLvl - Game.player.y < 0 + Game.ScreenHeight / 2)

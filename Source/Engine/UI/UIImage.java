@@ -19,7 +19,7 @@ public class UIImage extends GameObject{  // nachfragen an Piet
     public int w,h;
     public Color color;
 
-    public UIImage(int x, int y, int w, int h, ID id, String imgURL, Handler handler) {
+    public UIImage(int x, int y, int w, int h, ID id, String imgURL, Handler handler) { //Ein Bild, das unabhängig von der Camera benutzt werden kann
         super(x, y, w, h, id, handler);
         this.w = w;
         this.h = h;

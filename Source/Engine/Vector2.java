@@ -41,7 +41,7 @@ public class Vector2 {
       this.y = y;
     }
     
-    public void normalize() {     //verkleinert den Vector zu 1x1 ohne die Richtung zu verlieren (Piet)
+    public void normalize() {     //verkleinert den Vector zu 1x1 ohne die Richtung zu verlieren
         double magnitude = getLength();
         x /= magnitude;
         y /= magnitude;

@@ -106,14 +106,14 @@ public class animationHandler { // Nachfragen an Piet richten
     }
   }
 
-  private BufferedImage ImageFlipX(BufferedImage img){ //gibt das gegebene Bild gespiegelt zurück
+  private BufferedImage ImageFlipX(BufferedImage img){ //gibt das gegebene Bild gespiegelt (X Achse) zurück
     AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
     tx.translate( -img.getHeight(null),0);
     AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
     return op.filter(img, null);
   }
 
-  private BufferedImage ImageFlipY(BufferedImage img){ //gibt das gegebene Bild gespiegelt zurück
+  private BufferedImage ImageFlipY(BufferedImage img){ //gibt das gegebene Bild gespiegelt (Y Achse) zurück
     AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
     tx.translate(0,-img.getHeight(null));
     AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);

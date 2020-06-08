@@ -39,7 +39,7 @@ public class HUD {
     greenValue = HEALTH*2;
     //score++;
 
-    for(int i = 0; i<UIobj.size(); i++) {
+    for(int i = 0; i<UIobj.size(); i++) { //handler unabhängige tick schleife
       GameObject tempObject = UIobj.get(i);
       tempObject.tick();
     }
@@ -48,7 +48,7 @@ public class HUD {
   public void render(Graphics g) {
     if(Game.curState == Game.states.menu)
       ph.render(g);
-    for (int i = 0; i < UIobj.size(); i++) {
+    for (int i = 0; i < UIobj.size(); i++) {//handler unabhängige render schleife
       GameObject tempObject = UIobj.get(i);
       tempObject.render(g);
     }

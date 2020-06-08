@@ -52,7 +52,7 @@ public abstract class button extends GameObject {  //generische button Klasse (P
       }
     }
 
-    public abstract void event();
+    public abstract void event(); //wird ausgelößt, falls der Knopf gedrückt wird
     
     public void render(Graphics g){
       g.setColor(color);

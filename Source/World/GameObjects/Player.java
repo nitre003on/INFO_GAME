@@ -54,7 +54,7 @@ public class Player extends GameObject {
     collision();
     if(velX == 0 && velY == 0){
       ah.playAnimation("idle", 0, false, true);
-    }else if (ah.curPlaying != "walk"){
+    }else if (ah.curPlaying != "walk"){ //starte die animation nicht neu, falls sie schon läuft
       ah.playAnimation("walk", 0.05f, true, false);
     }
     if(velX > 0){ ah.faceLeft(); }

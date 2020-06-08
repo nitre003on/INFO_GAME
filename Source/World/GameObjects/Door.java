@@ -62,7 +62,7 @@ public class Door extends GameObject{
       ah.playAnimation("Hclosed", 0.05f, true, true);
     }
 
-    if(width > height){
+    if(width > height){ //falls noerdlich / suedliche tuer
       if(Game.player.y < y){
         ah.faceUp();
       }else{
@@ -142,7 +142,7 @@ public class Door extends GameObject{
       g.setColor(Color.WHITE);
       g.drawString(Integer.toString(teleportID), (int)x, (int)y);
     }
-    if(width > height)
+    if(width > height)  //falls noerdlich / suedliche tuer
       ah.draw(g, (int)x, (int)y,width / 2 - 60, -58 / 2- height, 120);
     else
       ah.draw(g, (int)x, (int)y,(int)(width / 2 - 60 ), 14, 120);
